@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 4970791679775700779}
   - component: {fileID: 1260865992186159246}
   - component: {fileID: 502268589996600908}
+  - component: {fileID: 7466378574836980076}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Untagged
