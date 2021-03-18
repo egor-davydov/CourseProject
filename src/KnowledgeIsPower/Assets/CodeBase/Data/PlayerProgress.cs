@@ -16,6 +16,7 @@ namespace CodeBase.Data
       WorldData = new WorldData(initialLevel);
       HeroState = new State();
       HeroStats = new Stats();
+      KillData = new KillData();
     }
   }
 }
