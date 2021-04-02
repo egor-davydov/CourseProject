@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using CodeBase.Data;
 using CodeBase.Enemy;
 using CodeBase.Infrastructure.Factory;
@@ -42,8 +42,10 @@ namespace CodeBase.Logic
 
     public void UpdateProgress(PlayerProgress progress)
     {
-      if(_slain)
-        progress.KillData.ClearedSpawners.Add(_id);
+      List<string> slainSpawnersList = progress.KillData.ClearedSpawners;
+      
+      if(_slain && !slainSpawnersList.Contains(_id))
+        slainSpawnersList.Add(_id);
     }
 
     private void Spawn()
