@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CodeBase.Enemy;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Logic;
+using CodeBase.Logic.EnemySpawners;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.StaticData;
@@ -51,7 +52,7 @@ namespace CodeBase.Infrastructure.Factory
         .GetComponent<LootPiece>();
       
       lootPiece.Construct(_persistentProgressService.Progress.WorldData);
-      
+
       return lootPiece;
     }
 
@@ -83,7 +84,16 @@ namespace CodeBase.Infrastructure.Factory
       return monster;
     }
 
-    public void Register(ISavedProgressReader progressReader)
+    public void CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId)
+    {
+      SpawnPoint spawner = InstantiateRegistered(AssetPath.Spawner, at).GetComponent<SpawnPoint>();
+      
+      spawner.Construct(this);
+      spawner.MonsterTypeId = monsterTypeId;
+      spawner.Id = spawnerId;
+    }
+
+    private void Register(ISavedProgressReader progressReader)
     {
       if (progressReader is ISavedProgress progressWriter)
         ProgressWriters.Add(progressWriter);

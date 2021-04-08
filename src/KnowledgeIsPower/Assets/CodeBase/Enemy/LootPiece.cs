@@ -21,30 +21,15 @@ namespace CodeBase.Enemy
     private string _id;
     
     private bool _pickedUp;
-    private bool _loadedFromProgress;
 
     public void Construct(WorldData worldData) => 
       _worldData = worldData;
 
-    public void LoadProgress(PlayerProgress progress)
-    {
-      _id = GetComponent<UniqueId>().Id;
-      
-      LootPieceData data = progress.WorldData.LootData.LootPiecesOnScene.Dictionary[_id];
-      Initialize(data.Loot);
-      transform.position = data.Position.AsUnityVector();
-
-      _loadedFromProgress = true;
-    }
-
     public void Initialize(Loot loot) => 
       _loot = loot;
 
-    private void Start()
-    {
-      if(!_loadedFromProgress)
-        _id = GetComponent<UniqueId>().Id;
-    }
+    private void Start() => 
+      _id = GetComponent<UniqueId>().Id;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,6 +50,10 @@ namespace CodeBase.Enemy
       if (!lootPiecesOnScene.Dictionary.ContainsKey(_id))
         lootPiecesOnScene.Dictionary
           .Add(_id, new LootPieceData(transform.position.AsVectorData(), _loot));
+    }
+
+    public void LoadProgress(PlayerProgress progress)
+    {
     }
 
     private void Pickup()

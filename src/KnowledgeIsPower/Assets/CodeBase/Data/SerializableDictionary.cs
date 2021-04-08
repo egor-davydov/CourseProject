@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CodeBase.Data
 {
   [Serializable]
-  public abstract class DictionaryData_Base<TKey, TValue> : ISerializationCallbackReceiver
+  public abstract class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiver
   {
     public Dictionary<TKey, TValue> Dictionary = new Dictionary<TKey, TValue>();
 

@@ -3,7 +3,7 @@
 namespace CodeBase.Data
 {
   [Serializable]
-  public class LootPieceDataDictionary : DictionaryData_Base<string, LootPieceData>
+  public class LootPieceDataDictionary : SerializableDictionary<string, LootPieceData>
   {
   }
 }
