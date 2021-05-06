@@ -29,3 +29,7 @@ MonoBehaviour:
   - Id: Main_63b26722-cc31-4968-9146-b9a9e96088ef
     MonsterTypeId: 1
     Position: {x: 9.46, y: 0.3727684, z: 1.0500002}
+  InitialHeroPosition: {x: 9.98, y: 1.24, z: -14.12}
+  LevelTransfer:
+    TransferTo: Dungeon
+    Position: {x: 0.67502224, y: 0.07, z: 12.38}
