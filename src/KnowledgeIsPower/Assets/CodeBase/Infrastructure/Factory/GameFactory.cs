@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Services.PersistentProgress;
@@ -17,8 +18,17 @@ namespace CodeBase.Infrastructure.Factory
       _assets = assets;
     }
 
-    public GameObject CreateHero(GameObject at) => 
-      InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
+    public GameObject CreateHero(GameObject at)
+    {
+      
+      HeroGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
+      HeroCreated?.Invoke();
+      return HeroGameObject;
+    }
+
+    public GameObject HeroGameObject { get; set; }
+    public event Action HeroCreated;
+
 
     public void CreateHud() =>
       InstantiateRegistered(AssetPath.HudPath);
