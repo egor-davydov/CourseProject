@@ -20,6 +20,7 @@ namespace CodeBase.Enemy
     private float _attackCooldown;
     private Collider[] _hits = new Collider[1];
     private int _layerMask;
+    private bool _attackIsActive;
 
     private void Awake()
     {
@@ -46,6 +47,18 @@ namespace CodeBase.Enemy
       }
     }
 
+    private void OnAttackEnded()
+    {
+      _attackCooldown = AttackCooldown;
+      _isAttacking = false;
+    }
+
+    public void EnableAttack() => 
+      _attackIsActive = true;
+
+    public void DisableAttack() => 
+      _attackIsActive = false;
+
     private bool Hit(out Collider hit)
     {
       int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
@@ -58,12 +71,6 @@ namespace CodeBase.Enemy
     private Vector3 StartPoint() => 
       new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) + transform.forward * EffectiveDistance;
 
-    private void OnAttackEnded()
-    {
-      _attackCooldown = AttackCooldown;
-      _isAttacking = false;
-    }
-
     private void UpdateCooldown()
     {
       if (!CooldownIsUp())
@@ -71,7 +78,7 @@ namespace CodeBase.Enemy
     }
 
     private bool CanAttack() =>
-      !_isAttacking && CooldownIsUp();
+      _attackIsActive && !_isAttacking && CooldownIsUp();
 
     private bool CooldownIsUp() =>
       _attackCooldown <= 0;
