@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Factory;
+﻿using System.Linq;
+using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
 using UnityEngine;
 
@@ -10,15 +11,22 @@ namespace CodeBase.Enemy
     public EnemyAnimator EnemyAnimator;
 
     public float AttackCooldown = 3f;
+    public float EffectiveDistance = 0.5f;
+    public float Cleavage = 0.5f;
 
     private IGameFactory _gameFactory;
     private Transform _heroTransform;
     private bool _isAttacking;
     private float _attackCooldown;
+    private Collider[] _hits = new Collider[1];
+    private int _layerMask;
 
     private void Awake()
     {
       _gameFactory = AllServices.Container.Single<IGameFactory>();
+      
+      _layerMask = 1 << LayerMask.NameToLayer("Player");
+      
       _gameFactory.HeroCreated += OnHeroCreated;
     }
 
@@ -32,7 +40,23 @@ namespace CodeBase.Enemy
 
     private void OnAttack()
     {
+      if (Hit(out Collider hit))
+      {
+        
+      }
     }
+
+    private bool Hit(out Collider hit)
+    {
+      int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
+
+      hit = _hits.FirstOrDefault();
+      
+      return hitsCount >= 1;
+    }
+
+    private Vector3 StartPoint() => 
+      new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) + transform.forward * EffectiveDistance;
 
     private void OnAttackEnded()
     {
