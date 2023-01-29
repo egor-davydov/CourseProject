@@ -506,6 +506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TriggerObserver: {fileID: 281865888692156888}
   Follow: {fileID: 3224809786247355007}
+  Cooldown: 3
 --- !u!1 &1537370055453520
 GameObject:
   m_ObjectHideFlags: 0
