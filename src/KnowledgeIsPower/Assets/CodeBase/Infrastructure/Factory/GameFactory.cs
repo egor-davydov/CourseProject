@@ -30,7 +30,7 @@ namespace CodeBase.Infrastructure.Factory
     public event Action HeroCreated;
 
 
-    public void CreateHud() =>
+    public GameObject CreateHud() =>
       InstantiateRegistered(AssetPath.HudPath);
 
     public void Cleanup()
