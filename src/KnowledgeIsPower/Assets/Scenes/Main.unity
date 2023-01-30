@@ -650,7 +650,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5291098251876116185}
   m_PrefabAsset: {fileID: 0}
---- !u!111 &296128597
+--- !u!111 &296128601
 Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1927,7 +1927,7 @@ PrefabInstance:
     - target: {fileID: 5291098253468975580, guid: 3297eed11d903454b8d9cb12724e20cb,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -106.127785
+      value: -124.79813
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3297eed11d903454b8d9cb12724e20cb, type: 3}
