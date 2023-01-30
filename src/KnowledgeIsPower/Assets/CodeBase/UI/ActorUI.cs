@@ -13,24 +13,25 @@ namespace CodeBase.UI
 
     private void Awake()
     {
-      _health = GetComponent<IHealth>();
-      _health.HealthChanged += UpdateHpBar;
+      IHealth health = GetComponent<IHealth>();
       
+      if (health != null)
+        Construct(health);
     }
 
-    private void OnDestroy() => 
+    private void OnDestroy() =>
       _health.HealthChanged -= UpdateHpBar;
 
-    
+
     public void Construct(IHealth health)
     {
       _health = health;
-    
+
       _health.HealthChanged += UpdateHpBar;
     }
 
 
-    private void UpdateHpBar() => 
+    private void UpdateHpBar() =>
       HpBar.SetValue(_health.Current, _health.Max);
   }
 }
