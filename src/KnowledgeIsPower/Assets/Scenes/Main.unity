@@ -136,7 +136,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1500939411536426, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_Name
-      value: FreeLichPBR (3)
+      value: Lich (3)
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1017,7 +1017,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1500939411536426, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_Name
-      value: FreeLichPBR (4)
+      value: Lich (4)
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1074,7 +1074,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1500939411536426, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_Name
-      value: FreeLichPBR (2)
+      value: Lich (2)
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1208,7 +1208,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1500939411536426, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_Name
-      value: FreeLichPBR (1)
+      value: Lich (1)
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1542,7 +1542,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1500939411536426, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_Name
-      value: FreeLichPBR
+      value: Lich
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalPosition.x

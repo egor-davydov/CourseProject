@@ -1281,6 +1281,7 @@ GameObject:
   - component: {fileID: 4017438973311787786}
   - component: {fileID: 80499723589914649}
   - component: {fileID: 2281834062680410671}
+  - component: {fileID: 789263641442454745}
   m_Layer: 12
   m_Name: hero
   m_TagString: Player
@@ -1383,8 +1384,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 2, y: 2.5, z: 2}
+  m_Center: {x: 0, y: 1.25, z: 0}
 --- !u!114 &80499723589914649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1414,6 +1415,20 @@ MonoBehaviour:
   Move: {fileID: 1906629527}
   DeathFx: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
   Animator: {fileID: 1941000699}
+--- !u!114 &789263641442454745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803adbce87054957be2103b65bd4f08b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HeroAnimator: {fileID: 1941000699}
+  CharacterController: {fileID: 6247783307006756389}
 --- !u!1 &178646
 GameObject:
   m_ObjectHideFlags: 0
