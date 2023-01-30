@@ -1,7 +1,7 @@
 ﻿using System;
 using CodeBase.Data;
-using CodeBase.Enemy;
 using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.Logic;
 using UnityEngine;
 
 namespace CodeBase.Hero
