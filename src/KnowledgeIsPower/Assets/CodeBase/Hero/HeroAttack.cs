@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.Data;
+using CodeBase.Enemy;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Services.Input;
@@ -34,16 +35,19 @@ namespace CodeBase.Hero
 
     private void OnAttack()
     {
-      
+      for (int i = 0; i < Hit(); i++)
+      {
+        _hits[i].transform.parent.parent.GetComponent<IHealth>().TakeDamage(_stats.Damage);
+      }
     }
 
-    private int Hit() => 
-      Physics.OverlapSphereNonAlloc(StartPoint()+transform.forward, _stats.DamageRadius, _hits, _layerMask );
+    private int Hit() =>
+      Physics.OverlapSphereNonAlloc(StartPoint() + transform.forward, _stats.DamageRadius, _hits, _layerMask);
 
-    private Vector3 StartPoint() => 
+    private Vector3 StartPoint() =>
       new Vector3(transform.position.x, CharacterController.center.y / 2, transform.position.z);
 
-    public void LoadProgress(PlayerProgress progress) => 
+    public void LoadProgress(PlayerProgress progress) =>
       _stats = progress.HeroStats;
   }
 }

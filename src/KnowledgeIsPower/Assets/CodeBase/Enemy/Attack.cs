@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using CodeBase.Hero;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
 using UnityEngine;
@@ -27,9 +26,9 @@ namespace CodeBase.Enemy
     private void Awake()
     {
       _gameFactory = AllServices.Container.Single<IGameFactory>();
-      
+
       _layerMask = 1 << LayerMask.NameToLayer("Player");
-      
+
       _gameFactory.HeroCreated += OnHeroCreated;
     }
 
@@ -46,7 +45,7 @@ namespace CodeBase.Enemy
       if (Hit(out Collider hit))
       {
         PhysicsDebug.DrawDebug(StartPoint(), Cleavage, 1);
-        hit.GetComponent<HeroHealth>().TakeDamage(Damage);
+        hit.GetComponent<IHealth>().TakeDamage(Damage);
       }
     }
 
@@ -56,10 +55,10 @@ namespace CodeBase.Enemy
       _isAttacking = false;
     }
 
-    public void EnableAttack() => 
+    public void EnableAttack() =>
       _attackIsActive = true;
 
-    public void DisableAttack() => 
+    public void DisableAttack() =>
       _attackIsActive = false;
 
     private bool Hit(out Collider hit)
@@ -67,11 +66,11 @@ namespace CodeBase.Enemy
       int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
 
       hit = _hits.FirstOrDefault();
-      
+
       return hitsCount >= 1;
     }
 
-    private Vector3 StartPoint() => 
+    private Vector3 StartPoint() =>
       new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) + transform.forward * EffectiveDistance;
 
     private void UpdateCooldown()
