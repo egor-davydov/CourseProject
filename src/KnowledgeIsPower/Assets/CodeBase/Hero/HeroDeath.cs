@@ -8,6 +8,7 @@ namespace CodeBase.Hero
   {
     public HeroHealth Health;
     public HeroMove Move;
+    public HeroAttack Attack;
     public GameObject DeathFx;
     public HeroAnimator Animator;
     
@@ -30,6 +31,7 @@ namespace CodeBase.Hero
       _isDead = true;
       
       Move.enabled = false;
+      Attack.enabled = false;
       Animator.PlayDeath();
       Instantiate(DeathFx, transform.position, Quaternion.identity);
     }

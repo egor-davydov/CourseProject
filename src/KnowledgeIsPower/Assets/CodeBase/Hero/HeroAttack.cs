@@ -1,4 +1,5 @@
 ﻿using CodeBase.Data;
+using CodeBase.Enemy;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic;
@@ -32,11 +33,12 @@ namespace CodeBase.Hero
         HeroAnimator.PlayAttack();
     }
 
-    private void OnAttack()
+    public void OnAttack()
     {
+      PhysicsDebug.DrawDebug(StartPoint(), _stats.DamageRadius, 3);
       for (int i = 0; i < Hit(); i++)
       {
-        _hits[i].transform.parent.parent.GetComponent<IHealth>().TakeDamage(_stats.Damage);
+        _hits[i].transform.parent.GetComponent<IHealth>().TakeDamage(_stats.Damage);
       }
     }
 
