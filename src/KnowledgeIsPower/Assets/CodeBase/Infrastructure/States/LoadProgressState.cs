@@ -37,6 +37,6 @@ namespace CodeBase.Infrastructure.States
     }
 
     private PlayerProgress NewProgress() => 
-      new PlayerProgress(initialLevel: "Main", maxHP: 50);
+      new PlayerProgress(initialLevel: "Main", maxHP: 50, damage: 1f, damageRadius: 0.5f);
   }
 }

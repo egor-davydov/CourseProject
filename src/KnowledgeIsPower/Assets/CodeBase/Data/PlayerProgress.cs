@@ -7,21 +7,18 @@ namespace CodeBase.Data
   {
     public WorldData WorldData;
     public State HeroState;
+    public Stats HeroStats;
 
-    public PlayerProgress(string initialLevel, float maxHP)
+    public PlayerProgress(string initialLevel, float maxHP, float damage, float damageRadius)
     {
       WorldData = new WorldData(initialLevel);
       HeroState = new State();
+      HeroStats = new Stats();
+      
       HeroState.MaxHP = maxHP;
       HeroState.ResetHP();
+      HeroStats.Damage = damage;
+      HeroStats.DamageRadius = damageRadius;
     }
-  }
-
-  [Serializable]
-  public class State
-  {
-    public float CurrentHP;
-    public float MaxHP;
-    public void ResetHP() => CurrentHP = MaxHP;
   }
 }
