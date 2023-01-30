@@ -1413,6 +1413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: {fileID: 80499723589914649}
   Move: {fileID: 1906629527}
+  Attack: {fileID: 789263641442454745}
   DeathFx: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
   Animator: {fileID: 1941000699}
 --- !u!114 &789263641442454745
