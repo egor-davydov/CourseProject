@@ -28,10 +28,11 @@ namespace CodeBase.Infrastructure.Factory
 
     public GameObject HeroGameObject { get; set; }
     public event Action HeroCreated;
-
-
+    
     public GameObject CreateHud() =>
       InstantiateRegistered(AssetPath.HudPath);
+    public GameObject CreateFireball(Vector3 at) =>
+      InstantiateRegistered(AssetPath.FireballPath, at);
 
     public void Cleanup()
     {

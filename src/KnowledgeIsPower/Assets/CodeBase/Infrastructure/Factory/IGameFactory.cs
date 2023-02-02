@@ -15,5 +15,6 @@ namespace CodeBase.Infrastructure.Factory
     List<ISavedProgressReader> ProgressReaders { get; }
     List<ISavedProgress> ProgressWriters { get; }
     void Cleanup();
+    GameObject CreateFireball(Vector3 at);
   }
 }

@@ -9,6 +9,7 @@ namespace CodeBase.Enemy
   {
     public float DestroyTime = 3f;
 
+    public Follow Follow;
     public EnemyHealth Health;
     public GameObject DeathFx;
     public EnemyAnimator Animator;
@@ -17,9 +18,6 @@ namespace CodeBase.Enemy
 
     private void Start() =>
       Health.HealthChanged += HealthChanged;
-
-    private void OnDestroy() =>
-      Health.HealthChanged -= HealthChanged;
 
     private void HealthChanged()
     {
@@ -31,6 +29,7 @@ namespace CodeBase.Enemy
     {
       Health.HealthChanged -= HealthChanged;
 
+      Follow.enabled = false;
       Animator.PlayDeath();
       SpawnDeathFx();
       StartCoroutine(DestroyTimer());
