@@ -12,7 +12,13 @@ namespace CodeBase.Editor
   {
     private void OnEnable()
     {
-      var uniqueId = (UniqueId) target;
+      var uniqueId = (UniqueId)target;
+
+      if (IsPrefab(uniqueId))
+      {
+        uniqueId.Id = default;
+        return;
+      }
 
       if (string.IsNullOrEmpty(uniqueId.Id))
       {
@@ -21,11 +27,14 @@ namespace CodeBase.Editor
       else
       {
         UniqueId[] uniqueIds = FindObjectsOfType<UniqueId>();
-        
-        if(uniqueIds.Any(other=>other != uniqueId && other.Id == uniqueId.Id))
+
+        if (uniqueIds.Any(other => other != uniqueId && other.Id == uniqueId.Id))
           Generate(uniqueId);
       }
     }
+
+    private bool IsPrefab(UniqueId uniqueId) =>
+      uniqueId.gameObject.scene.rootCount == 0;
 
     private void Generate(UniqueId uniqueId)
     {
