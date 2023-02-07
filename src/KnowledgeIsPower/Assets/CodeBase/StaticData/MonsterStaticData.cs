@@ -5,6 +5,8 @@ namespace CodeBase.StaticData
   [CreateAssetMenu(fileName = "MonsterData", menuName = "StaticData/Monster")]
   public class MonsterStaticData : ScriptableObject
   {
+    public MonsterTypeId TypeId;
+    
     [Range(1,100)]
     public int Hp;
     
@@ -16,6 +18,6 @@ namespace CodeBase.StaticData
     [Range(0.5f,1)]
     public float EffectiveDistance;
 
-    public GameObject prefab;
+    public GameObject Prefab;
   }
 }
