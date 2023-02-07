@@ -22,7 +22,7 @@ namespace CodeBase.Infrastructure.States
       _sceneLoader = sceneLoader;
       _services = services;
 
-      RegisterServices(); 
+      RegisterServices();
     }
 
     public void Enter()
@@ -40,7 +40,7 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IAssetProvider>(new AssetProvider());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-      _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>(), _services.Single<IStaticDataService>()));
+      _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>(), _services.Single<IStaticDataService>(), _services.Single<IInputService>()));
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
     }
 
@@ -49,6 +49,7 @@ namespace CodeBase.Infrastructure.States
       IStaticDataService staticDataService = new StaticDataService();
       _services.RegisterSingle(staticDataService);
       staticDataService.LoadMonsters();
+      staticDataService.LoadHero();
     }
 
     private void EnterLoadLevel() =>

@@ -1,6 +1,4 @@
 ﻿using CodeBase.Data;
-using CodeBase.Infrastructure;
-using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Services.Input;
 using UnityEngine;
@@ -11,15 +9,15 @@ namespace CodeBase.Hero
   public class HeroMove : MonoBehaviour, ISavedProgress
   {
     [SerializeField] private CharacterController _characterController;
-    [SerializeField] private float _movementSpeed;
+
+    public float MovementSpeed;
 
     private IInputService _inputService;
+
     private Camera _camera;
 
-    private void Awake()
-    {
-      _inputService = AllServices.Container.Single<IInputService>();
-    }
+    public void Construct(IInputService inputService) => 
+      _inputService = inputService;
 
     private void Start() =>
       _camera = Camera.main;
@@ -39,7 +37,7 @@ namespace CodeBase.Hero
 
       movementVector += Physics.gravity;
 
-      _characterController.Move(_movementSpeed * movementVector * Time.deltaTime);
+      _characterController.Move(MovementSpeed * movementVector * Time.deltaTime);
     }
 
     public void UpdateProgress(PlayerProgress progress)

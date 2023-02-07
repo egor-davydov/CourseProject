@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using CodeBase.Enemy;
+using CodeBase.Hero;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic;
+using CodeBase.Services.Input;
 using CodeBase.StaticData;
 using CodeBase.UI;
 using UnityEngine;
@@ -16,21 +18,28 @@ namespace CodeBase.Infrastructure.Factory
   {
     private readonly IAssetProvider _assets;
     private readonly IStaticDataService _staticData;
+    private IInputService _inputService;
 
     public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
     public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
 
     private GameObject HeroGameObject { get; set; }
 
-    public GameFactory(IAssetProvider assets, IStaticDataService staticData)
+    public GameFactory(IAssetProvider assets, IStaticDataService staticData, IInputService inputService)
     {
       _assets = assets;
       _staticData = staticData;
+      _inputService = inputService;
     }
 
     public GameObject CreateHero(GameObject at)
     {
       HeroGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
+
+      var heroMove = HeroGameObject.GetComponent<HeroMove>();
+      heroMove.Construct(_inputService);
+      heroMove.MovementSpeed = _staticData.HeroData.MovementSpeed;
+      
       return HeroGameObject;
     }
 
@@ -64,7 +73,6 @@ namespace CodeBase.Infrastructure.Factory
       monster.GetComponent<AgentMoveToPlayer>().Construct(HeroGameObject.transform);
       monster.GetComponent<NavMeshAgent>().speed = monsterData.MoveSpeed;
       
-
       var attack = monster.GetComponent<Attack>();
       attack.Construct(HeroGameObject.transform);
       attack.Cleavage = monsterData.Cleavage;

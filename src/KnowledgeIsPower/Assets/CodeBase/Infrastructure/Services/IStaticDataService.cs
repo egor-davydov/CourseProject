@@ -7,5 +7,7 @@ namespace CodeBase.Infrastructure.Services
   {
     void LoadMonsters();
     MonsterStaticData ForMonster(MonsterTypeId typeId);
+    HeroStaticData HeroData { get; set; }
+    void LoadHero();
   }
 }
