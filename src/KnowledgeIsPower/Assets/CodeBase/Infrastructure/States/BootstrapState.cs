@@ -46,9 +46,9 @@ namespace CodeBase.Infrastructure.States
 
     private void RegisterStaticData()
     {
-      var staticDataService = new StaticDataService();
-      _services.RegisterSingle<IStaticDataService>(staticDataService);
-      staticDataService.LoadData();
+      IStaticDataService staticDataService = new StaticDataService();
+      _services.RegisterSingle(staticDataService);
+      staticDataService.LoadMonsters();
     }
 
     private void EnterLoadLevel() =>

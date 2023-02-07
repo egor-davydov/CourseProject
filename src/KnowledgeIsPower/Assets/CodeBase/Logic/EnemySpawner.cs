@@ -32,6 +32,7 @@ namespace CodeBase.Logic
 
     private void Spawn()
     {
+      
     }
   }
 }

@@ -7,18 +7,19 @@ namespace CodeBase.StaticData
 {
   public class StaticDataService : IStaticDataService
   {
-    private const string EnemiesStaticDataPath = "Enemies/StaticData";
-    private Dictionary<MonsterTypeId, GameObject> _monsters;
+    private const string EnemiesStaticDataPath = "StaticData/Monsters";
+    private Dictionary<MonsterTypeId, MonsterStaticData> _monsters;
 
-    public void LoadData()
+    public void LoadMonsters()
     {
-      _monsters = Resources.LoadAll<MonsterStaticData>(EnemiesStaticDataPath)
-        .ToDictionary(x=>x.TypeId, x=> x.Prefab);
+      _monsters = Resources
+        .LoadAll<MonsterStaticData>(EnemiesStaticDataPath)
+        .ToDictionary(x=>x.TypeId, x=> x);
     }
 
-    public GameObject ForMonster(MonsterTypeId typeId) => 
-      _monsters.TryGetValue(typeId, out GameObject monsterPrefab)
-        ? monsterPrefab
+    public MonsterStaticData ForMonster(MonsterTypeId typeId) => 
+      _monsters.TryGetValue(typeId, out MonsterStaticData monsterData)
+        ? monsterData
         : null;
   }
 }

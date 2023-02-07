@@ -5,7 +5,7 @@ namespace CodeBase.Infrastructure.Services
 {
   public interface IStaticDataService : IService
   {
-    void LoadData();
-    GameObject ForMonster(MonsterTypeId typeId);
+    void LoadMonsters();
+    MonsterStaticData ForMonster(MonsterTypeId typeId);
   }
 }
