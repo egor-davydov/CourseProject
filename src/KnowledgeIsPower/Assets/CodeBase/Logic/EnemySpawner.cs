@@ -24,7 +24,6 @@ namespace CodeBase.Logic
       _factory = AllServices.Container.Single<IGameFactory>();
     }
 
-
     public void LoadProgress(PlayerProgress progress)
     {
       if (progress.KillData.ClearedSpawners.Contains(_id))
