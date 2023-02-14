@@ -55,8 +55,15 @@ namespace CodeBase.Infrastructure.Factory
       
       monster.GetComponent<AgentMoveToPlayer>()?.Construct(_heroGameObject.transform);
       monster.GetComponent<RotateToHero>()?.Construct(_heroGameObject.transform);
+      monster.GetComponentInChildren<LootSpawner>().Construct(this);
 
       return monster;
+    }
+
+    public GameObject CreateLoot()
+    {
+      GameObject loot = InstantiateRegistered(AssetPath.Loot);
+      return loot;
     }
 
     public void Cleanup()
