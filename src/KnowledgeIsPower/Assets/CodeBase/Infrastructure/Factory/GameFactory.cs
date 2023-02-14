@@ -23,13 +23,15 @@ namespace CodeBase.Infrastructure.Factory
     private readonly IRandomService _random;
 
     private GameObject _heroGameObject;
+    private IPersistentProgressService _progress;
 
 
-    public GameFactory(IAssetProvider assets, IStaticDataService staticData, IRandomService random)
+    public GameFactory(IAssetProvider assets, IStaticDataService staticData, IRandomService random, IPersistentProgressService progress)
     {
       _assets = assets;
       _staticData = staticData;
       _random = random;
+      _progress = progress;
     }
 
     public GameObject CreateHero(GameObject at) => 
@@ -66,9 +68,11 @@ namespace CodeBase.Infrastructure.Factory
       return monster;
     }
 
-    public GameObject CreateLoot()
+    public LootPiece CreateLoot()
     {
-      GameObject loot = InstantiateRegistered(AssetPath.Loot);
+      LootPiece loot = InstantiateRegistered(AssetPath.Loot)
+        .GetComponent<LootPiece>();
+      loot.Construct(_progress.Progress.WorldData);
       return loot;
     }
 

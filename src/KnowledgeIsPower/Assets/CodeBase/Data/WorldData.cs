@@ -1,5 +1,4 @@
 using System;
-using UnityEngine.Serialization;
 
 namespace CodeBase.Data
 {
@@ -7,6 +6,7 @@ namespace CodeBase.Data
   public class WorldData
   {
     public PositionOnLevel PositionOnLevel;
+    public LootData LootData;
 
     public WorldData(string initialLevel)
     {
