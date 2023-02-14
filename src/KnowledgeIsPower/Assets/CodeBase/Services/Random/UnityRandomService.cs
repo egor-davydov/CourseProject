@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-
-namespace CodeBase.Services
+﻿namespace CodeBase.Services.Random
 {
   public class UnityRandomService : IRandomService
   {
     public int Next(int min, int max) => 
-      Random.Range(min, max);
+      UnityEngine.Random.Range(min, max);
   }
 }

@@ -3,6 +3,7 @@ using CodeBase.Enemy;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Logic;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.Random;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData;
 using CodeBase.UI;
@@ -19,14 +20,16 @@ namespace CodeBase.Infrastructure.Factory
     
     private readonly IAssetProvider _assets;
     private readonly IStaticDataService _staticData;
+    private readonly IRandomService _random;
 
     private GameObject _heroGameObject;
 
 
-    public GameFactory(IAssetProvider assets, IStaticDataService staticData)
+    public GameFactory(IAssetProvider assets, IStaticDataService staticData, IRandomService random)
     {
       _assets = assets;
       _staticData = staticData;
+      _random = random;
     }
 
     public GameObject CreateHero(GameObject at) => 
@@ -55,7 +58,10 @@ namespace CodeBase.Infrastructure.Factory
       
       monster.GetComponent<AgentMoveToPlayer>()?.Construct(_heroGameObject.transform);
       monster.GetComponent<RotateToHero>()?.Construct(_heroGameObject.transform);
-      monster.GetComponentInChildren<LootSpawner>().Construct(this);
+      
+      LootSpawner lootSpawner = monster.GetComponentInChildren<LootSpawner>();
+      lootSpawner.Construct(this, _random);
+      lootSpawner.SetLoot(monsterData.MinLoot,monsterData.MaxLoot);
 
       return monster;
     }
