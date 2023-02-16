@@ -1,11 +1,14 @@
 ﻿using System;
 using CodeBase.CameraLogic;
+using CodeBase.Data;
+using CodeBase.Enemy;
 using CodeBase.Hero;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -56,12 +59,29 @@ namespace CodeBase.Infrastructure.States
     private void InitGameWorld()
     {
       InitSpawners();
+      InitLoot();
       
       GameObject hero = _gameFactory.CreateHero(GameObject.FindWithTag(InitialPointTag));
       InitHud(hero);
 
       CameraFollow(hero);
     }
+
+    private void InitLoot()
+    {
+      foreach (NotCollectedLoot notCollectedLoot in _progressService.Progress.WorldData.LootData.NotCollectedLoot)
+      {
+        if (IsLootOnCurrentLevel(notCollectedLoot))
+          continue;
+        
+        LootPiece lootPiece = _gameFactory.CreateLoot();
+        lootPiece.transform.position = notCollectedLoot.PositionOnLevel.Position.AsUnityVector();
+        lootPiece.Initialize(notCollectedLoot.Loot);
+      }
+    }
+
+    private bool IsLootOnCurrentLevel(NotCollectedLoot notCollectedLoot) => 
+      SceneManager.GetActiveScene().name != notCollectedLoot.PositionOnLevel.Level;
 
     private void InitSpawners()
     {

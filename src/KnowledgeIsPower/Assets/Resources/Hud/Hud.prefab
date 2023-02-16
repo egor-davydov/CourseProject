@@ -474,6 +474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8858442787602491165}
   - component: {fileID: 258939530721281064}
+  - component: {fileID: 5690662829931204241}
   m_Layer: 0
   m_Name: Loot
   m_TagString: Untagged
@@ -527,6 +528,19 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &5690662829931204241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5328709229824462170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9166c52097dd4e0bae82d55f9ea77397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Counter: {fileID: 2889017075732146683}
 --- !u!1 &7537324722733914174
 GameObject:
   m_ObjectHideFlags: 0

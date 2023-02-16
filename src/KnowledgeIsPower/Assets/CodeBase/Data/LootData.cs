@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace CodeBase.Data
 {
@@ -7,6 +9,7 @@ namespace CodeBase.Data
   {
     public int Collected;
     public Action Changed;
+    public List<NotCollectedLoot> NotCollectedLoot = new List<NotCollectedLoot>();
 
     public void Collect(Loot loot)
     {

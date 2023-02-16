@@ -21,11 +21,10 @@ namespace CodeBase.Infrastructure.Factory
     private readonly IAssetProvider _assets;
     private readonly IStaticDataService _staticData;
     private readonly IRandomService _random;
+    private readonly IPersistentProgressService _progress;
 
     private GameObject _heroGameObject;
-    private IPersistentProgressService _progress;
-
-
+    
     public GameFactory(IAssetProvider assets, IStaticDataService staticData, IRandomService random, IPersistentProgressService progress)
     {
       _assets = assets;
