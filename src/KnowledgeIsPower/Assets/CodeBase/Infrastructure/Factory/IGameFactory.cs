@@ -16,6 +16,6 @@ namespace CodeBase.Infrastructure.Factory
     GameObject CreateMonster(MonsterTypeId typeId, Transform parent);
     LootPiece CreateLoot();
     void Cleanup();
-    void Register(ISavedProgressReader savedProgress);
+    void CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId);
   }
 }

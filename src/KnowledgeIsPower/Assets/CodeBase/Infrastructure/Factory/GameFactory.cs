@@ -83,6 +83,15 @@ namespace CodeBase.Infrastructure.Factory
       return monster;
     }
 
+    public void CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId)
+    {
+      EnemySpawner spawner = InstantiateRegistered(AssetPath.Spawner, at)
+        .GetComponent<EnemySpawner>();
+
+      spawner.Id = spawnerId;
+      spawner.MonsterTypeId = monsterTypeId;
+    }
+
     public void Register(ISavedProgressReader progressReader)
     {
       if (progressReader is ISavedProgress progressWriter)

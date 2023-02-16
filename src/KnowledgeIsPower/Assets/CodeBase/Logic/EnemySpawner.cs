@@ -12,11 +12,11 @@ namespace CodeBase.Logic
   public class EnemySpawner : MonoBehaviour, ISavedProgress
   {
     public MonsterTypeId MonsterTypeId;
+    public string Id;
 
     private IGameFactory _factory;
     private EnemyDeath _enemyDeath;
 
-    private string _id;
     private bool _slain;
 
     private void Awake()
