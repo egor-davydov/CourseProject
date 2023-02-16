@@ -19,7 +19,7 @@ namespace CodeBase.Services.StaticData
         .ToDictionary(x => x.MonsterTypeId, x => x);
       
       _levels = Resources
-        .LoadAll<LevelStaticData>(MonstersDataPath)
+        .LoadAll<LevelStaticData>(LevelDataPath)
         .ToDictionary(x => x.LevelKey, x => x);
     }
 
