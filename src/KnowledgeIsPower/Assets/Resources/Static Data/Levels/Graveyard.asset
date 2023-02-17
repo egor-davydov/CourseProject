@@ -10,7 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cb3183238504a888fddd778faac883c, type: 3}
-  m_Name: Grayev
+  m_Name: Graveyard
   m_EditorClassIdentifier: 
-  LevelKey: 
-  EnemySpawners: []
+  LevelKey: Main
+  EnemySpawners:
+  - Id: Main_1ad29ccf-3572-4c33-8524-b63b7d859bdc
+    MonsterTypeId: 0
+    Position: {x: -8.54, y: 0.1645093, z: -14.281484}
+  - Id: Main_51da6745-182c-44f6-a4ee-c41357d45f8e
+    MonsterTypeId: 0
+    Position: {x: -15.97622, y: 0.8456962, z: -6.6100006}
+  - Id: Main_43541770-9273-4c97-80c4-d47da522b082
+    MonsterTypeId: 0
+    Position: {x: 0.93544483, y: 0.00000071525574, z: -0.24716628}
+  - Id: Main_7569850b-b326-4c73-98c5-fcf8cba61f0e
+    MonsterTypeId: 0
+    Position: {x: -8.705454, y: 0.1500001, z: -4.76}
