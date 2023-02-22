@@ -9,6 +9,7 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData;
 using CodeBase.UI;
+using CodeBase.UI.Elements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
