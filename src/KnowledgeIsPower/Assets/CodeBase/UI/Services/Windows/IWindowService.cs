@@ -1,6 +1,8 @@
-﻿namespace CodeBase.UI.Services.Windows
+﻿using CodeBase.Services;
+
+namespace CodeBase.UI.Services.Windows
 {
-  public interface IWindowService
+  public interface IWindowService : IService
   {
     void Open(WindowId windowId);
   }
