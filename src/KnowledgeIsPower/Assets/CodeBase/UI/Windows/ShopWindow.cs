@@ -7,18 +7,18 @@ namespace CodeBase.UI.Windows
     public TextMeshProUGUI SkullText;
 
     protected override void Init() => 
-      RefreshSkullTextText();
+      RefreshSkullText();
 
     protected override void SubscribeUpdates() => 
-      Progress.WorldData.LootData.Changed += SubscribeUpdates;
+      Progress.WorldData.LootData.Changed += RefreshSkullText;
 
     protected override void Cleanup()
     {
       base.Cleanup();
-      Progress.WorldData.LootData.Changed -= SubscribeUpdates;
+      Progress.WorldData.LootData.Changed -= RefreshSkullText;
     }
 
-    private string RefreshSkullTextText() => 
+    private void RefreshSkullText() => 
       SkullText.text = Progress.WorldData.LootData.Collected.ToString();
   }
 }
