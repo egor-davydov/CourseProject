@@ -1,9 +1,13 @@
-﻿using CodeBase.Services;
+﻿using System;
+using CodeBase.Services;
+using CodeBase.UI.Windows;
 
 namespace CodeBase.UI.Services.Windows
 {
   public interface IWindowService : IService
   {
-    void Open(WindowId windowId);
+    void OpenByButton(WindowId windowId);
+    void OpenPrevious();
+    event Action NewWindowOpened;
   }
 }

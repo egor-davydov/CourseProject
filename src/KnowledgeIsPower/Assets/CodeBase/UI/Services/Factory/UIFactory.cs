@@ -14,6 +14,7 @@ namespace CodeBase.UI.Services.Factory
     private readonly IAssetProvider _assets;
     private readonly IStaticDataService _staticData;
     private readonly IPersistentProgressService _progress;
+    private IWindowService _windowService;
 
     private Transform _uiRoot;
 
@@ -24,11 +25,14 @@ namespace CodeBase.UI.Services.Factory
       _progress = progress;
     }
 
-    public void CreateShop()
+    public void Construct(IWindowService windowService) => 
+      _windowService = windowService;
+
+    public void CreateWindow(WindowId windowId)
     {
-      WindowConfig config = _staticData.ForWindow(WindowId.Shop);
+      WindowConfig config = _staticData.ForWindow(windowId);
       WindowBase window = Object.Instantiate(config.Prefab, _uiRoot);
-      window.Construct(_progress);
+      window.Construct(_progress, _windowService);
     }
 
     public void CreateUIRoot() => 

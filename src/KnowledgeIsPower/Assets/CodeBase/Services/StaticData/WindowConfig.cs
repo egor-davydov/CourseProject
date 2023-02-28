@@ -9,5 +9,7 @@ namespace CodeBase.Services.StaticData
   {
     public WindowId WindowId;
     public WindowBase Prefab;
+    public bool OpenPreviousWindowOnClose;
+
   }
 }

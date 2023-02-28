@@ -15,3 +15,8 @@ MonoBehaviour:
   Configs:
   - WindowId: 1
     Prefab: {fileID: 769169819997001648, guid: 597046ab573634f56b2c7840b8ece0ce, type: 3}
+    OpenPreviousWindowOnClose: 0
+  - WindowId: 2
+    Prefab: {fileID: 3917376887672699233, guid: 28f4d5a894e0e554aae15d74ac25f0c4,
+      type: 3}
+    OpenPreviousWindowOnClose: 1

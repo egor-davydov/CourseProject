@@ -1,6 +1,6 @@
-﻿using System;
-using CodeBase.Data;
+﻿using CodeBase.Data;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.UI.Services.Windows;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +12,15 @@ namespace CodeBase.UI.Windows
 
     protected IPersistentProgressService ProgressService;
     protected PlayerProgress Progress => ProgressService.Progress;
+    
+    private IWindowService _windowService;
 
-    public void Construct(IPersistentProgressService progressService) =>
+    public void Construct(IPersistentProgressService progressService, IWindowService windowService)
+    {
+      _windowService = windowService;
       ProgressService = progressService;
+      _windowService.NewWindowOpened += CloseWindow;
+    }
 
     private void Awake() =>
       OnAwake();
@@ -36,11 +42,19 @@ namespace CodeBase.UI.Windows
     {
     }
 
-    protected virtual void CleanUp()
+    protected virtual void CleanUp() => 
+      _windowService.NewWindowOpened -= CloseWindow;
+
+    protected virtual void OnAwake()
     {
+      CloseButton.onClick.AddListener(() =>
+      {
+        _windowService.OpenPrevious();
+        CloseWindow();
+      });
     }
 
-    protected virtual void OnAwake() =>
-      CloseButton.onClick.AddListener((() => Destroy(gameObject)));
+    private void CloseWindow() => 
+      Destroy(gameObject);
   }
 }

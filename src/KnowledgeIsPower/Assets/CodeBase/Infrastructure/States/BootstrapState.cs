@@ -28,12 +28,15 @@ namespace CodeBase.Infrastructure.States
       RegisterServices();
     }
 
-    public void Enter() =>
+    public void Enter() => 
       _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
 
     public void Exit()
     {
     }
+
+    private void EnterLoadLevel() =>
+      _stateMachine.Enter<LoadProgressState>();
 
     private void RegisterServices()
     {
@@ -44,9 +47,9 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
 
       _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>(), _services.Single<IStaticDataService>(), _services.Single<IPersistentProgressService>()));
-      _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
-
-
+      _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>(), _services.Single<IStaticDataService>()));
+      _services.Single<IUIFactory>().Construct(_services.Single<IWindowService>());
+      
       _services.RegisterSingle<IGameFactory>(new GameFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IStaticDataService>(),
@@ -65,12 +68,9 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle(staticData);
     }
 
-    private void EnterLoadLevel() =>
-      _stateMachine.Enter<LoadProgressState>();
-
     private static IInputService InputService() =>
       Application.isEditor
-        ? (IInputService) new StandaloneInputService()
+        ? (IInputService)new StandaloneInputService()
         : new MobileInputService();
   }
 }

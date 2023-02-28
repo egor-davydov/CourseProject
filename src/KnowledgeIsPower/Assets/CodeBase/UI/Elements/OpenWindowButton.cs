@@ -19,6 +19,6 @@ namespace CodeBase.UI.Elements
       Button.onClick.AddListener(Open);
 
     private void Open() => 
-      _windowService.Open(WindowId);
+      _windowService.OpenByButton(WindowId);
   }
 }

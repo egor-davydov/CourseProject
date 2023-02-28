@@ -3,6 +3,7 @@
   public enum WindowId
   {
     Unknown = 0,
-    Shop = 1
+    Shop = 1,
+    Settings = 2
   }
 }
