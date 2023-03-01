@@ -1,6 +1,7 @@
 ﻿using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Services;
+using CodeBase.Services.Ads;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
@@ -38,11 +39,13 @@ namespace CodeBase.Infrastructure.States
     private void RegisterServices()
     {
       RegisterStaticDataService();
+      RegisterAdsService();
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IAssetProvider>(new AssetProvider());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-    
+      
+
 
       _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>(),
         _services.Single<IStaticDataService>(), _services.Single<IPersistentProgressService>()));
@@ -57,6 +60,13 @@ namespace CodeBase.Infrastructure.States
       
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(),
         _services.Single<IGameFactory>()));
+    }
+
+    private void RegisterAdsService()
+    {
+      var adsService = new AdsService();
+      adsService.Initialize();
+      _services.RegisterSingle<IAdsService>(adsService);
     }
 
     private void RegisterStaticDataService()
