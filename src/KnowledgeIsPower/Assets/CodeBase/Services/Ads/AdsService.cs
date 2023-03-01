@@ -15,6 +15,8 @@ namespace CodeBase.Services.Ads
     private Action _onVideoFinished;
     private string _gameId;
 
+    public int Reward => 13;
+
     public void Initialize()
     {
       switch (Application.platform)
