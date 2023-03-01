@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using CodeBase.Enemy;
+using CodeBase.Hero;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Logic;
 using CodeBase.Logic.EnemySpawners;
+using CodeBase.Services.LifeCycle;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.StaticData;
@@ -27,18 +29,32 @@ namespace CodeBase.Infrastructure.Factory
     private readonly IPersistentProgressService _persistentProgressService;
     private GameObject _heroGameObject;
     private readonly IWindowService _windowService;
+    private readonly IResurrectionService _resurrectionService;
 
-    public GameFactory(IAssetProvider assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService persistentProgressService, IWindowService windowService)
+    public GameFactory(
+      IAssetProvider assets,
+      IStaticDataService staticData,
+      IRandomService randomService,
+      IPersistentProgressService persistentProgressService,
+      IWindowService windowService,
+      IResurrectionService resurrectionService
+      )
     {
       _assets = assets;
       _staticData = staticData;
       _randomService = randomService;
       _persistentProgressService = persistentProgressService;
       _windowService = windowService;
+      _resurrectionService = resurrectionService;
     }
 
-    public GameObject CreateHero(GameObject at) =>
+    public GameObject CreateHero(GameObject at)
+    {
       _heroGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
+      _heroGameObject.GetComponent<HeroResurrection>().Construct(_resurrectionService);
+      _heroGameObject.GetComponent<HeroDeath>().Construct(_windowService);
+      return _heroGameObject;
+    }
 
     public GameObject CreateHud()
     {

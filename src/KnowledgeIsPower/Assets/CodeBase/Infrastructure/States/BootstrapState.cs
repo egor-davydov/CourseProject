@@ -3,6 +3,7 @@ using CodeBase.Infrastructure.Factory;
 using CodeBase.Services;
 using CodeBase.Services.Ads;
 using CodeBase.Services.Input;
+using CodeBase.Services.LifeCycle;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.SaveLoad;
@@ -43,23 +44,29 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+      _services.RegisterSingle<IResurrectionService>(new ResurrectionService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
       
       _services.RegisterSingle<IUIFactory>(new UIFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IStaticDataService>(),
         _services.Single<IPersistentProgressService>(),
-        _services.Single<IAdsService>()
+        _services.Single<IAdsService>(),
+        _services.Single<IResurrectionService>()
         ));
-      _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
+      _services.RegisterSingle<IWindowService>(new WindowService(
+        _services.Single<IUIFactory>(),
+        _services.Single<IResurrectionService>()
+        ));
       
       _services.RegisterSingle<IGameFactory>(new GameFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IStaticDataService>(),
         _services.Single<IRandomService>(),
         _services.Single<IPersistentProgressService>(),
-        _services.Single<IWindowService>()
-        ));
+        _services.Single<IWindowService>(),
+        _services.Single<IResurrectionService>()
+      ));
       
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(),
         _services.Single<IGameFactory>()));

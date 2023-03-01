@@ -4,5 +4,6 @@
   {
     None = 0,
     Shop = 1,
+    HeroDeath = 2
   }
 }

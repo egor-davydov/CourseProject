@@ -1,4 +1,5 @@
 ﻿using CodeBase.Services;
+using CodeBase.UI.Windows;
 
 namespace CodeBase.UI.Services.Factory
 {
@@ -6,5 +7,6 @@ namespace CodeBase.UI.Services.Factory
   {
     void CreateShop();
     void CreateUIRoot();
+    WindowBase CreateHeroDeathWindow();
   }
 }

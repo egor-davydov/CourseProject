@@ -355,6 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CloseButton: {fileID: 5208047445641987932}
   SkullText: {fileID: 7822923333974032518}
+  RewardedAds: {fileID: 8166218193356227918}
   AdsItem: {fileID: 578434069593634816}
 --- !u!1 &5208047444372000527
 GameObject:
@@ -1454,6 +1455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5208047445539596014}
   - component: {fileID: 578434069593634816}
+  - component: {fileID: 8166218193356227918}
   m_Layer: 5
   m_Name: AdsItem_container
   m_TagString: Untagged
@@ -1493,6 +1495,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37b09f2a11a148838763643472a1e502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8166218193356227918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5208047445539596013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abc525fafc7f4f34a3465a5fc1cd4a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowAdButton: {fileID: 5208047444372000521}

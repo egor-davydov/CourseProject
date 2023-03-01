@@ -1,4 +1,4 @@
-using System;
+using CodeBase.UI.Services.Windows;
 using UnityEngine;
 
 namespace CodeBase.Hero
@@ -13,6 +13,12 @@ namespace CodeBase.Hero
 
     public GameObject DeathFx;
     private bool _isDead;
+    private IWindowService _windowService;
+
+    public void Construct(IWindowService windowService)
+    {
+      _windowService = windowService;
+    }
 
     private void Start()
     {
@@ -24,6 +30,15 @@ namespace CodeBase.Hero
       Health.HealthChanged -= HealthChanged;
     }
 
+    public void MakeAlive()
+    {
+      _isDead = false;
+      Move.enabled = true;
+      Attack.enabled = true;
+      Health.Current = Health.Max;
+      Animator.ResetToIdle();
+    }
+    
     private void HealthChanged()
     {
       if (!_isDead && Health.Current <= 0) 
@@ -36,8 +51,8 @@ namespace CodeBase.Hero
       Move.enabled = false;
       Attack.enabled = false;
       Animator.PlayDeath();
-
       Instantiate(DeathFx, transform.position, Quaternion.identity);
+      _windowService.Open(WindowId.HeroDeath);
     }
   }
 }
