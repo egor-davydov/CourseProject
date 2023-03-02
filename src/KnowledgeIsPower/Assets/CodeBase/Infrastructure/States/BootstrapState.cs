@@ -17,7 +17,7 @@ namespace CodeBase.Infrastructure.States
   {
     private const string Initial = "Initial";
     private readonly GameStateMachine _stateMachine;
-    private readonly SceneLoader _sceneLoader;
+    private readonly SceneLoader  _sceneLoader;
     private readonly AllServices _services;
 
     public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
@@ -42,6 +42,7 @@ namespace CodeBase.Infrastructure.States
       RegisterAdsService();
 
       _services.RegisterSingle<IInputService>(InputService());
+      _services.RegisterSingle<IGameStateMachine>(_stateMachine);
       _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IAssetProvider>(new AssetProvider());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());

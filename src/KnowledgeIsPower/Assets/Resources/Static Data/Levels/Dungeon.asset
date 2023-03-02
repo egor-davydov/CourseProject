@@ -17,3 +17,4 @@ MonoBehaviour:
   - Id: SpawnMarker_6134952b-7547-4ea7-9ec3-327d010bbcb2
     MonsterTypeId: 3
     Position: {x: -5.4, y: 0, z: 24.53}
+  InitialPlayerPoint: {x: -4.6, y: 0.26, z: -18.6}
