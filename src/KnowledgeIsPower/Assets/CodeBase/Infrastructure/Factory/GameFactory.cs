@@ -66,7 +66,7 @@ namespace CodeBase.Infrastructure.Factory
     public GameObject CreateMonster(MonsterTypeId typeId, Transform parent)
     {
       MonsterStaticData monsterData = _staticData.ForMonster(typeId);
-      GameObject monster = Object.Instantiate(monsterData.Prefab, parent.position, Quaternion.identity, parent);
+      GameObject monster = Object.Instantiate(monsterData.PrefabReference, parent.position, Quaternion.identity, parent);
 
       IHealth health = monster.GetComponent<IHealth>();
       health.Current = monsterData.Hp;
