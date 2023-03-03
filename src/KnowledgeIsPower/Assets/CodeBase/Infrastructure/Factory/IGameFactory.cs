@@ -18,5 +18,6 @@ namespace CodeBase.Infrastructure.Factory
     LootPiece CreateLoot();
     void CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId);
     void Cleanup();
+    Task WarmUp();
   }
 }

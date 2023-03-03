@@ -37,11 +37,11 @@ namespace CodeBase.Infrastructure.Factory
     }
 
     public GameObject CreateHero(Vector3 at) =>
-      _heroGameObject = InstantiateRegistered(AssetPath.HeroPath, at);
+      _heroGameObject = InstantiateRegistered(AssetAddress.HeroPath, at);
 
     public GameObject CreateHud()
     {
-      GameObject hud = InstantiateRegistered(AssetPath.HudPath);
+      GameObject hud = InstantiateRegistered(AssetAddress.HudPath);
       
       hud.GetComponentInChildren<LootCounter>()
         .Construct(_persistentProgressService.Progress.WorldData);
@@ -54,7 +54,7 @@ namespace CodeBase.Infrastructure.Factory
 
     public LootPiece CreateLoot()
     {
-      LootPiece lootPiece = InstantiateRegistered(AssetPath.Loot)
+      LootPiece lootPiece = InstantiateRegistered(AssetAddress.Loot)
         .GetComponent<LootPiece>();
       
       lootPiece.Construct(_persistentProgressService.Progress.WorldData);
@@ -93,11 +93,24 @@ namespace CodeBase.Infrastructure.Factory
 
     public void CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId)
     {
-      SpawnPoint spawner = InstantiateRegistered(AssetPath.Spawner, at).GetComponent<SpawnPoint>();
+      SpawnPoint spawner = InstantiateRegistered(AssetAddress.Spawner, at).GetComponent<SpawnPoint>();
       
       spawner.Construct(this);
       spawner.MonsterTypeId = monsterTypeId;
       spawner.Id = spawnerId;
+    }
+
+    public async Task WarmUp()
+    {
+       await _assets.Load<GameObject>(AssetAddress.Loot);
+       await _assets.Load<GameObject>(AssetAddress.Spawner);
+    }
+
+    public void Cleanup()
+    {
+      ProgressReaders.Clear();
+      ProgressWriters.Clear();
+      _assets.CleanUp();
     }
 
     private void Register(ISavedProgressReader progressReader)
@@ -106,13 +119,6 @@ namespace CodeBase.Infrastructure.Factory
         ProgressWriters.Add(progressWriter);
 
       ProgressReaders.Add(progressReader);
-    }
-
-    public void Cleanup()
-    {
-      ProgressReaders.Clear();
-      ProgressWriters.Clear();
-      _assets.CleanUp();
     }
 
     private GameObject InstantiateRegistered(string prefabPath, Vector3 at)

@@ -10,6 +10,8 @@ namespace CodeBase.Infrastructure.AssetManagement
     GameObject Instantiate(string path, Vector3 at);
     GameObject Instantiate(string path);
     Task<T> Load<T>(AssetReference assetReference);
+    Task<T> Load<T>(string address);
     void CleanUp();
+    void Initialize();
   }
 }
