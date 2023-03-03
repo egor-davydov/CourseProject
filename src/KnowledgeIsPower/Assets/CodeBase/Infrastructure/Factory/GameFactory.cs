@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using CodeBase.Enemy;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Logic;
@@ -7,12 +8,10 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData;
-using CodeBase.UI;
 using CodeBase.UI.Elements;
 using CodeBase.UI.Services.Windows;
 using UnityEngine;
 using UnityEngine.AI;
-using Object = UnityEngine.Object;
 
 namespace CodeBase.Infrastructure.Factory
 {
@@ -63,10 +62,11 @@ namespace CodeBase.Infrastructure.Factory
       return lootPiece;
     }
 
-    public GameObject CreateMonster(MonsterTypeId typeId, Transform parent)
+    public async Task<GameObject> CreateMonster(MonsterTypeId typeId, Transform parent)
     {
       MonsterStaticData monsterData = _staticData.ForMonster(typeId);
-      GameObject monster = Object.Instantiate(monsterData.PrefabReference, parent.position, Quaternion.identity, parent);
+      GameObject prefab = await _assets.Load<GameObject>(monsterData.PrefabReference);
+      GameObject monster = Object.Instantiate(prefab, parent.position, Quaternion.identity, parent);
 
       IHealth health = monster.GetComponent<IHealth>();
       health.Current = monsterData.Hp;
@@ -112,6 +112,7 @@ namespace CodeBase.Infrastructure.Factory
     {
       ProgressReaders.Clear();
       ProgressWriters.Clear();
+      _assets.CleanUp();
     }
 
     private GameObject InstantiateRegistered(string prefabPath, Vector3 at)
