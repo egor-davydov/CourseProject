@@ -31,6 +31,9 @@ namespace CodeBase.Services.IAP
       UnityPurchasing.Initialize(this, builder);
     }
 
+    public void StartPurchase(string productId) => 
+      _controller.InitiatePurchase(productId);
+
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
       _extensions = extensions;
@@ -45,13 +48,13 @@ namespace CodeBase.Services.IAP
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
     {
-      throw new System.NotImplementedException();
+      Debug.Log($"UnityPurchasing ProcessPurchase success {purchaseEvent.purchasedProduct.definition.id}");
+      
+      return PurchaseProcessingResult.Complete;
     }
 
-    public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
-    {
-      throw new System.NotImplementedException();
-    }
+    public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) => 
+      Debug.Log($"UnityPurchasing OnPurchaseFailed Product: {product.definition.id}, PurchaseFailureReason: {failureReason}, transaction id: {product.transactionID}");
 
     private void Load() => 
       _configs = Resources.Load<TextAsset>(IAPConfigsPath).text.ToDeserialized<ProductConfigWrapper>().Configs;
