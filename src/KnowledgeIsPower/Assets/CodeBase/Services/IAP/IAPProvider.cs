@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeBase.Data;
 using UnityEngine;
 using UnityEngine.Purchasing;
@@ -8,8 +9,15 @@ namespace CodeBase.Services.IAP
   public class IAPProvider : IStoreListener
   {
     private const string IAPConfigsPath = "IAP/Products";
-    
+
+    private IStoreController _controller;
+    private IExtensionProvider _extensions;
+
     private List<ProductConfig> _configs;
+
+    public event Action Initialized;
+    public bool IsInitialized => _controller != null && _extensions != null;
+
 
     public void Initialize()
     {
@@ -25,13 +33,15 @@ namespace CodeBase.Services.IAP
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
-      throw new System.NotImplementedException();
+      _extensions = extensions;
+      _controller = controller;
+      
+      Initialized?.Invoke();
+      Debug.Log("UnityPurchasing initialize success");
     }
 
-    public void OnInitializeFailed(InitializationFailureReason error)
-    {
-      throw new System.NotImplementedException();
-    }
+    public void OnInitializeFailed(InitializationFailureReason error) => 
+      Debug.Log($"UnityPurchasing OnInitializeFailed: {error}");
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
     {
