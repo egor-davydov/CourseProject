@@ -4,5 +4,6 @@
   {
     None = 0,
     Skulls = 1,
+    MonsterRespawn = 2,
   }
 }

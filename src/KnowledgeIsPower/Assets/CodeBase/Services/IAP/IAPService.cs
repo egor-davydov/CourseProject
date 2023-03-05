@@ -11,12 +11,14 @@ namespace CodeBase.Services.IAP
   {
     private readonly IAPProvider _iapProvider;
     private readonly IPersistentProgressService _progress;
+    private readonly IRespawnService _respawnService;
 
     public event Action Initialized;
     public bool IsInitialized => _iapProvider.IsInitialized;
 
-    public IAPService(IAPProvider iapProvider, IPersistentProgressService progress)
+    public IAPService(IAPProvider iapProvider, IPersistentProgressService progress, IRespawnService respawnService)
     {
+      _respawnService = respawnService;
       _iapProvider = iapProvider;
       _progress = progress;
     }
@@ -42,6 +44,11 @@ namespace CodeBase.Services.IAP
         case ItemType.Skulls:
           _progress.Progress.WorldData.LootData.Add(productConfig.Quantity);
           _progress.Progress.PurchaseData.AddPurchase(product.definition.id);
+          break;
+        case ItemType.MonsterRespawn:
+          _progress.Progress.KillData.ClearedSpawners.Clear();
+          _progress.Progress.PurchaseData.AddPurchase(product.definition.id);
+          _respawnService.RespawnEnemies();
           break;
       }
 

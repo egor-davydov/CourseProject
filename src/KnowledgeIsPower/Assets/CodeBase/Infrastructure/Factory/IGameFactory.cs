@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeBase.Enemy;
+using CodeBase.Logic.EnemySpawners;
 using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.StaticData;
@@ -16,7 +17,7 @@ namespace CodeBase.Infrastructure.Factory
     Task<GameObject> CreateHud();
     Task<GameObject> CreateMonster(MonsterTypeId typeId, Transform parent);
     Task<LootPiece> CreateLoot();
-    Task CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId);
+    Task<SpawnPoint> CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId);
     void Cleanup();
     Task WarmUp();
     Task CreateLevelTransfer(Vector3 at);

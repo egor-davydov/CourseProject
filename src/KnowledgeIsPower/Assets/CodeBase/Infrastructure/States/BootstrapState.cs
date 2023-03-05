@@ -46,9 +46,14 @@ namespace CodeBase.Infrastructure.States
       RegisterAssetProvider();
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IRandomService>(new RandomService());
+      _services.RegisterSingle<IRespawnService>(new RespawnService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
       
-      RegisterIAPService(new IAPProvider(), _services.Single<IPersistentProgressService>());
+      RegisterIAPService(
+        new IAPProvider(),
+        _services.Single<IPersistentProgressService>(),
+        _services.Single<IRespawnService>()
+        );
     
       _services.RegisterSingle<IUIFactory>(new UIFactory(
         _services.Single<IAssetProvider>(),
@@ -87,9 +92,9 @@ namespace CodeBase.Infrastructure.States
       adsService.Initialize();
       _services.RegisterSingle<IAdsService>(adsService);
     }
-    private void RegisterIAPService(IAPProvider iapProvider, IPersistentProgressService progress)
+    private void RegisterIAPService(IAPProvider iapProvider, IPersistentProgressService progress, IRespawnService respawnService)
     {
-      IAPService iapService = new IAPService(iapProvider, progress);
+      IAPService iapService = new IAPService(iapProvider, progress, respawnService);
       iapService.Initialize();
       _services.RegisterSingle<IIAPService>(iapService);
     }
