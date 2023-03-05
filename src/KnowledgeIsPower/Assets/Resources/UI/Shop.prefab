@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8561687658177824646}
   - component: {fileID: 2008809344038370466}
   m_Layer: 5
-  m_Name: NoItems_text
+  m_Name: NoShopItems_text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,6 +512,7 @@ MonoBehaviour:
   CloseButton: {fileID: 5208047445641987932}
   SkullText: {fileID: 7822923333974032518}
   AdItem: {fileID: 7841237280906206643}
+  ShopItemsContainer: {fileID: 5918543655582221114}
 --- !u!1 &5208047444372000527
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,6 +888,7 @@ GameObject:
   - component: {fileID: 5208047444579722034}
   - component: {fileID: 5208047444579722028}
   - component: {fileID: 5208047444579722035}
+  - component: {fileID: 5918543655582221114}
   m_Layer: 5
   m_Name: InApps_container
   m_TagString: Untagged
@@ -952,6 +954,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5918543655582221114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5208047444579722033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee52a1c698464621a7e991d5cbc540d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShopUnavailableObjects:
+  - {fileID: 311886589226783093}
+  Parent: {fileID: 5208047445408662982}
 --- !u!1 &5208047444596344156
 GameObject:
   m_ObjectHideFlags: 0

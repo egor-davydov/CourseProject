@@ -3,6 +3,7 @@ using CodeBase.Services.Ads;
 using CodeBase.Services.IAP;
 using CodeBase.Services.PersistentProgress;
 using TMPro;
+using UnityEngine;
 
 namespace CodeBase.UI.Windows.Shop
 {
@@ -15,7 +16,7 @@ namespace CodeBase.UI.Windows.Shop
     public void Construct(
       IAdsService adsService,
       IPersistentProgressService progressService,
-      IAPService iapService, 
+      IIAPService iapService, 
       IAssetProvider assets
       )
     {

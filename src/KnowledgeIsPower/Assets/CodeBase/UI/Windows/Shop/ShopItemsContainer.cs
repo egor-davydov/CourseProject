@@ -14,14 +14,14 @@ namespace CodeBase.UI.Windows.Shop
     public GameObject[] ShopUnavailableObjects;
     public Transform Parent;
 
-    private IAPService _iapService;
+    private IIAPService _iapService;
     private IPersistentProgressService _progressService;
     private IAssetProvider _assets;
     
     private readonly List<GameObject> _shopItems = new List<GameObject>();   
 
 
-    public void Construct(IAPService iapService, IPersistentProgressService progressService, IAssetProvider assets)
+    public void Construct(IIAPService iapService, IPersistentProgressService progressService, IAssetProvider assets)
     {
       _assets = assets;
       _progressService = progressService;

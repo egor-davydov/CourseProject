@@ -19,12 +19,12 @@ namespace CodeBase.UI.Services.Factory
     private readonly IStaticDataService _staticData;
     private readonly IPersistentProgressService _progressService;
     private readonly IAdsService _adsService;
-    private readonly IAPService _iapService;
+    private readonly IIAPService _iapService;
     
     private Transform _uiRoot;
 
     public UIFactory(IAssetProvider assets, IStaticDataService staticData, IPersistentProgressService progressService,
-      IAdsService adsService, IAPService iapService)
+      IAdsService adsService, IIAPService iapService)
     {
       _assets = assets;
       _staticData = staticData;

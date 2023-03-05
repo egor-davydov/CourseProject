@@ -15,10 +15,10 @@ namespace CodeBase.Data
     public PlayerProgress(string initialLevel)
     {
       WorldData = new WorldData(initialLevel);
+      PurchaseData = new PurchaseData();
       HeroState = new State();
       HeroStats = new Stats();
       KillData = new KillData();
-      PurchaseData = new PurchaseData();
     }
   }
 }

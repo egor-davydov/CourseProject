@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Purchasing;
 
 namespace CodeBase.Data
@@ -7,7 +8,7 @@ namespace CodeBase.Data
   [Serializable]
   public class PurchaseData
   {
-    private List<BoughtIAP> _boughtIAPs = new List<BoughtIAP>();
+    public List<BoughtIAP> BoughtIAPs = new List<BoughtIAP>();
 
     public event Action Changed; 
 
@@ -15,8 +16,9 @@ namespace CodeBase.Data
     {
       BoughtIAP boughtIAP = Product(id);
 
+      Debug.Log(boughtIAP);
       if (boughtIAP == null)
-        _boughtIAPs.Add(new BoughtIAP { Id = id, Count = 1});
+        BoughtIAPs.Add(new BoughtIAP { Id = id, Count = 1});
       else
         boughtIAP.Count++;
         
@@ -24,6 +26,6 @@ namespace CodeBase.Data
     }
 
     public BoughtIAP Product(string productId) => 
-      _boughtIAPs.Find(x => x.Id == productId);
+      BoughtIAPs.Find(x => x.Id == productId);
   }
 }
