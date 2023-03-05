@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine.Purchasing;
 
 namespace CodeBase.Services.IAP
@@ -12,6 +13,7 @@ namespace CodeBase.Services.IAP
     public int MaxPurchaseCount;
     public int Quantity;
     public ItemType ItemType;
-    
+    public string Price;
+    public string Icon;
   }
 }

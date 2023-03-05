@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Services.IAP;
 using CodeBase.Services.PersistentProgress;
@@ -16,7 +17,8 @@ namespace CodeBase.UI.Windows.Shop
     private IAPService _iapService;
     private IPersistentProgressService _progressService;
     private IAssetProvider _assets;
-    private List<GameObject> _shopItems;
+    
+    private readonly List<GameObject> _shopItems = new List<GameObject>();   
 
 
     public void Construct(IAPService iapService, IPersistentProgressService progressService, IAssetProvider assets)
@@ -45,16 +47,30 @@ namespace CodeBase.UI.Windows.Shop
     {
       UpdateShopUnavailableObjects();
 
-      if (_iapService.IsInitialized)
+      if (!_iapService.IsInitialized)
         return;
 
-      foreach (GameObject shopItem in _shopItems) 
-        Destroy(shopItem);
+      ClearShopItems();
 
+      await FillShopItems();
+    }
+
+    private void ClearShopItems()
+    {
+      foreach (GameObject shopItem in _shopItems)
+        Destroy(shopItem);
+    }
+
+    private async Task FillShopItems()
+    {
       foreach (ProductDescription productDescription in _iapService.Products())
       {
         GameObject shopItemObject = await _assets.Instantiate(ShopItemAddress, Parent);
         ShopItem shopItem = shopItemObject.GetComponent<ShopItem>();
+
+        shopItem.Construct(_iapService, _assets, productDescription);
+        shopItem.Initialize();
+
         _shopItems.Add(shopItemObject);
       }
     }
