@@ -23,7 +23,7 @@ namespace CodeBase.Data
       Changed?.Invoke();
     }
 
-    private BoughtIAP Product(string productId) => 
+    public BoughtIAP Product(string productId) => 
       _boughtIAPs.Find(x => x.Id == productId);
   }
 }

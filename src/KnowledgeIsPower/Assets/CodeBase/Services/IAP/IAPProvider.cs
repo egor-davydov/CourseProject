@@ -16,6 +16,7 @@ namespace CodeBase.Services.IAP
     private IAPService _iapService;
 
     public Dictionary<string, ProductConfig> Configs { get; private set; }
+    public Dictionary<string, Product> Products { get; private set; }
 
     public event Action Initialized;
     public bool IsInitialized => _controller != null && _extensions != null;
@@ -26,6 +27,7 @@ namespace CodeBase.Services.IAP
       _iapService = iapService;
       
       Configs = new Dictionary<string, ProductConfig>();
+      Products = new Dictionary<string, Product>();
       
       Load();
       
@@ -44,6 +46,9 @@ namespace CodeBase.Services.IAP
     {
       _extensions = extensions;
       _controller = controller;
+
+      foreach (Product product in _controller.products.all) 
+        Products.Add(product.definition.id, product);
 
       Initialized?.Invoke();
       Debug.Log("UnityPurchasing initialize success");
