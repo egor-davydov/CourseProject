@@ -54,7 +54,9 @@ namespace CodeBase.Infrastructure.States
         _services.Single<IAssetProvider>(),
         _services.Single<IStaticDataService>(),
         _services.Single<IPersistentProgressService>(),
-        _services.Single<IAdsService>()));
+        _services.Single<IAdsService>(),
+        _services.Single<IAPService>()
+        ));
       
       _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
       
