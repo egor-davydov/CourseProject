@@ -7,7 +7,7 @@ using UnityEngine.Purchasing;
 
 namespace CodeBase.Services.IAP
 {
-  public class IAPService
+  public class IAPService : IIAPService
   {
     private readonly IAPProvider _iapProvider;
     private readonly IPersistentProgressService _progress;
