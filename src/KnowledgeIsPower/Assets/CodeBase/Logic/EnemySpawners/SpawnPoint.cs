@@ -48,7 +48,7 @@ namespace CodeBase.Logic.EnemySpawners
 
     public async void Spawn()
     {
-      GameObject monster = await _factory.CreateMonster(MonsterTypeId, transform);
+      GameObject monster = await _factory.CreateEnemy(MonsterTypeId, transform);
       _enemyDeath = monster.GetComponent<EnemyDeath>();
       _enemyDeath.Happened += Slay;
     }

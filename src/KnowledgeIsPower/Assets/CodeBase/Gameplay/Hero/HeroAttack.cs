@@ -29,17 +29,24 @@ namespace CodeBase.Gameplay.Hero
 
     private void Update()
     {
-      if(_inputService.IsAttackButtonUp() && !Animator.IsAttacking)
-        Animator.PlayAttack();
+      if(Animator.IsAttacking)
+        return;
+      
+      if(_inputService.IsFastAttackButtonUp())
+        Animator.PlayFastAttack();
+      
+      if(_inputService.IsLongAttackButtonUp())
+        Animator.PlayLongAttack();
     }
 
-    private void OnAttack()
+    private void OnFastAttack() => Attack(attackMultiplier: 1f);
+    private void OnLongAttack() => Attack(attackMultiplier: 2f);
+
+    private void Attack(float attackMultiplier)
     {
       PhysicsDebug.DrawDebug(StartPoint() + transform.forward, _stats.DamageRadius, 1.0f);
       for (int i = 0; i < Hit(); ++i)
-      {
-        _hits[i].transform.parent.GetComponent<IHealth>().TakeDamage(_stats.Damage);
-      }
+        _hits[i].transform.parent.GetComponent<IHealth>().TakeDamage(_stats.Damage * attackMultiplier);
     }
 
     private int Hit() => 
@@ -48,9 +55,7 @@ namespace CodeBase.Gameplay.Hero
     private Vector3 StartPoint() =>
       new Vector3(transform.position.x, CharacterController.center.y / 2, transform.position.z);
 
-    public void LoadProgress(PlayerProgress progress)
-    {
+    public void LoadProgress(PlayerProgress progress) => 
       _stats = progress.HeroStats;
-    }
   }
 }

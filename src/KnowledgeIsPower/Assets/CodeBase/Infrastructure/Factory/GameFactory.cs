@@ -88,7 +88,7 @@ namespace CodeBase.Infrastructure.Factory
       return lootPiece;
     }
 
-    public async Task<GameObject> CreateMonster(MonsterTypeId typeId, Transform parent)
+    public async Task<GameObject> CreateEnemy(MonsterTypeId typeId, Transform parent)
     {
       MonsterStaticData monsterData = _staticData.ForMonster(typeId);
 
