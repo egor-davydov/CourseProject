@@ -5,6 +5,6 @@ namespace CodeBase.Services.PersistentProgress
 {
   public interface ISavedProgressReader
   {
-    void LoadProgress(PlayerProgress progress);
+    void ReceiveProgress(PlayerProgress progress);
   }
 }

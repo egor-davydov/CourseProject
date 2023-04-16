@@ -77,7 +77,7 @@ namespace CodeBase.Infrastructure.States
     private void InformProgressReaders()
     {
       foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
-        progressReader.LoadProgress(_progressService.Progress);
+        progressReader.ReceiveProgress(_progressService.Progress);
     }
 
     private async Task InitGameWorld()

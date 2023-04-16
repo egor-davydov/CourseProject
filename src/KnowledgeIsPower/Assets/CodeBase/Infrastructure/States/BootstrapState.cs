@@ -49,8 +49,7 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IRespawnService>(new RespawnService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
       
-      RegisterIAPService(
-        new IAPProvider(),
+      RegisterIAPService(new IAPProvider(),
         _services.Single<IPersistentProgressService>(),
         _services.Single<IRespawnService>()
         );
@@ -67,6 +66,7 @@ namespace CodeBase.Infrastructure.States
       
       _services.RegisterSingle<IGameFactory>(new GameFactory(
         _services.Single<IAssetProvider>(),
+        _services.Single<IInputService>(),
         _services.Single<IStaticDataService>(),
         _services.Single<IRandomService>(),
         _services.Single<IPersistentProgressService>(),

@@ -47,7 +47,7 @@ namespace CodeBase.Gameplay.Hero
       progress.WorldData.PositionOnLevel = new PositionOnLevel(CurrentLevel(), transform.position.AsVectorData());
     }
 
-    public void LoadProgress(PlayerProgress progress)
+    public void ReceiveProgress(PlayerProgress progress)
     {
       if (CurrentLevel() != progress.WorldData.PositionOnLevel.Level) return;
 

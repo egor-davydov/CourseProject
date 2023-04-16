@@ -13,6 +13,7 @@ namespace CodeBase.Gameplay.Hero
     private static readonly int MoveHash = Animator.StringToHash("Walking");
     private static readonly int FastAttackHash = Animator.StringToHash("AttackNormal");
     private static readonly int LongAttackHash = Animator.StringToHash("AttackSpecial");
+    private static readonly int DefendHash = Animator.StringToHash("Defend");
     private static readonly int HitHash = Animator.StringToHash("Hit");
     private static readonly int DieHash = Animator.StringToHash("Die");
 
@@ -52,6 +53,9 @@ namespace CodeBase.Gameplay.Hero
 
     public void PlayLongAttack() => 
       _animator.SetTrigger(LongAttackHash);
+    
+    public void PlayDefend() => 
+      _animator.SetTrigger(DefendHash);
 
     public void PlayDeath() => 
       _animator.SetTrigger(DieHash);

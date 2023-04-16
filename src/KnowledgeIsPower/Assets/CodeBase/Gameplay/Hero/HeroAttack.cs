@@ -55,7 +55,7 @@ namespace CodeBase.Gameplay.Hero
     private Vector3 StartPoint() =>
       new Vector3(transform.position.x, CharacterController.center.y / 2, transform.position.z);
 
-    public void LoadProgress(PlayerProgress progress) => 
+    public void ReceiveProgress(PlayerProgress progress) => 
       _stats = progress.HeroStats;
   }
 }

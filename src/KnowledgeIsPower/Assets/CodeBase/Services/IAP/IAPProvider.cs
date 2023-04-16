@@ -51,7 +51,9 @@ namespace CodeBase.Services.IAP
         Products.Add(product.definition.id, product);
 
       Initialized?.Invoke();
+#if DEBUGING
       Debug.Log("UnityPurchasing initialize success");
+#endif
     }
 
     public void OnInitializeFailed(InitializationFailureReason error) =>

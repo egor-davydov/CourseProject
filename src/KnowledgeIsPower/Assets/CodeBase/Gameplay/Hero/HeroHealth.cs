@@ -8,11 +8,28 @@ namespace CodeBase.Gameplay.Hero
 {
   public class HeroHealth : MonoBehaviour, ISavedProgress, IHealth
   {
-    public HeroAnimator Animator;
-    
+    [SerializeField]
+    private HeroAnimator Animator;
+
+    [SerializeField]
+    private HeroDefend HeroDefend;
+
     private State _state;
+    private bool _defending;
 
     public event Action HealthChanged;
+
+    private void Start()
+    {
+      HeroDefend.Activate += ActivateDefending;
+      HeroDefend.Deactivate += DeactivateDefending;
+    }
+
+    private void OnDestroy()
+    {
+      HeroDefend.Activate -= ActivateDefending;
+      HeroDefend.Deactivate -= DeactivateDefending;
+    }
 
     public float Current
     {
@@ -22,7 +39,7 @@ namespace CodeBase.Gameplay.Hero
         if (value != _state.CurrentHP)
         {
           _state.CurrentHP = value;
-          
+
           HealthChanged?.Invoke();
         }
       }
@@ -35,7 +52,7 @@ namespace CodeBase.Gameplay.Hero
     }
 
 
-    public void LoadProgress(PlayerProgress progress)
+    public void ReceiveProgress(PlayerProgress progress)
     {
       _state = progress.HeroState;
       HealthChanged?.Invoke();
@@ -49,11 +66,32 @@ namespace CodeBase.Gameplay.Hero
 
     public void TakeDamage(float damage)
     {
-      if(Current <= 0)
+      if (Current <= 0)
         return;
-      
-      Current -= damage;
+
+      float finalDamage;
+      if (!_defending)
+      {
+        finalDamage = damage;
+      }
+      else
+      {
+        if (HeroDefend.MaximumDamageToBlock > damage)
+          finalDamage = 0;
+        else
+          finalDamage = damage - damage * HeroDefend.DefendFactor;
+      }
+
+      Current -= finalDamage;
+
       Animator.PlayHit();
+      //Debug.Log($"Damage {finalDamage}");
     }
+
+    private void ActivateDefending() =>
+      _defending = true;
+
+    private void DeactivateDefending() =>
+      _defending = false;
   }
 }

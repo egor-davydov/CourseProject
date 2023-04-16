@@ -7,5 +7,7 @@ namespace CodeBase.Data.Progress
   {
     public float Damage;
     public float DamageRadius;
+    public float MaximumDamageToBlock;
+    public float DefendFactor;
   }
 }

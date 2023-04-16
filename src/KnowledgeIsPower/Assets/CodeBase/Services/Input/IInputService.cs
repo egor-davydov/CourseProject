@@ -9,5 +9,6 @@ namespace CodeBase.Services.Input
 
     bool IsFastAttackButtonUp();
     bool IsLongAttackButtonUp();
+    bool IsDefendButtonUp();
   }
 }

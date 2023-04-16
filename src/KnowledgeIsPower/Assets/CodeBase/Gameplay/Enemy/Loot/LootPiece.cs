@@ -54,7 +54,7 @@ namespace CodeBase.Gameplay.Enemy.Loot
           .Add(_id, new LootPieceData(transform.position.AsVectorData(), _loot));
     }
 
-    public void LoadProgress(PlayerProgress progress)
+    public void ReceiveProgress(PlayerProgress progress)
     {
     }
 

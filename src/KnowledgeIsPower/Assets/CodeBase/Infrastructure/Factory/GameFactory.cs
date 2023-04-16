@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using CodeBase.Gameplay.Enemy.Attack;
 using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Gameplay.Enemy.Move;
+using CodeBase.Gameplay.Hero;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.States;
 using CodeBase.Logic;
 using CodeBase.Logic.EnemySpawners;
+using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.StaticData;
@@ -25,6 +27,7 @@ namespace CodeBase.Infrastructure.Factory
     public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
 
     private readonly IAssetProvider _assets;
+    private readonly IInputService _inputService;
     private readonly IStaticDataService _staticData;
     private readonly IRandomService _randomService;
     private readonly IPersistentProgressService _persistentProgressService;
@@ -33,13 +36,15 @@ namespace CodeBase.Infrastructure.Factory
     private readonly IGameStateMachine _stateMachine;
 
     public GameFactory(
-      IAssetProvider assets, 
-      IStaticDataService staticData, 
-      IRandomService randomService, 
-      IPersistentProgressService persistentProgressService, 
+      IAssetProvider assets,
+      IInputService inputService,
+      IStaticDataService staticData,
+      IRandomService randomService,
+      IPersistentProgressService persistentProgressService,
       IWindowService windowService, IGameStateMachine stateMachine)
     {
       _assets = assets;
+      _inputService = inputService;
       _staticData = staticData;
       _randomService = randomService;
       _persistentProgressService = persistentProgressService;
@@ -53,21 +58,25 @@ namespace CodeBase.Infrastructure.Factory
       await _assets.Load<GameObject>(AssetAddress.Spawner);
     }
 
-    public async Task<GameObject> CreateHero(Vector3 at) =>
+    public async Task<GameObject> CreateHero(Vector3 at)
+    {
       _heroGameObject = await InstantiateRegisteredAsync(AssetAddress.HeroPath, at);
+      _heroGameObject.GetComponent<HeroDefend>().Construct(_inputService);
+      return _heroGameObject;
+    }
 
     public async Task CreateLevelTransfer(Vector3 at)
     {
       GameObject prefab = await InstantiateRegisteredAsync(AssetAddress.LevelTransferTrigger, at);
       LevelTransferTrigger levelTransfer = prefab.GetComponent<LevelTransferTrigger>();
-      
+
       levelTransfer.Construct(_stateMachine);
     }
 
     public async Task<GameObject> CreateHud()
     {
       GameObject hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
-      
+
       hud.GetComponentInChildren<LootCounter>()
         .Construct(_persistentProgressService.Progress.WorldData);
 
@@ -82,7 +91,7 @@ namespace CodeBase.Infrastructure.Factory
       GameObject prefab = await _assets.Load<GameObject>(AssetAddress.Loot);
       LootPiece lootPiece = InstantiateRegistered(prefab)
         .GetComponent<LootPiece>();
-      
+
       lootPiece.Construct(_persistentProgressService.Progress.WorldData);
 
       return lootPiece;
@@ -121,9 +130,9 @@ namespace CodeBase.Infrastructure.Factory
     public async Task<SpawnPoint> CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId)
     {
       GameObject prefab = await _assets.Load<GameObject>(AssetAddress.Spawner);
-      
+
       SpawnPoint spawner = InstantiateRegistered(prefab, at).GetComponent<SpawnPoint>();
-      
+
       spawner.Construct(this);
       spawner.MonsterTypeId = monsterTypeId;
       spawner.Id = spawnerId;
@@ -142,10 +151,10 @@ namespace CodeBase.Infrastructure.Factory
     {
       ProgressReaders.Clear();
       ProgressWriters.Clear();
-      
+
       _assets.Cleanup();
     }
-    
+
     private GameObject InstantiateRegistered(GameObject prefab, Vector3 at)
     {
       GameObject gameObject = Object.Instantiate(prefab, at, Quaternion.identity);
@@ -153,7 +162,7 @@ namespace CodeBase.Infrastructure.Factory
 
       return gameObject;
     }
-    
+
     private GameObject InstantiateRegistered(GameObject prefab)
     {
       GameObject gameObject = Object.Instantiate(prefab);

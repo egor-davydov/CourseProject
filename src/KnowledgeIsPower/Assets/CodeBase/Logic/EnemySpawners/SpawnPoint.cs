@@ -30,7 +30,7 @@ namespace CodeBase.Logic.EnemySpawners
         _enemyDeath.Happened -= Slay;
     }
 
-    public void LoadProgress(PlayerProgress progress)
+    public void ReceiveProgress(PlayerProgress progress)
     {
       if (progress.KillData.ClearedSpawners.Contains(Id))
         Slain = true;
