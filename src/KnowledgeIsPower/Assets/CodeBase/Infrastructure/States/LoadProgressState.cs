@@ -1,5 +1,6 @@
 using System;
 using CodeBase.Data;
+using CodeBase.Data.Progress;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 

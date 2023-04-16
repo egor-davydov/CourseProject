@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CodeBase.Enemy;
+using CodeBase.Gameplay.Enemy.Attack;
+using CodeBase.Gameplay.Enemy.Loot;
+using CodeBase.Gameplay.Enemy.Move;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.States;
 using CodeBase.Logic;

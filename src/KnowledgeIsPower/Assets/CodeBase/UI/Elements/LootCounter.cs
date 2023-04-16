@@ -1,4 +1,5 @@
 ﻿using CodeBase.Data;
+using CodeBase.Data.Progress;
 using TMPro;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CodeBase.Enemy;
+using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Logic.EnemySpawners;
 using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;

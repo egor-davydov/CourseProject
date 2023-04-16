@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using CodeBase.CameraLogic;
 using CodeBase.Data;
-using CodeBase.Enemy;
-using CodeBase.Hero;
+using CodeBase.Data.Progress.Loot;
+using CodeBase.Gameplay.Enemy.Loot;
+using CodeBase.Gameplay.Hero;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using CodeBase.Logic.EnemySpawners;

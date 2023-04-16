@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
-using CodeBase.Enemy;
+using CodeBase.Data.Progress;
+using CodeBase.Gameplay.Enemy;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.StaticData;
