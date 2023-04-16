@@ -18,7 +18,7 @@ namespace CodeBase.Logic.EnemySpawners
     
     private EnemyDeath _enemyDeath;
 
-    private bool _slain;
+    public bool Slain { get; private set; }
 
     public void Construct(IGameFactory gameFactory) => 
       _factory = gameFactory;
@@ -32,7 +32,7 @@ namespace CodeBase.Logic.EnemySpawners
     public void LoadProgress(PlayerProgress progress)
     {
       if (progress.KillData.ClearedSpawners.Contains(Id))
-        _slain = true;
+        Slain = true;
       else
         Spawn();
     }
@@ -41,11 +41,11 @@ namespace CodeBase.Logic.EnemySpawners
     {
       List<string> slainSpawnersList = progress.KillData.ClearedSpawners;
       
-      if(_slain && !slainSpawnersList.Contains(Id))
+      if(Slain && !slainSpawnersList.Contains(Id))
         slainSpawnersList.Add(Id);
     }
 
-    private async void Spawn()
+    public async void Spawn()
     {
       GameObject monster = await _factory.CreateMonster(MonsterTypeId, transform);
       _enemyDeath = monster.GetComponent<EnemyDeath>();
@@ -57,7 +57,7 @@ namespace CodeBase.Logic.EnemySpawners
       if (_enemyDeath != null)
         _enemyDeath.Happened -= Slay;
       
-      _slain = true;
+      Slain = true;
     }
   }
 }

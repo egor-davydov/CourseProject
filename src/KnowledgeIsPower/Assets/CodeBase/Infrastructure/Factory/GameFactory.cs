@@ -116,7 +116,7 @@ namespace CodeBase.Infrastructure.Factory
       return monster;
     }
 
-    public async Task CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId)
+    public async Task<SpawnPoint> CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId)
     {
       GameObject prefab = await _assets.Load<GameObject>(AssetAddress.Spawner);
       
@@ -125,6 +125,7 @@ namespace CodeBase.Infrastructure.Factory
       spawner.Construct(this);
       spawner.MonsterTypeId = monsterTypeId;
       spawner.Id = spawnerId;
+      return spawner;
     }
 
     private void Register(ISavedProgressReader progressReader)

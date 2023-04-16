@@ -43,6 +43,9 @@ namespace CodeBase.Infrastructure.AssetManagement
 
     public Task<GameObject> Instantiate(string address) => 
       Addressables.InstantiateAsync(address).Task;
+    
+    public Task<GameObject> Instantiate(string address, Transform under) => 
+      Addressables.InstantiateAsync(address, under).Task;
 
     public void Cleanup()
     {

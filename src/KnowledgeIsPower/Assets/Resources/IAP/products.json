@@ -7,7 +7,16 @@
       "ItemType": 1,
       "Quantity": 100,
       "Price": "2.99 $",
-      "Icon": "iap_icon_2"
+      "Icon": "iap_icon_9"
+    },
+    {
+      "Id": "monstersRespawn",
+      "ProductType": 0,
+      "MaxPurchaseCount": "2",
+      "ItemType": 2,
+      "Quantity": "",
+      "Price": "0.99 $",
+      "Icon": "iap_icon_19"
     },
     {
       "Id": "skulls10",

@@ -69,10 +69,46 @@ MonoBehaviour:
     m_Address: LevelTransferTrigger
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 6786149431982285977, guid: 7780ced9430df7348b78be2caf10ed1f,
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ea9306e1aa95eb8439400efefff9f8db
+    m_Address: iap_icon_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2800000, guid: ea9306e1aa95eb8439400efefff9f8db, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: ea9306e1aa95eb8439400efefff9f8db, type: 3}
+  - m_GUID: 8a38e0c362c83a047983d02b417b0980
+    m_Address: iap_icon_18
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2800000, guid: 8a38e0c362c83a047983d02b417b0980, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: 8a38e0c362c83a047983d02b417b0980, type: 3}
+  - m_GUID: 33ba85d5fc7cbab4a9dcd8dc35e31542
+    m_Address: iap_icon_9
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2800000, guid: 33ba85d5fc7cbab4a9dcd8dc35e31542, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: 33ba85d5fc7cbab4a9dcd8dc35e31542, type: 3}
+  - m_GUID: 7dce9379d5e964e11a8da7df72c8cd05
+    m_Address: ShopItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8884647952119982026, guid: 7dce9379d5e964e11a8da7df72c8cd05,
       type: 3}
-    m_TargetAsset: {fileID: 6786149431982285977, guid: 7780ced9430df7348b78be2caf10ed1f,
+    m_TargetAsset: {fileID: 8884647952119982026, guid: 7dce9379d5e964e11a8da7df72c8cd05,
       type: 3}
+  - m_GUID: 4529ec1f96075cf43abd428185f25409
+    m_Address: iap_icon_19
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2800000, guid: 4529ec1f96075cf43abd428185f25409, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: 4529ec1f96075cf43abd428185f25409, type: 3}
+  - m_GUID: 53f0a099e5669d345a3f0b7f41c2f8c7
+    m_Address: Assets/Plugins/Free RPG Icons/PNG/14.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d78b6c7a5abc2784c90e7f6881d27a04, type: 2}
   m_SchemaSet:
