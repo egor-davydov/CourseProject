@@ -21,20 +21,23 @@ namespace CodeBase.Editor
 
       LevelStaticData levelData = (LevelStaticData) target;
 
-      if (GUILayout.Button("Collect"))
-      {
-        levelData.EnemySpawners = FindObjectsOfType<SpawnMarker>()
-          .Select(x => new EnemySpawnerStaticData(x.GetComponent<UniqueId>().Id, x.MonsterTypeId, new TransformData(x.transform.position, x.transform.rotation, x.transform.localScale)))
-          .ToList();
+      if (GUILayout.Button("Collect")) 
+        Collect(levelData);
 
-        levelData.LevelKey = SceneManager.GetActiveScene().name;
-        
-        levelData.InitialHeroPosition =  GameObject.FindWithTag(InitialPointTag).transform.position;
-        
-        levelData.LevelTransfer.Position = GameObject.FindWithTag(LevelTransferInitialPointTag).transform.position;
-      }
-      
       EditorUtility.SetDirty(target);
+    }
+
+    public static void Collect(LevelStaticData levelData)
+    {
+      levelData.EnemySpawners = FindObjectsOfType<SpawnMarker>()
+        .Select(x => new EnemySpawnerStaticData(x.GetComponent<UniqueId>().Id, x.MonsterTypeId, new TransformData(x.transform.position, x.transform.rotation, x.transform.localScale)))
+        .ToList();
+
+      levelData.LevelKey = SceneManager.GetActiveScene().name;
+
+      levelData.InitialHeroPosition = GameObject.FindWithTag(InitialPointTag).transform.position;
+
+      levelData.LevelTransfer.Position = GameObject.FindWithTag(LevelTransferInitialPointTag).transform.position;
     }
   }
 }

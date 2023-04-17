@@ -14,23 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelKey: Main
   EnemySpawners:
-  - Id: Main_b458e2e8-0d9e-4941-8c11-1e099321600d
-    MonsterTypeId: 2
-    TransformData:
-      position:
-        X: 0.13847876
-        Y: 0.1227684
-        Z: 5.2051563
-      rotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-      scale:
-        X: 0.01
-        Y: 0.01
-        Z: 0.01
   - Id: SpawnMarker_232f4141-47c4-4264-80ae-749742aa1bea
     MonsterTypeId: 2
     TransformData:
       position:
-        X: -1.3998163
+        X: -1.4198163
         Y: 0.1227684
         Z: 10.385698
       rotation: {x: -0, y: 0.8925858, z: -0, w: 0.4508776}

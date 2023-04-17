@@ -8,8 +8,8 @@ namespace CodeBase.Gameplay.Enemy
   {
     public TriggerObserver TriggerObserver;
     public Follow Follow;
-
     public float Cooldown;
+    
     private bool _hasAggroTarget;
 
     private WaitForSeconds _switchFollowOffAfterCooldown;
@@ -33,7 +33,8 @@ namespace CodeBase.Gameplay.Enemy
 
     private void TriggerEnter(Collider obj)
     {
-      if(_hasAggroTarget) return;
+      if(_hasAggroTarget)
+        return;
       
       StopAggroCoroutine();
 
@@ -42,7 +43,8 @@ namespace CodeBase.Gameplay.Enemy
 
     private void TriggerExit(Collider obj)
     {
-      if(!_hasAggroTarget) return;
+      if(!_hasAggroTarget)
+        return;
       
       _aggroCoroutine = StartCoroutine(SwitchFollowOffAfterCooldown());
     }

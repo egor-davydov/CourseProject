@@ -14,9 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelKey: Dungeon
   EnemySpawners:
-  - Id: SpawnMarker_6134952b-7547-4ea7-9ec3-327d010bbcb2
+  - Id: SpawnMarker_232f4141-47c4-4264-80ae-749742aa1bea
     MonsterTypeId: 3
-    Position: {x: -5.4, y: 0, z: 24.53}
+    TransformData:
+      position:
+        X: -5.4
+        Y: 2.63
+        Z: 24.53
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale:
+        X: 0.01
+        Y: 0.01
+        Z: 0.01
   InitialHeroPosition: {x: -4.6, y: 0.26, z: -18.6}
   LevelTransfer:
     TransferTo: Main

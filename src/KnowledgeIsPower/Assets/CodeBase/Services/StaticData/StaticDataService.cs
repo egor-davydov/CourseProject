@@ -16,7 +16,8 @@ namespace CodeBase.Services.StaticData
     private Dictionary<MonsterTypeId, MonsterStaticData> _monsters;
     private Dictionary<string, LevelStaticData> _levels;
     private Dictionary<WindowId, WindowConfig> _windowConfigs;
-
+    
+    public Dictionary<string, LevelStaticData> Levels => _levels;
 
     public void Load()
     {
