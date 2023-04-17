@@ -14,21 +14,78 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelKey: Main
   EnemySpawners:
-  - Id: SpawnMarker_6134952b-7547-4ea7-9ec3-327d010bbcb2
+  - Id: Main_b458e2e8-0d9e-4941-8c11-1e099321600d
     MonsterTypeId: 2
-    Position: {x: 0.13847876, y: 0.1227684, z: 10.385698}
+    TransformData:
+      position:
+        X: 0.13847876
+        Y: 0.1227684
+        Z: 5.2051563
+      rotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+      scale:
+        X: 0.01
+        Y: 0.01
+        Z: 0.01
+  - Id: SpawnMarker_232f4141-47c4-4264-80ae-749742aa1bea
+    MonsterTypeId: 2
+    TransformData:
+      position:
+        X: -1.3998163
+        Y: 0.1227684
+        Z: 10.385698
+      rotation: {x: -0, y: 0.8925858, z: -0, w: 0.4508776}
+      scale:
+        X: 0.01
+        Y: 0.01
+        Z: 0.01
   - Id: Main_33ec1e17-31d9-4c34-9b93-552ae2ea43cd
     MonsterTypeId: 1
-    Position: {x: -12.01, y: 0.2227683, z: -12.84}
+    TransformData:
+      position:
+        X: -12.01
+        Y: 0.2227683
+        Z: -12.84
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale:
+        X: 0.01
+        Y: 0.01
+        Z: 0.01
   - Id: Main_d72a7202-d1f5-49c3-9a82-7140d86cc074
     MonsterTypeId: 1
-    Position: {x: 0.30018377, y: 0.3727684, z: -14.304844}
+    TransformData:
+      position:
+        X: 0.30018377
+        Y: 0.3727684
+        Z: -14.304844
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale:
+        X: 0.01
+        Y: 0.01
+        Z: 0.01
   - Id: Main_0c3d001a-18cd-43d5-8a07-4c4b7c12f771
     MonsterTypeId: 1
-    Position: {x: -14.753568, y: 0.66276836, z: -4.7960496}
+    TransformData:
+      position:
+        X: -14.753568
+        Y: 0.66276836
+        Z: -4.7960496
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale:
+        X: 0.01
+        Y: 0.01
+        Z: 0.01
   - Id: Main_63b26722-cc31-4968-9146-b9a9e96088ef
     MonsterTypeId: 1
-    Position: {x: 9.46, y: 0.3727684, z: 1.0500002}
+    TransformData:
+      position:
+        X: 9.46
+        Y: 0.07276845
+        Z: 1.0500002
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale:
+        X: 0.01
+        Y: 0.01
+        Z: 0.01
   InitialHeroPosition: {x: 5.17, y: 1.24, z: 9.69}
   LevelTransfer:
     TransferTo: Dungeon
