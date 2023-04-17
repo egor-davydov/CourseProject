@@ -97,7 +97,7 @@ namespace CodeBase.Infrastructure.States
       List<SpawnPoint> spawners = new List<SpawnPoint>();
       foreach (EnemySpawnerStaticData spawnerData in levelStaticData.EnemySpawners)
       {
-        SpawnPoint spawnPoint = await _gameFactory.CreateSpawner(spawnerData.Id, spawnerData.Position, spawnerData.MonsterTypeId);
+        SpawnPoint spawnPoint = await _gameFactory.CreateSpawner(spawnerData.Id, spawnerData.TransformData, spawnerData.MonsterTypeId);
         spawners.Add(spawnPoint);
       }
       _respawnService.Initialize(spawners);

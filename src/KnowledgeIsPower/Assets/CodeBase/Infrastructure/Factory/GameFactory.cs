@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CodeBase.Data;
 using CodeBase.Gameplay.Enemy.Attack;
 using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Gameplay.Enemy.Move;
@@ -102,7 +103,7 @@ namespace CodeBase.Infrastructure.Factory
       MonsterStaticData monsterData = _staticData.ForMonster(typeId);
 
       GameObject prefab = await _assets.Load<GameObject>(monsterData.PrefabReference);
-      GameObject monster = Object.Instantiate(prefab, parent.position, Quaternion.identity, parent);
+      GameObject monster = Object.Instantiate(prefab, parent.position, parent.rotation, parent);
 
       IHealth health = monster.GetComponent<IHealth>();
       health.Current = monsterData.Hp;
@@ -127,11 +128,11 @@ namespace CodeBase.Infrastructure.Factory
       return monster;
     }
 
-    public async Task<SpawnPoint> CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId)
+    public async Task<SpawnPoint> CreateSpawner(string spawnerId, TransformData transform, MonsterTypeId monsterTypeId)
     {
       GameObject prefab = await _assets.Load<GameObject>(AssetAddress.Spawner);
 
-      SpawnPoint spawner = InstantiateRegistered(prefab, at).GetComponent<SpawnPoint>();
+      SpawnPoint spawner = InstantiateRegistered(prefab, transform.position.AsUnityVector(), transform.rotation).GetComponent<SpawnPoint>();
 
       spawner.Construct(this);
       spawner.MonsterTypeId = monsterTypeId;
@@ -153,6 +154,14 @@ namespace CodeBase.Infrastructure.Factory
       ProgressWriters.Clear();
 
       _assets.Cleanup();
+    }
+
+    private GameObject InstantiateRegistered(GameObject prefab, Vector3 asUnityVector, Quaternion asUnityQuaternion)
+    {
+      GameObject gameObject = Object.Instantiate(prefab, asUnityVector, asUnityQuaternion);
+      RegisterProgressWatchers(gameObject);
+
+      return gameObject;
     }
 
     private GameObject InstantiateRegistered(GameObject prefab, Vector3 at)

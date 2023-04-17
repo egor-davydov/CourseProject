@@ -17,7 +17,9 @@ namespace CodeBase.Editor
         return;
       
       if (string.IsNullOrEmpty(uniqueId.Id))
+      {
         Generate(uniqueId);
+      }
       else
       {
         UniqueId[] uniqueIds = FindObjectsOfType<UniqueId>();

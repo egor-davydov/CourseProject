@@ -143,6 +143,11 @@ PrefabInstance:
       propertyPath: MonsterTypeId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4915538969508207733, guid: 03d168d3c58a81047bd2732d2668bb97,
+        type: 3}
+      propertyPath: _monsterTypeId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7470894167778697352, guid: 03d168d3c58a81047bd2732d2668bb97,
         type: 3}
       propertyPath: m_RootOrder
@@ -700,6 +705,11 @@ PrefabInstance:
       propertyPath: MonsterTypeId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4915538969508207733, guid: 03d168d3c58a81047bd2732d2668bb97,
+        type: 3}
+      propertyPath: _monsterTypeId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7470894167778697352, guid: 03d168d3c58a81047bd2732d2668bb97,
         type: 3}
       propertyPath: m_RootOrder
@@ -839,7 +849,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &709338512 stripped
 Transform:
@@ -867,6 +877,11 @@ PrefabInstance:
     - target: {fileID: 4915538969508207733, guid: 03d168d3c58a81047bd2732d2668bb97,
         type: 3}
       propertyPath: MonsterTypeId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915538969508207733, guid: 03d168d3c58a81047bd2732d2668bb97,
+        type: 3}
+      propertyPath: _monsterTypeId
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7470894167778697352, guid: 03d168d3c58a81047bd2732d2668bb97,
@@ -1352,7 +1367,7 @@ Transform:
   - {fileID: 23333399}
   - {fileID: 1613201176}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1487114695
 PrefabInstance:
@@ -1535,6 +1550,11 @@ PrefabInstance:
       propertyPath: MonsterTypeId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4915538969508207733, guid: 03d168d3c58a81047bd2732d2668bb97,
+        type: 3}
+      propertyPath: _monsterTypeId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7470894167778697352, guid: 03d168d3c58a81047bd2732d2668bb97,
         type: 3}
       propertyPath: m_RootOrder
@@ -1613,6 +1633,11 @@ PrefabInstance:
     - target: {fileID: 4915538969508207733, guid: 03d168d3c58a81047bd2732d2668bb97,
         type: 3}
       propertyPath: MonsterTypeId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915538969508207733, guid: 03d168d3c58a81047bd2732d2668bb97,
+        type: 3}
+      propertyPath: _monsterTypeId
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7470894167778697352, guid: 03d168d3c58a81047bd2732d2668bb97,
@@ -1850,36 +1875,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5578fd2850adc4b81a3dc5b792b83228, type: 3}
---- !u!1 &2067140746
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2067140747}
-  m_Layer: 0
-  m_Name: Enemy Spawners
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2067140747
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2067140746}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2084704804
 PrefabInstance:
   m_ObjectHideFlags: 0
