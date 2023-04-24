@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeBase.Gameplay.Hero.States;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using CodeBase.Services;
@@ -12,7 +13,7 @@ namespace CodeBase.Infrastructure.States
 {
   public class GameStateMachine : IGameStateMachine
   {
-    private Dictionary<Type, IExitableState> _states;
+    private readonly Dictionary<Type, IExitableState> _states;
     private IExitableState _activeState;
 
     public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain loadingCurtain, AllServices services)
@@ -20,7 +21,7 @@ namespace CodeBase.Infrastructure.States
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, services.Single<IGameFactory>(),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, services.Single<IHeroStateMachine>(), sceneLoader, loadingCurtain, services.Single<IGameFactory>(),
           services.Single<IPersistentProgressService>(), services.Single<IStaticDataService>(), services.Single<IUIFactory>(),
           services.Single<IRespawnService>()),
         

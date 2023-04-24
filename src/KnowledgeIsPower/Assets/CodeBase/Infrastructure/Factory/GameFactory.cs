@@ -5,6 +5,7 @@ using CodeBase.Gameplay.Enemy.Attack;
 using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Gameplay.Enemy.Move;
 using CodeBase.Gameplay.Hero;
+using CodeBase.Gameplay.Hero.States;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.States;
 using CodeBase.Logic;
@@ -35,6 +36,7 @@ namespace CodeBase.Infrastructure.Factory
     private GameObject _heroGameObject;
     private readonly IWindowService _windowService;
     private readonly IGameStateMachine _stateMachine;
+    private readonly IHeroStateMachine _heroStateMachine;
 
     public GameFactory(
       IAssetProvider assets,
@@ -42,7 +44,10 @@ namespace CodeBase.Infrastructure.Factory
       IStaticDataService staticData,
       IRandomService randomService,
       IPersistentProgressService persistentProgressService,
-      IWindowService windowService, IGameStateMachine stateMachine)
+      IWindowService windowService,
+      IGameStateMachine stateMachine,
+      IHeroStateMachine heroStateMachine
+      )
     {
       _assets = assets;
       _inputService = inputService;
@@ -51,6 +56,7 @@ namespace CodeBase.Infrastructure.Factory
       _persistentProgressService = persistentProgressService;
       _windowService = windowService;
       _stateMachine = stateMachine;
+      _heroStateMachine = heroStateMachine;
     }
 
     public async Task WarmUp()
@@ -62,6 +68,8 @@ namespace CodeBase.Infrastructure.Factory
     public async Task<GameObject> CreateHero(Vector3 at)
     {
       _heroGameObject = await InstantiateRegisteredAsync(AssetAddress.HeroPath, at);
+      _heroGameObject.GetComponent<HeroAnimator>().Construct(_heroStateMachine);
+      _heroGameObject.GetComponent<HeroMove>().Construct(_inputService, _heroStateMachine);
       _heroGameObject.GetComponent<HeroDefend>().Construct(_inputService);
       return _heroGameObject;
     }

@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.AssetManagement;
+﻿using CodeBase.Gameplay.Hero.States;
+using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Services;
 using CodeBase.Services.Ads;
@@ -17,6 +18,7 @@ namespace CodeBase.Infrastructure.States
   public class BootstrapState : IState
   {
     private const string Initial = "Initial";
+    
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly AllServices _services;
@@ -41,9 +43,10 @@ namespace CodeBase.Infrastructure.States
     {
       RegisterStaticDataService();
       RegisterAdsService();
+      RegisterAssetProvider();
 
       _services.RegisterSingle<IGameStateMachine>(_stateMachine);
-      RegisterAssetProvider();
+      _services.RegisterSingle<IHeroStateMachine>(new HeroStateMachine());
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IRespawnService>(new RespawnService());
@@ -71,7 +74,8 @@ namespace CodeBase.Infrastructure.States
         _services.Single<IRandomService>(),
         _services.Single<IPersistentProgressService>(),
         _services.Single<IWindowService>(),
-        _services.Single<IGameStateMachine>()
+        _services.Single<IGameStateMachine>(),
+        _services.Single<IHeroStateMachine>()
         ));
       
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(

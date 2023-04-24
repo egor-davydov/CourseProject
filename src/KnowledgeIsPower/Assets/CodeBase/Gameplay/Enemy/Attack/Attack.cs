@@ -22,19 +22,25 @@ namespace CodeBase.Gameplay.Enemy.Attack
     private bool _attackIsActive;
 
 
-    public void Construct(Transform heroTransform) => 
+    public void Construct(Transform heroTransform) =>
       _heroTransform = heroTransform;
 
-    private void Awake() => 
+    private void Awake() =>
       _layerMask = 1 << LayerMask.NameToLayer("Player");
 
     private void Update()
     {
       UpdateCooldown();
+      
+      if (_attackIsActive)
+        LookAtHero();
 
-      if(CanAttack())
+      if (CanAttack())
         StartAttack();
     }
+
+    private void LookAtHero() =>
+      transform.LookAt(_heroTransform);
 
     private void OnAttack()
     {
@@ -51,13 +57,13 @@ namespace CodeBase.Gameplay.Enemy.Attack
       _isAttacking = false;
     }
 
-    public void DisableAttack() => 
+    public void DisableAttack() =>
       _attackIsActive = false;
 
-    public void EnableAttack() => 
+    public void EnableAttack() =>
       _attackIsActive = true;
 
-    private bool CooldownIsUp() => 
+    private bool CooldownIsUp() =>
       _attackCooldown <= 0f;
 
     private void UpdateCooldown()
@@ -71,7 +77,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
       var hitAmount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
 
       hit = _hits.FirstOrDefault();
-      
+
       return hitAmount > 0;
     }
 
@@ -81,12 +87,11 @@ namespace CodeBase.Gameplay.Enemy.Attack
              transform.forward * EffectiveDistance;
     }
 
-    private bool CanAttack() => 
+    private bool CanAttack() =>
       _attackIsActive && !_isAttacking && CooldownIsUp();
 
     private void StartAttack()
     {
-      transform.LookAt(_heroTransform);
       Animator.PlayAttack();
       _isAttacking = true;
     }

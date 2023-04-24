@@ -5,6 +5,7 @@ using CodeBase.Data;
 using CodeBase.Data.Progress.Loot;
 using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Gameplay.Hero;
+using CodeBase.Gameplay.Hero.States;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using CodeBase.Logic.EnemySpawners;
@@ -22,6 +23,7 @@ namespace CodeBase.Infrastructure.States
   public class LoadLevelState : IPayloadedState<string>
   {
     private readonly GameStateMachine _stateMachine;
+    private readonly IHeroStateMachine _heroStateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly LoadingCurtain _loadingCurtain;
     private readonly IGameFactory _gameFactory;
@@ -32,6 +34,7 @@ namespace CodeBase.Infrastructure.States
 
     public LoadLevelState(
       GameStateMachine gameStateMachine,
+      IHeroStateMachine heroStateMachine,
       SceneLoader sceneLoader,
       LoadingCurtain loadingCurtain,
       IGameFactory gameFactory,
@@ -42,6 +45,7 @@ namespace CodeBase.Infrastructure.States
       )
     {
       _stateMachine = gameStateMachine;
+      _heroStateMachine = heroStateMachine;
       _sceneLoader = sceneLoader;
       _loadingCurtain = loadingCurtain;
       _gameFactory = gameFactory;
@@ -114,8 +118,11 @@ namespace CodeBase.Infrastructure.States
       }
     }
 
-    private async Task<GameObject> InitHero(LevelStaticData levelStaticData) =>
-      await _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
+    private async Task<GameObject> InitHero(LevelStaticData levelStaticData)
+    {
+      _heroStateMachine.Enter(HeroStateType.Basic);
+      return await _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
+    }
 
     private async Task InitLevelTransfer(LevelStaticData levelData) =>
       await _gameFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);

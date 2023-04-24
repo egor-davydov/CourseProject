@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CodeBase.Gameplay.Hero.States;
 using CodeBase.Logic;
 using UnityEngine;
 
@@ -33,7 +34,9 @@ namespace CodeBase.Gameplay.Hero
     private readonly int _runStateHash = Animator.StringToHash("Run");
     private readonly int _walkingStateHash = Animator.StringToHash("WalkBack");
     private readonly int _deathStateHash = Animator.StringToHash("Die");
+    
     private Dictionary<int, AnimatorState> _states;
+    private IHeroStateMachine _hero;
 
     public event Action<AnimatorState> StateEntered;
     public event Action<AnimatorState> StateExited;
@@ -42,6 +45,8 @@ namespace CodeBase.Gameplay.Hero
     public bool IsAttacking => State == AnimatorState.Attack;
     public bool IsDefending => State == AnimatorState.Defend;
 
+    public void Construct(IHeroStateMachine heroStateMachine) => 
+      _hero = heroStateMachine;
 
     private void Awake()
     {
@@ -57,18 +62,17 @@ namespace CodeBase.Gameplay.Hero
 
     private void Update()
     {
+      if(_hero == null)
+        return;
+      
       Vector3 velocityNormalized = _characterController.velocity.normalized;
-      float angle = AngleBetween(velocityNormalized, transform.forward);
-
-      _animator.SetBool(WalkBackHash,
-        IsMoving(velocityNormalized) && (
-          MovingBack(angle)
-          || MovingForward(angle))
-      );
-
-      _animator.SetBool(WalkLeftHash, MovingLeft(angle));
-
-      _animator.SetBool(WalkRightHash, MovingRight(angle));
+      if(_hero.IsOnBasicState)
+      {
+        _animator.SetBool(RunHash, IsMoving(velocityNormalized));
+        return;
+      }
+      
+      AnimateFocusedState(velocityNormalized);
     }
 
     public void PlayHit() =>
@@ -97,6 +101,21 @@ namespace CodeBase.Gameplay.Hero
 
     public void ExitedState(int stateHash) =>
       StateExited?.Invoke(_states[stateHash]);
+    
+    private void AnimateFocusedState(Vector3 velocityNormalized)
+    {
+      float angle = AngleBetween(velocityNormalized, transform.forward);
+
+      _animator.SetBool(WalkBackHash,
+        IsMoving(velocityNormalized) && (
+          MovingBack(angle)
+          || MovingForward(angle))
+      );
+
+      _animator.SetBool(WalkLeftHash, MovingLeft(angle));
+
+      _animator.SetBool(WalkRightHash, MovingRight(angle));
+    }
 
     private float AngleBetween(Vector3 from, Vector3 to)
     {
