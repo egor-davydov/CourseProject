@@ -30,7 +30,8 @@ namespace CodeBase.Gameplay.Hero
     private readonly int _fastAttackStateHash = Animator.StringToHash("Attack Normal");
     private readonly int _longAttackStateHash = Animator.StringToHash("Attack Special");
     private readonly int _defendStateHash = Animator.StringToHash("Defend");
-    private readonly int _walkingStateHash = Animator.StringToHash("Run");
+    private readonly int _runStateHash = Animator.StringToHash("Run");
+    private readonly int _walkingStateHash = Animator.StringToHash("WalkBack");
     private readonly int _deathStateHash = Animator.StringToHash("Die");
     private Dictionary<int, AnimatorState> _states;
 
@@ -56,25 +57,19 @@ namespace CodeBase.Gameplay.Hero
 
     private void Update()
     {
-      Vector3 velocity = _characterController.velocity.normalized;
-      float sign = SignedAngle(velocity, transform.forward);
-      Debug.Log(sign);
-      //_animator.SetBool(WalkBackHash, );
-      _animator.SetBool(WalkBackHash, (Mathf.Abs(sign) >= 135f && Mathf.Abs(sign) <= 180|| Mathf.Abs(sign) <= 45f && Mathf.Abs(sign) >= 0) && velocity != Vector3.zero);
-      _animator.SetBool(WalkLeftHash, sign > 45f && sign < 135f);
-      _animator.SetBool(WalkRightHash, sign < -45f && sign > -135f);
+      Vector3 velocityNormalized = _characterController.velocity.normalized;
+      float angle = AngleBetween(velocityNormalized, transform.forward);
+
+      _animator.SetBool(WalkBackHash,
+        IsMoving(velocityNormalized) && (
+          MovingBack(angle)
+          || MovingForward(angle))
+      );
+
+      _animator.SetBool(WalkLeftHash, MovingLeft(angle));
+
+      _animator.SetBool(WalkRightHash, MovingRight(angle));
     }
-
-    private float SignedAngle(Vector3 from, Vector3 to)
-    {
-      float angle = Vector3.Angle(from, to);
-      float sign = angle * Mathf.Sign(Vector3.Cross(from, to).y);
-
-      return sign;
-    }
-
-    private Vector3 Abs(Vector3 vector3) =>
-      new Vector3(Mathf.Abs(vector3.x), Mathf.Abs(vector3.y), Mathf.Abs(vector3.z));
 
     public void PlayHit() =>
       _animator.SetTrigger(HitHash);
@@ -102,5 +97,28 @@ namespace CodeBase.Gameplay.Hero
 
     public void ExitedState(int stateHash) =>
       StateExited?.Invoke(_states[stateHash]);
+
+    private float AngleBetween(Vector3 from, Vector3 to)
+    {
+      float angle = Vector3.Angle(from, to);
+      float signedAngle = angle * Mathf.Sign(Vector3.Cross(from, to).y);
+
+      return signedAngle;
+    }
+
+    private bool IsMoving(Vector3 velocityNormalized) =>
+      velocityNormalized != Vector3.zero;
+
+    private bool MovingBack(float angle) =>
+      Mathf.Abs(angle) >= 135f && Mathf.Abs(angle) <= 180;
+
+    private bool MovingForward(float angle) =>
+      Mathf.Abs(angle) <= 45f && Mathf.Abs(angle) >= 0;
+
+    private bool MovingLeft(float angle) =>
+      angle > 45f && angle < 135f;
+
+    private bool MovingRight(float angle) =>
+      angle < -45f && angle > -135f;
   }
 }
