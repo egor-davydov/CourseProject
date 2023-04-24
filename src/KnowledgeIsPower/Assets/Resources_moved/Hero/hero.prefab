@@ -1373,7 +1373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterController: {fileID: 6247783307006756389}
-  _movementSpeed: 4
+  _movementSpeed: 3
 --- !u!65 &3207652250405300192
 BoxCollider:
   m_ObjectHideFlags: 0

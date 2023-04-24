@@ -21,19 +21,19 @@ namespace CodeBase.Gameplay.Hero
       _inputService = AllServices.Container.Single<IInputService>();
     }
 
-    private void Start() =>
+    private void Start() => 
       _camera = Camera.main;
 
     private void Update()
     {
       Vector3 movementVector = Vector3.zero;
-
+     
       if (_inputService.Axis.sqrMagnitude > Constants.Epsilon)
       {
         movementVector = _camera.transform.TransformDirection(_inputService.Axis);
         movementVector.y = 0;
         movementVector.Normalize();
-
+        
         transform.forward = movementVector;
       }
 
