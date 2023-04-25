@@ -1,4 +1,5 @@
 ﻿using CodeBase.Services;
+using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero.States
 {
@@ -8,5 +9,6 @@ namespace CodeBase.Gameplay.Hero.States
     bool IsOnBasicState { get; }
     bool IsFocused { get; }
     void Enter(HeroStateType heroStateType);
+    void Initialize(GameObject heroObject);
   }
 }

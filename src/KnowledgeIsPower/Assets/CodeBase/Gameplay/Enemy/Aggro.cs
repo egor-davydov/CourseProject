@@ -33,6 +33,8 @@ namespace CodeBase.Gameplay.Enemy
 
     private void TriggerEnter(Collider obj)
     {
+      if(!obj.CompareTag("Player") )
+        return;
       if(_hasAggroTarget)
         return;
       
@@ -43,6 +45,8 @@ namespace CodeBase.Gameplay.Enemy
 
     private void TriggerExit(Collider obj)
     {
+      if(!obj.CompareTag("Player") )
+        return;
       if(!_hasAggroTarget)
         return;
       

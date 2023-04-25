@@ -16,11 +16,11 @@ namespace CodeBase.Infrastructure.States
     private readonly Dictionary<Type, IExitableState> _states;
     private IExitableState _activeState;
 
-    public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain loadingCurtain, AllServices services)
+    public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain loadingCurtain, AllServices services, HeroStateMachine heroStateMachine)
     {
       _states = new Dictionary<Type, IExitableState>
       {
-        [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
+        [typeof(BootstrapState)] = new BootstrapState(this,heroStateMachine, sceneLoader, services),
         [typeof(LoadLevelState)] = new LoadLevelState(this, services.Single<IHeroStateMachine>(), sceneLoader, loadingCurtain, services.Single<IGameFactory>(),
           services.Single<IPersistentProgressService>(), services.Single<IStaticDataService>(), services.Single<IUIFactory>(),
           services.Single<IRespawnService>()),

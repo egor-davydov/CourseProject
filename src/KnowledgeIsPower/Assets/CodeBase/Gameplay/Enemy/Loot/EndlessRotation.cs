@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CodeBase.Gameplay.Enemy
+namespace CodeBase.Gameplay.Enemy.Loot
 {
   public class EndlessRotation : MonoBehaviour
   {

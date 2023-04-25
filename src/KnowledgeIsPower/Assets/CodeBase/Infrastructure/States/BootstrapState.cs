@@ -20,12 +20,14 @@ namespace CodeBase.Infrastructure.States
     private const string Initial = "Initial";
     
     private readonly GameStateMachine _stateMachine;
+    private readonly HeroStateMachine _heroStateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly AllServices _services;
 
-    public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
+    public BootstrapState(GameStateMachine stateMachine, HeroStateMachine heroStateMachine, SceneLoader sceneLoader, AllServices services)
     {
       _stateMachine = stateMachine;
+      _heroStateMachine = heroStateMachine;
       _sceneLoader = sceneLoader;
       _services = services;
 
@@ -46,7 +48,7 @@ namespace CodeBase.Infrastructure.States
       RegisterAssetProvider();
 
       _services.RegisterSingle<IGameStateMachine>(_stateMachine);
-      _services.RegisterSingle<IHeroStateMachine>(new HeroStateMachine());
+      _services.RegisterSingle<IHeroStateMachine>(_heroStateMachine);
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IRespawnService>(new RespawnService());

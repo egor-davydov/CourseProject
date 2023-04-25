@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 502268589996600908}
   m_Layer: 0
   m_Name: BaseEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,9 +38,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
+  - {fileID: 5421834847383230440}
   - {fileID: 6937923552516902480}
   - {fileID: 5254260099508961692}
-  - {fileID: 5421834847383230440}
   - {fileID: 8188204158430964870}
   - {fileID: 101891811432167347}
   m_Father: {fileID: 0}
@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 8580551966244656563}
   m_Layer: 15
   m_Name: HurtBox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -430,7 +430,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4665124114459090}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8580551966244656563
 BoxCollider:
@@ -549,7 +549,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4665124114459090}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &235835247671380907
 SphereCollider:
@@ -710,7 +710,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4665124114459090}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &6015299376900249112
 SphereCollider:

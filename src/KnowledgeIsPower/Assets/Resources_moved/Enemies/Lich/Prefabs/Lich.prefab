@@ -796,6 +796,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lich
       objectReference: {fileID: 0}
+    - target: {fileID: 1500939411536426, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -86,6 +86,8 @@ namespace CodeBase.Infrastructure.Factory
     {
       GameObject hud = await InstantiateRegisteredAsync(AssetAddress.HudPath);
 
+      hud.GetComponentInChildren<FocusOnEnemyButton>()
+        .Initialize(_heroStateMachine, _heroGameObject.GetComponentInChildren<FocusSphere>());
       hud.GetComponentInChildren<LootCounter>()
         .Construct(_persistentProgressService.Progress.WorldData);
 

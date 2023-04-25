@@ -40,9 +40,9 @@ namespace CodeBase.Infrastructure.States
       IGameFactory gameFactory,
       IPersistentProgressService progressService,
       IStaticDataService staticDataService,
-      IUIFactory uiFactory, 
+      IUIFactory uiFactory,
       IRespawnService respawnService
-      )
+    )
     {
       _stateMachine = gameStateMachine;
       _heroStateMachine = heroStateMachine;
@@ -104,6 +104,7 @@ namespace CodeBase.Infrastructure.States
         SpawnPoint spawnPoint = await _gameFactory.CreateSpawner(spawnerData.Id, spawnerData.TransformData, spawnerData.MonsterTypeId);
         spawners.Add(spawnPoint);
       }
+
       _respawnService.Initialize(spawners);
     }
 
@@ -120,8 +121,10 @@ namespace CodeBase.Infrastructure.States
 
     private async Task<GameObject> InitHero(LevelStaticData levelStaticData)
     {
-      _heroStateMachine.Enter(HeroStateType.Basic);
-      return await _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
+      GameObject heroObject = await _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
+      _heroStateMachine.Initialize(heroObject);
+
+      return heroObject;
     }
 
     private async Task InitLevelTransfer(LevelStaticData levelData) =>

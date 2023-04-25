@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Enemy.Attack
@@ -16,14 +17,16 @@ namespace CodeBase.Gameplay.Enemy.Attack
       Attack.DisableAttack();
     }
 
-    private void TriggerExit(Collider obj)
+    private void OnDestroy()
     {
-      Attack.DisableAttack();
+      TriggerObserver.TriggerEnter -= TriggerEnter;
+      TriggerObserver.TriggerExit -= TriggerExit;
     }
 
-    private void TriggerEnter(Collider obj)
-    {
+    private void TriggerExit(Collider obj) => 
+      Attack.DisableAttack();
+
+    private void TriggerEnter(Collider obj) => 
       Attack.EnableAttack();
-    }
   }
 }
