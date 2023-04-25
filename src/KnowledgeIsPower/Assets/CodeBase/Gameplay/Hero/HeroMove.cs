@@ -44,6 +44,7 @@ namespace CodeBase.Gameplay.Hero
           transform.forward = movementVector;
       }
 
+      transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
       movementVector += Physics.gravity;
 
       _characterController.Move(_movementSpeed * movementVector * Time.deltaTime);

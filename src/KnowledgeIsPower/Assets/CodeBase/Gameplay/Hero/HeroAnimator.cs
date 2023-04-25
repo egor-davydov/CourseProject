@@ -75,6 +75,16 @@ namespace CodeBase.Gameplay.Hero
       AnimateFocusedState(velocityNormalized);
     }
 
+    public void TurnOffRun() =>
+      _animator.SetBool(RunHash, false);
+
+    public void TurnOffFocusedAnimations()
+    {
+      _animator.SetBool(WalkBackHash, false);
+      _animator.SetBool(WalkLeftHash, false);
+      _animator.SetBool(WalkRightHash, false);
+    }
+
     public void PlayHit() =>
       _animator.SetTrigger(HitHash);
 

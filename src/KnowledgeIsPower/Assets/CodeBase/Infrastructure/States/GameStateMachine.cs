@@ -8,6 +8,7 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -33,6 +34,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter<TState>() where TState : class, IState
     {
       IState state = ChangeState<TState>();
+      Debug.Log(state);
       state.Enter();
     }
 

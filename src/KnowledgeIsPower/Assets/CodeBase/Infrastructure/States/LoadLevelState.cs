@@ -123,7 +123,8 @@ namespace CodeBase.Infrastructure.States
     {
       GameObject heroObject = await _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
       _heroStateMachine.Initialize(heroObject);
-
+      _heroStateMachine.Enter(HeroStateType.Basic);
+      
       return heroObject;
     }
 

@@ -7,6 +7,7 @@ namespace CodeBase.Gameplay.Hero.States
   {
     private readonly Dictionary<HeroStateType, IHeroState> _heroStates;
     private readonly List<IUpdatable> _updatables = new List<IUpdatable>();
+    private IHeroState _currentState;
 
     public HeroStateType CurrentStateType { get; private set; }
     public bool IsOnBasicState => CurrentStateType == HeroStateType.Basic;
@@ -23,12 +24,17 @@ namespace CodeBase.Gameplay.Hero.States
       FillUpdatables();
     }
 
-    public void Initialize(GameObject heroObject) => 
+    public void Initialize(GameObject heroObject)
+    {
+      ((HeroBasicState)_heroStates[HeroStateType.Basic]).Initialize(heroObject);
       ((HeroFocusedState)_heroStates[HeroStateType.Focused]).Initialize(heroObject);
+    }
 
     public void Enter(HeroStateType heroStateType)
     {
+      _currentState?.Exit();
       IHeroState state = _heroStates[heroStateType];
+      _currentState = state;
       CurrentStateType = heroStateType;
       state.Enter();
     }

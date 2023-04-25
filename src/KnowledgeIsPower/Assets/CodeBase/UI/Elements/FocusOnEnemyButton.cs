@@ -24,9 +24,17 @@ namespace CodeBase.UI.Elements
 
     private void FocusOnEnemy()
     {
-      Debug.Log(_focusSphere.EnemiesInSphere.Count);
-      if (_focusSphere.EnemiesInSphere.Count > 0)
-        _heroStateMachine.Enter(HeroStateType.Focused);
+      if (_heroStateMachine.IsOnBasicState)
+      {
+        if (_focusSphere.EnemiesInSphere.Count > 0)
+          _heroStateMachine.Enter(HeroStateType.Focused);
+        _button.GetComponent<Image>().color = new Color(1, 0, 0, 0.5f);
+      }
+      else
+      {
+        _heroStateMachine.Enter(HeroStateType.Basic);
+        _button.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+      }
     }
   }
 }

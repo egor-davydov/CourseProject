@@ -11,7 +11,7 @@ namespace CodeBase.Gameplay.Hero
     [SerializeField]
     private TriggerObserver _triggerObserver;
 
-    public List<Collider> EnemiesInSphere { get; } = new List<Collider>();
+    public List<Transform> EnemiesInSphere { get; } = new List<Transform>();
 
     private void Start()
     {
@@ -30,7 +30,7 @@ namespace CodeBase.Gameplay.Hero
       if (obj.transform.parent != null && obj.transform.parent.CompareTag(FocusTag))
       {
         Debug.Log("Add");
-        EnemiesInSphere.Add(obj);
+        EnemiesInSphere.Add(obj.transform.parent);
       }
       //Debug.Log(obj.name);
     }
@@ -40,7 +40,7 @@ namespace CodeBase.Gameplay.Hero
       if (obj.transform.parent != null && obj.transform.parent.CompareTag(FocusTag))
       {
         Debug.Log("Remove");
-        EnemiesInSphere.Remove(obj);
+        EnemiesInSphere.Remove(obj.transform.parent);
       }
     }
   }

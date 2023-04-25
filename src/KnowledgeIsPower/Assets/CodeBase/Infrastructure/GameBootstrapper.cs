@@ -15,7 +15,6 @@ namespace CodeBase.Infrastructure
     private void Awake()
     {
       _heroStateMachine = new HeroStateMachine();
-      _heroStateMachine.Enter(HeroStateType.Basic);
       GameStateMachine gameStateMachine = new GameStateMachine(new SceneLoader(this), Instantiate(CurtainPrefab), AllServices.Container, _heroStateMachine);
       gameStateMachine.Enter<BootstrapState>();
 
