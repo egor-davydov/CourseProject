@@ -1,7 +1,6 @@
 ﻿using CodeBase.Data;
 using CodeBase.Data.Progress;
 using CodeBase.Gameplay.Hero.States;
-using CodeBase.Services;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
 using UnityEngine;

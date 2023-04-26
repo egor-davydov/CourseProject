@@ -2,7 +2,7 @@
 
 namespace CodeBase.Gameplay.Enemy
 {
-  public class EnemyFocused : MonoBehaviour
+  public class EnemyForFocus : MonoBehaviour
   {
     [SerializeField]
     private GameObject _focusCircle;

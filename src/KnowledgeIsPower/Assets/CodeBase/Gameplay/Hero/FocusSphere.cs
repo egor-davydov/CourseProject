@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeBase.Gameplay.Enemy;
 using UnityEngine;
 
@@ -7,8 +6,6 @@ namespace CodeBase.Gameplay.Hero
 {
   public class FocusSphere : MonoBehaviour
   {
-    private const string EnemyTag = "Enemy";
-
     [SerializeField]
     private TriggerObserver _triggerObserver;
 
@@ -28,33 +25,29 @@ namespace CodeBase.Gameplay.Hero
 
     private void OnSphereEnter(Collider obj)
     {
-      Transform enemyTransform = obj.transform.parent;
-      if (enemyTransform != null && enemyTransform.CompareTag(EnemyTag))
+      Transform transformParent = obj.transform.parent;
+      if (IsEnemy(transformParent))
+        return;
+
+      EnemiesInSphere.Add(transformParent);
+      transformParent.GetComponent<EnemyDeath>().Happened += OnHappened;
+
+      void OnHappened()
       {
-        //Debug.Log("OnSphereEnter");
-        EnemiesInSphere.Add(enemyTransform);
-        enemyTransform.GetComponent<EnemyDeath>().Happened += OnHappened;
-        
-        void OnHappened()
-        {
-          RemoveFromEnemiesInSphere(enemyTransform);
-          if(EnemiesInSphere.Count != 0)
-            GetComponentInParent<HeroFocusOnEnemy>().ChangeEnemyToFocusRight();
-        }
+        EnemiesInSphere.Remove(transformParent);
+        if (EnemiesInSphere.Count != 0)
+          GetComponentInParent<HeroFocusOnEnemy>().ChangeEnemyToFocusRight();
       }
     }
-
-    private void RemoveFromEnemiesInSphere(Transform enemyTransform) => 
-      EnemiesInSphere.Remove(enemyTransform);
 
     private void OnSphereExit(Collider obj)
     {
-      Transform enemyTransform = obj.transform.parent;
-      if (enemyTransform != null && enemyTransform.CompareTag(EnemyTag))
-      {
-        //Debug.Log("OnSphereExit");
-        RemoveFromEnemiesInSphere(enemyTransform);
-      }
+      Transform transformParent = obj.transform.parent;
+      if (IsEnemy(transformParent))
+        EnemiesInSphere.Remove(transformParent);
     }
+
+    private bool IsEnemy(Transform transformParent) =>
+      transformParent == null || !transformParent.CompareTag(Tags.EnemyTag);
   }
 }

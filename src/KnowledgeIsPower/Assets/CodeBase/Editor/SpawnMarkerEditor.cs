@@ -3,7 +3,6 @@ using CodeBase.Services.StaticData;
 using CodeBase.StaticData;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CodeBase.Editor
 {
@@ -12,7 +11,7 @@ namespace CodeBase.Editor
   {
     private static IStaticDataService _staticDataService;
 
-    public static IStaticDataService StaticDataService
+    private static IStaticDataService StaticDataService
     {
       get
       {
@@ -30,12 +29,17 @@ namespace CodeBase.Editor
     public static void RenderCustomGizmo(SpawnMarker spawner, GizmoType gizmo)
     {
       MonsterStaticData data = StaticDataService.ForMonster(spawner.MonsterTypeId);
-      Handles.Label(spawner.transform.position + Vector3.up * 1f, $"Damage: {data.Damage}");
-      Handles.Label(spawner.transform.position + Vector3.up * 2f, $"Speed: {data.MoveSpeed}");
-      Handles.Label(spawner.transform.position + Vector3.up * 3f, $"HP: {data.Hp}/{data.Hp}");
+
+      Transform spawnerTransform = spawner.transform;
+      Vector3 spawnerPosition = spawnerTransform.position;
+
+      Handles.Label(spawnerPosition + Vector3.up * 1f, $"Damage: {data.Damage}");
+      Handles.Label(spawnerPosition + Vector3.up * 2f, $"Speed: {data.MoveSpeed}");
+      Handles.Label(spawnerPosition + Vector3.up * 3f, $"HP: {data.Hp}/{data.Hp}");
+
       SkinnedMeshRenderer mesh = data.PrefabReference.editorAsset.GetComponentInChildren<SkinnedMeshRenderer>();
       Gizmos.color = Color.red;
-      Gizmos.DrawMesh(mesh.sharedMesh, spawner.transform.position, spawner.transform.rotation, mesh.transform.lossyScale);
+      Gizmos.DrawMesh(mesh.sharedMesh, spawnerPosition, spawnerTransform.rotation, mesh.transform.lossyScale);
     }
   }
 }

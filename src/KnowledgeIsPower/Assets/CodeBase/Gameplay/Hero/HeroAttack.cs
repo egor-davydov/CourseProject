@@ -1,5 +1,4 @@
 using CodeBase.Data.Progress;
-using CodeBase.Gameplay.Enemy;
 using CodeBase.Logic;
 using CodeBase.Services;
 using CodeBase.Services.Input;
@@ -17,14 +16,14 @@ namespace CodeBase.Gameplay.Hero
     private IInputService _inputService;
 
     private static int _layerMask;
-    private Collider[] _hits = new Collider[3];
+    private readonly Collider[] _hits = new Collider[3];
     private Stats _stats;
 
     private void Awake()
     {
       _inputService = AllServices.Container.Single<IInputService>();
 
-      _layerMask = 1 << LayerMask.NameToLayer("Hittable");
+      _layerMask = 1 << LayerMask.NameToLayer(Layers.HittableLayer);
     }
 
     private void Update()

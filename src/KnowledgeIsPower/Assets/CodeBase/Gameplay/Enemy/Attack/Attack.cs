@@ -26,7 +26,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
       _heroTransform = heroTransform;
 
     private void Awake() =>
-      _layerMask = 1 << LayerMask.NameToLayer("Player");
+      _layerMask = 1 << LayerMask.NameToLayer(Layers.PlayerLayer);
 
     private void Update()
     {
