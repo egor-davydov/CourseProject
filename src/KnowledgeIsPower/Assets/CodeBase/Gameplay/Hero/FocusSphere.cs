@@ -31,7 +31,7 @@ namespace CodeBase.Gameplay.Hero
       Transform enemyTransform = obj.transform.parent;
       if (enemyTransform != null && enemyTransform.CompareTag(EnemyTag))
       {
-        Debug.Log("OnSphereEnter");
+        //Debug.Log("OnSphereEnter");
         EnemiesInSphere.Add(enemyTransform);
         enemyTransform.GetComponent<EnemyDeath>().Happened += OnHappened;
         
@@ -52,7 +52,7 @@ namespace CodeBase.Gameplay.Hero
       Transform enemyTransform = obj.transform.parent;
       if (enemyTransform != null && enemyTransform.CompareTag(EnemyTag))
       {
-        Debug.Log("OnSphereExit");
+        //Debug.Log("OnSphereExit");
         RemoveFromEnemiesInSphere(enemyTransform);
       }
     }

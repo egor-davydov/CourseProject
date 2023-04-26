@@ -77,7 +77,10 @@ namespace CodeBase.UI.Elements
     private void ChangeEnemyLeft() =>
       _heroFocusOnEnemy.ChangeEnemyToFocusLeft();
 
-    private void ChangeEnemyRight() =>
+    private void ChangeEnemyRight()
+    {
+      Debug.Log("Pressed");
       _heroFocusOnEnemy.ChangeEnemyToFocusRight();
+    }
   }
 }
