@@ -11,8 +11,7 @@ namespace CodeBase.Services.Input
     private const string DefendName = "Defend";
 
     public abstract Vector2 Axis { get; }
-
-
+    
     public bool IsFastAttackButtonUp() => 
       SimpleInput.GetButtonUp(FastAttackName);
 

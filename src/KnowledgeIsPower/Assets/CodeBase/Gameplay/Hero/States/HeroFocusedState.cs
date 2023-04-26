@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero.States
 {
-  public class HeroFocusedState : IHeroState, IUpdatable
+  public class HeroFocusedState : IHeroState
   {
     private GameObject _heroObject;
-    private Transform _enemyToFocus;
+    private HeroFocusOnEnemy _heroFocusOnEnemy;
 
     public void Initialize(GameObject heroObject) =>
       _heroObject = heroObject;
@@ -14,21 +13,11 @@ namespace CodeBase.Gameplay.Hero.States
     public void Enter()
     {
       _heroObject.GetComponent<HeroAnimator>().TurnOffRun();
-      
-      FocusSphere focusSphere = _heroObject.GetComponentInChildren<FocusSphere>();
-
-      List<Transform> enemiesInSphere = focusSphere.EnemiesInSphere;
-      _enemyToFocus = enemiesInSphere[0];
-      _heroObject.transform.LookAt(_enemyToFocus.transform);
+      _heroFocusOnEnemy = _heroObject.GetComponent<HeroFocusOnEnemy>();
+      _heroFocusOnEnemy.Initialize();
     }
 
     public void Exit() => 
-      _enemyToFocus = null;
-
-    public void OnUpdate()
-    {
-      if (_enemyToFocus != null)
-        _heroObject.transform.LookAt(_enemyToFocus);
-    }
+      _heroFocusOnEnemy.UnFocus();
   }
 }

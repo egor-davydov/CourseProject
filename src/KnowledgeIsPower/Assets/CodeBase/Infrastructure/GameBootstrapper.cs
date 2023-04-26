@@ -1,5 +1,4 @@
-﻿using System;
-using CodeBase.Gameplay.Hero.States;
+﻿using CodeBase.Gameplay.Hero.States;
 using CodeBase.Infrastructure.States;
 using CodeBase.Logic;
 using CodeBase.Services;

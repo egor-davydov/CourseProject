@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeBase.Gameplay.Enemy;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero
 {
   public class FocusSphere : MonoBehaviour
   {
-    private const string FocusTag = "Enemy";
+    private const string EnemyTag = "Enemy";
 
     [SerializeField]
     private TriggerObserver _triggerObserver;
@@ -27,20 +28,32 @@ namespace CodeBase.Gameplay.Hero
 
     private void OnSphereEnter(Collider obj)
     {
-      if (obj.transform.parent != null && obj.transform.parent.CompareTag(FocusTag))
+      Transform enemyTransform = obj.transform.parent;
+      if (enemyTransform != null && enemyTransform.CompareTag(EnemyTag))
       {
-        Debug.Log("Add");
-        EnemiesInSphere.Add(obj.transform.parent);
+        Debug.Log("OnSphereEnter");
+        EnemiesInSphere.Add(enemyTransform);
+        enemyTransform.GetComponent<EnemyDeath>().Happened += OnHappened;
+        
+        void OnHappened()
+        {
+          RemoveFromEnemiesInSphere(enemyTransform);
+          if(EnemiesInSphere.Count != 0)
+            GetComponentInParent<HeroFocusOnEnemy>().ChangeEnemyToFocusRight();
+        }
       }
-      //Debug.Log(obj.name);
     }
+
+    private void RemoveFromEnemiesInSphere(Transform enemyTransform) => 
+      EnemiesInSphere.Remove(enemyTransform);
 
     private void OnSphereExit(Collider obj)
     {
-      if (obj.transform.parent != null && obj.transform.parent.CompareTag(FocusTag))
+      Transform enemyTransform = obj.transform.parent;
+      if (enemyTransform != null && enemyTransform.CompareTag(EnemyTag))
       {
-        Debug.Log("Remove");
-        EnemiesInSphere.Remove(obj.transform.parent);
+        Debug.Log("OnSphereExit");
+        RemoveFromEnemiesInSphere(enemyTransform);
       }
     }
   }
