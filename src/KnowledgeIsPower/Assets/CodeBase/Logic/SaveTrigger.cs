@@ -17,6 +17,9 @@ namespace CodeBase.Logic
 
     private void OnTriggerEnter(Collider other)
     {
+      if(!other.CompareTag("Player"))
+        return;
+      
       _saveLoadService.SaveProgress();
       Debug.Log("Progress saved!");
       gameObject.SetActive(false);

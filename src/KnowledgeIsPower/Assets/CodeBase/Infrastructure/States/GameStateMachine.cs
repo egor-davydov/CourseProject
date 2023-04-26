@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeBase.Gameplay.Hero.States;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using CodeBase.Services;
@@ -7,20 +8,21 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
   public class GameStateMachine : IGameStateMachine
   {
-    private Dictionary<Type, IExitableState> _states;
+    private readonly Dictionary<Type, IExitableState> _states;
     private IExitableState _activeState;
 
-    public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain loadingCurtain, AllServices services)
+    public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain loadingCurtain, AllServices services, HeroStateMachine heroStateMachine)
     {
       _states = new Dictionary<Type, IExitableState>
       {
-        [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, services.Single<IGameFactory>(),
+        [typeof(BootstrapState)] = new BootstrapState(this,heroStateMachine, sceneLoader, services),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, services.Single<IHeroStateMachine>(), sceneLoader, loadingCurtain, services.Single<IGameFactory>(),
           services.Single<IPersistentProgressService>(), services.Single<IStaticDataService>(), services.Single<IUIFactory>(),
           services.Single<IRespawnService>()),
         
@@ -32,6 +34,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter<TState>() where TState : class, IState
     {
       IState state = ChangeState<TState>();
+      Debug.Log(state);
       state.Enter();
     }
 

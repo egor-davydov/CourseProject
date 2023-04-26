@@ -5,6 +5,9 @@ namespace CodeBase.Logic.EnemySpawners
 {
   public class SpawnMarker : MonoBehaviour
   {
-    public MonsterTypeId MonsterTypeId;
+    [SerializeField]
+    private MonsterTypeId _monsterTypeId;
+
+    public MonsterTypeId MonsterTypeId => _monsterTypeId;
   }
 }

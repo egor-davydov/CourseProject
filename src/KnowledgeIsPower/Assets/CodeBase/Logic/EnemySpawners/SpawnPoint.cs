@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
-using CodeBase.Enemy;
+using CodeBase.Data.Progress;
+using CodeBase.Gameplay.Enemy;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.StaticData;
@@ -29,7 +30,7 @@ namespace CodeBase.Logic.EnemySpawners
         _enemyDeath.Happened -= Slay;
     }
 
-    public void LoadProgress(PlayerProgress progress)
+    public void ReceiveProgress(PlayerProgress progress)
     {
       if (progress.KillData.ClearedSpawners.Contains(Id))
         Slain = true;
@@ -47,7 +48,7 @@ namespace CodeBase.Logic.EnemySpawners
 
     public async void Spawn()
     {
-      GameObject monster = await _factory.CreateMonster(MonsterTypeId, transform);
+      GameObject monster = await _factory.CreateEnemy(MonsterTypeId, transform);
       _enemyDeath = monster.GetComponent<EnemyDeath>();
       _enemyDeath.Happened += Slay;
     }

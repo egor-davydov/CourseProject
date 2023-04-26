@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.AssetManagement;
+﻿using CodeBase.Gameplay.Hero.States;
+using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Services;
 using CodeBase.Services.Ads;
@@ -17,13 +18,16 @@ namespace CodeBase.Infrastructure.States
   public class BootstrapState : IState
   {
     private const string Initial = "Initial";
+    
     private readonly GameStateMachine _stateMachine;
+    private readonly HeroStateMachine _heroStateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly AllServices _services;
 
-    public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
+    public BootstrapState(GameStateMachine stateMachine, HeroStateMachine heroStateMachine, SceneLoader sceneLoader, AllServices services)
     {
       _stateMachine = stateMachine;
+      _heroStateMachine = heroStateMachine;
       _sceneLoader = sceneLoader;
       _services = services;
 
@@ -41,16 +45,16 @@ namespace CodeBase.Infrastructure.States
     {
       RegisterStaticDataService();
       RegisterAdsService();
+      RegisterAssetProvider();
 
       _services.RegisterSingle<IGameStateMachine>(_stateMachine);
-      RegisterAssetProvider();
+      _services.RegisterSingle<IHeroStateMachine>(_heroStateMachine);
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IRespawnService>(new RespawnService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
       
-      RegisterIAPService(
-        new IAPProvider(),
+      RegisterIAPService(new IAPProvider(),
         _services.Single<IPersistentProgressService>(),
         _services.Single<IRespawnService>()
         );
@@ -67,11 +71,13 @@ namespace CodeBase.Infrastructure.States
       
       _services.RegisterSingle<IGameFactory>(new GameFactory(
         _services.Single<IAssetProvider>(),
+        _services.Single<IInputService>(),
         _services.Single<IStaticDataService>(),
         _services.Single<IRandomService>(),
         _services.Single<IPersistentProgressService>(),
         _services.Single<IWindowService>(),
-        _services.Single<IGameStateMachine>()
+        _services.Single<IGameStateMachine>(),
+        _services.Single<IHeroStateMachine>()
         ));
       
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(

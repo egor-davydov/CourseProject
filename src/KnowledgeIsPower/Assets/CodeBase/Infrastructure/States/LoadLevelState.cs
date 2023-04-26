@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using CodeBase.CameraLogic;
 using CodeBase.Data;
-using CodeBase.Enemy;
-using CodeBase.Hero;
+using CodeBase.Data.Progress.Loot;
+using CodeBase.Gameplay.Enemy.Loot;
+using CodeBase.Gameplay.Hero;
+using CodeBase.Gameplay.Hero.States;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using CodeBase.Logic.EnemySpawners;
@@ -21,6 +23,7 @@ namespace CodeBase.Infrastructure.States
   public class LoadLevelState : IPayloadedState<string>
   {
     private readonly GameStateMachine _stateMachine;
+    private readonly IHeroStateMachine _heroStateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly LoadingCurtain _loadingCurtain;
     private readonly IGameFactory _gameFactory;
@@ -31,16 +34,18 @@ namespace CodeBase.Infrastructure.States
 
     public LoadLevelState(
       GameStateMachine gameStateMachine,
+      IHeroStateMachine heroStateMachine,
       SceneLoader sceneLoader,
       LoadingCurtain loadingCurtain,
       IGameFactory gameFactory,
       IPersistentProgressService progressService,
       IStaticDataService staticDataService,
-      IUIFactory uiFactory, 
+      IUIFactory uiFactory,
       IRespawnService respawnService
-      )
+    )
     {
       _stateMachine = gameStateMachine;
+      _heroStateMachine = heroStateMachine;
       _sceneLoader = sceneLoader;
       _loadingCurtain = loadingCurtain;
       _gameFactory = gameFactory;
@@ -76,7 +81,7 @@ namespace CodeBase.Infrastructure.States
     private void InformProgressReaders()
     {
       foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
-        progressReader.LoadProgress(_progressService.Progress);
+        progressReader.ReceiveProgress(_progressService.Progress);
     }
 
     private async Task InitGameWorld()
@@ -96,9 +101,10 @@ namespace CodeBase.Infrastructure.States
       List<SpawnPoint> spawners = new List<SpawnPoint>();
       foreach (EnemySpawnerStaticData spawnerData in levelStaticData.EnemySpawners)
       {
-        SpawnPoint spawnPoint = await _gameFactory.CreateSpawner(spawnerData.Id, spawnerData.Position, spawnerData.MonsterTypeId);
+        SpawnPoint spawnPoint = await _gameFactory.CreateSpawner(spawnerData.Id, spawnerData.TransformData, spawnerData.MonsterTypeId);
         spawners.Add(spawnPoint);
       }
+
       _respawnService.Initialize(spawners);
     }
 
@@ -113,8 +119,14 @@ namespace CodeBase.Infrastructure.States
       }
     }
 
-    private async Task<GameObject> InitHero(LevelStaticData levelStaticData) =>
-      await _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
+    private async Task<GameObject> InitHero(LevelStaticData levelStaticData)
+    {
+      GameObject heroObject = await _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
+      _heroStateMachine.Initialize(heroObject);
+      _heroStateMachine.Enter(HeroStateType.Basic);
+      
+      return heroObject;
+    }
 
     private async Task InitLevelTransfer(LevelStaticData levelData) =>
       await _gameFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);

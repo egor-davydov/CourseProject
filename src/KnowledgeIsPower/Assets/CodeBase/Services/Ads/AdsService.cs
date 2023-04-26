@@ -14,7 +14,7 @@ namespace CodeBase.Services.Ads
 
     private string _gameId;
     private string _placementId;
-    
+
     private Action _onVideoFinished;
 
     public event Action RewardedVideoReady;
@@ -38,17 +38,27 @@ namespace CodeBase.Services.Ads
 
     public void OnUnityAdsReady(string placementId)
     {
+#if DEBUGING
       Debug.Log($"OnUnityAdsReady {placementId}");
+#endif
 
-      if (placementId == _placementId) 
+      if (placementId == _placementId)
         RewardedVideoReady?.Invoke();
     }
 
-    public void OnUnityAdsDidError(string message) => 
+    public void OnUnityAdsDidError(string message)
+    {
+#if DEBUGING
       Debug.Log($"OnUnityAdsDidError {message}");
+#endif
+    }
 
-    public void OnUnityAdsDidStart(string placementId) => 
+    public void OnUnityAdsDidStart(string placementId)
+    {
+#if DEBUGING
       Debug.Log($"OnUnityAdsDidStart {placementId}");
+#endif
+    }
 
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: FatDragon
   m_EditorClassIdentifier: 
   MonsterTypeId: 3
-  Hp: 100
+  Hp: 30
   Damage: 30
-  MaxLootValue: 10
-  MinLootValue: 0
+  MaxLootValue: 500
+  MinLootValue: 100
   EffectiveDistance: 1
   Cleavage: 0.5
   MoveSpeed: 5

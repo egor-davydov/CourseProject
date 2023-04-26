@@ -1,5 +1,6 @@
 using System;
 using CodeBase.Data;
+using CodeBase.Data.Progress;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 
@@ -40,9 +41,11 @@ namespace CodeBase.Infrastructure.States
     {
       var progress =  new PlayerProgress(initialLevel: "Main");
 
-      progress.HeroState.MaxHP = 50;
+      progress.HeroState.MaxHP = 100;
       progress.HeroStats.Damage = 1;
       progress.HeroStats.DamageRadius = 0.5f;
+      progress.HeroStats.MaximumDamageToBlock = 10f;
+      progress.HeroStats.DefendFactor = 0.5f;
       progress.HeroState.ResetHP();
 
       return progress;

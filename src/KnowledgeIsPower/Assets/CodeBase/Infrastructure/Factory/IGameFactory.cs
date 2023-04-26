@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CodeBase.Enemy;
+using CodeBase.Data;
+using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Logic.EnemySpawners;
 using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
@@ -15,9 +16,9 @@ namespace CodeBase.Infrastructure.Factory
     List<ISavedProgress> ProgressWriters { get; }
     Task<GameObject> CreateHero(Vector3 at);
     Task<GameObject> CreateHud();
-    Task<GameObject> CreateMonster(MonsterTypeId typeId, Transform parent);
+    Task<GameObject> CreateEnemy(MonsterTypeId typeId, Transform parent);
     Task<LootPiece> CreateLoot();
-    Task<SpawnPoint> CreateSpawner(string spawnerId, Vector3 at, MonsterTypeId monsterTypeId);
+    Task<SpawnPoint> CreateSpawner(string spawnerId, TransformData transform, MonsterTypeId monsterTypeId);
     void Cleanup();
     Task WarmUp();
     Task CreateLevelTransfer(Vector3 at);

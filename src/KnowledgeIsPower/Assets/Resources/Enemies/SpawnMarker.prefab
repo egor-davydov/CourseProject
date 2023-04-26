@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3347660264595608319}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f98e498cee5400f9ba8c6a15d5458c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterTypeId: 0
+  _meshFilter: {fileID: 0}
+  _monsterTypeId: 0
 --- !u!114 &2706905004472391448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,4 +58,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f7b18dc0164cb0a405d9b5ceb7b68d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: SpawnMarker_6134952b-7547-4ea7-9ec3-327d010bbcb2
+  Id: SpawnMarker_232f4141-47c4-4264-80ae-749742aa1bea

@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Data;
 using UnityEngine;
 
 namespace CodeBase.StaticData
@@ -8,13 +9,13 @@ namespace CodeBase.StaticData
   {
     public string Id;
     public MonsterTypeId MonsterTypeId;
-    public Vector3 Position;
+    public TransformData TransformData;
 
-    public EnemySpawnerStaticData(string id, MonsterTypeId monsterTypeId, Vector3 position)
+    public EnemySpawnerStaticData(string id, MonsterTypeId monsterTypeId, TransformData transformData)
     {
       Id = id;
       MonsterTypeId = monsterTypeId;
-      Position = position;
+      TransformData = transformData;
     }
   }
 }
