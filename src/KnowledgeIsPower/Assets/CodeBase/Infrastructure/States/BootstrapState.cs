@@ -1,11 +1,19 @@
-﻿using CodeBase.Gameplay.Hero.States;
+﻿using CodeBase.Gameplay.Hero;
+using CodeBase.Gameplay.Hero.States;
 using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.Factories.Enemy;
+using CodeBase.Infrastructure.Factories.EnemySpawner;
+using CodeBase.Infrastructure.Factories.Hero;
+using CodeBase.Infrastructure.Factories.Hud;
+using CodeBase.Infrastructure.Factories.LevelTransfer;
+using CodeBase.Infrastructure.Factories.Loot;
 using CodeBase.Services;
 using CodeBase.Services.Ads;
 using CodeBase.Services.IAP;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
@@ -47,12 +55,14 @@ namespace CodeBase.Infrastructure.States
       RegisterAdsService();
       RegisterAssetProvider();
 
+      _services.RegisterSingle<HeroProvider>(new HeroProvider());
       _services.RegisterSingle<IGameStateMachine>(_stateMachine);
       _services.RegisterSingle<IHeroStateMachine>(_heroStateMachine);
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IRespawnService>(new RespawnService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
+      _services.RegisterSingle<IProgressWatchers>(new ProgressWatchers());
       
       RegisterIAPService(new IAPProvider(),
         _services.Single<IPersistentProgressService>(),
@@ -68,21 +78,47 @@ namespace CodeBase.Infrastructure.States
         ));
       
       _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
-      
-      _services.RegisterSingle<IGameFactory>(new GameFactory(
+
+      _services.RegisterSingle<ILootFactory>(new LootFactory(
         _services.Single<IAssetProvider>(),
-        _services.Single<IInputService>(),
+        _services.Single<IProgressWatchers>(),
+        _services.Single<IPersistentProgressService>()
+      ));
+      _services.RegisterSingle<ILevelTransferFactory>(new LevelTransferFactory(
+        _services.Single<IAssetProvider>(),
+        _services.Single<IProgressWatchers>(),
+        _services.Single<IGameStateMachine>()
+      ));
+      _services.RegisterSingle<IHeroFactory>(new HeroFactory(
+        _services.Single<IAssetProvider>(),
+        _services.Single<IProgressWatchers>(),
+        _services.Single<IHeroStateMachine>(),
+        _services.Single<IInputService>()
+      ));
+      _services.RegisterSingle<IHudFactory>(new HudFactory(
+        _services.Single<IAssetProvider>(),
+        _services.Single<IProgressWatchers>(),
+        _services.Single<IHeroStateMachine>(),
+        _services.Single<HeroProvider>(),
+        _services.Single<IWindowService>()
+        ));
+      _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
+        _services.Single<IAssetProvider>(),
+        _services.Single<IProgressWatchers>(),
         _services.Single<IStaticDataService>(),
+        _services.Single<HeroProvider>(),
         _services.Single<IRandomService>(),
-        _services.Single<IPersistentProgressService>(),
-        _services.Single<IWindowService>(),
-        _services.Single<IGameStateMachine>(),
-        _services.Single<IHeroStateMachine>()
+        _services.Single<ILootFactory>()
+        ));
+      _services.RegisterSingle<IEnemySpawnerFactory>(new EnemySpawnerFactory(
+        _services.Single<IAssetProvider>(),
+        _services.Single<IProgressWatchers>(),
+        _services.Single<IEnemyFactory>()
         ));
       
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
         _services.Single<IPersistentProgressService>(),
-        _services.Single<IGameFactory>()));
+        _services.Single<IProgressWatchers>()));
     }
 
     private void RegisterAssetProvider()

@@ -3,12 +3,13 @@ using CodeBase.Data.Progress;
 using CodeBase.Gameplay.Hero.States;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Gameplay.Hero
 {
-  public class HeroMove : MonoBehaviour, ISavedProgress
+  public class HeroMove : MonoBehaviour, IProgressWriter, IProgressReader
   {
     [SerializeField]
     private CharacterController _characterController;

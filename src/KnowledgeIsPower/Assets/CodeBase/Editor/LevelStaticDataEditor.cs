@@ -29,6 +29,7 @@ namespace CodeBase.Editor
 
     public static void Collect(LevelStaticData levelData)
     {
+      if (levelData == null) return;
       levelData.EnemySpawners = FindObjectsOfType<SpawnMarker>()
         .Select(x => new EnemySpawnerStaticData(x.GetComponent<UniqueId>().Id, x.MonsterTypeId, new TransformData(x.transform.position, x.transform.rotation, x.transform.localScale)))
         .ToList();

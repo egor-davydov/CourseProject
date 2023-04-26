@@ -2,11 +2,12 @@
 using CodeBase.Data.Progress;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero
 {
-  public class HeroDefend : MonoBehaviour, ISavedProgressReader
+  public class HeroDefend : MonoBehaviour, IProgressReader
   {
     [SerializeField]
     private HeroAnimator Animator;

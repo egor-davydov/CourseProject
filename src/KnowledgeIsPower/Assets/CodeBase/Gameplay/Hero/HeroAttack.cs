@@ -3,12 +3,13 @@ using CodeBase.Logic;
 using CodeBase.Services;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero
 {
   [RequireComponent(typeof(HeroAnimator), typeof(CharacterController))]
-  public class HeroAttack : MonoBehaviour, ISavedProgressReader
+  public class HeroAttack : MonoBehaviour, IProgressReader
   {
     public HeroAnimator Animator;
     public CharacterController CharacterController;

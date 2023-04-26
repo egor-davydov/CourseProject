@@ -1,5 +1,4 @@
 using CodeBase.Data;
-using CodeBase.Infrastructure.Factory;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,19 +10,18 @@ namespace CodeBase.Gameplay.Enemy.Move
 
     private const float MinimalDistance = 1;
 
-    private IGameFactory _gameFactory;
     private Transform _heroTransform;
 
-    public void Construct(Transform heroTransform) => 
+    public void Construct(Transform heroTransform) =>
       _heroTransform = heroTransform;
 
     private void Update()
     {
-      if(_heroTransform && IsHeroNotReached())
+      if (_heroTransform && IsHeroNotReached())
         Agent.destination = _heroTransform.position;
     }
-    
-    private bool IsHeroNotReached() => 
+
+    private bool IsHeroNotReached() =>
       Agent.transform.position.SqrMagnitudeTo(_heroTransform.position) >= MinimalDistance;
   }
 }

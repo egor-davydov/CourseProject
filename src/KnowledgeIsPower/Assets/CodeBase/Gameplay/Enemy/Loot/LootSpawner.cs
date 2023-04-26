@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Factory;
+﻿using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.Factories.Loot;
 using CodeBase.Logic;
 using CodeBase.Services.Randomizer;
 using UnityEngine;
@@ -8,16 +9,16 @@ namespace CodeBase.Gameplay.Enemy.Loot
   public class LootSpawner : MonoBehaviour
   {
     public EnemyDeath EnemyDeath;
-    
-    private IGameFactory _factory;
+
     private IRandomService _randomizer;
 
     private int _minValue;
     private int _maxValue;
+    private ILootFactory _lootFactory;
 
-    public void Construct(IGameFactory factory, IRandomService randomService)
+    public void Construct(ILootFactory lootFactory, IRandomService randomService)
     {
-      _factory = factory;
+      _lootFactory = lootFactory;
       _randomizer = randomService;
     }
     
@@ -36,7 +37,7 @@ namespace CodeBase.Gameplay.Enemy.Loot
     {
       EnemyDeath.Happened -= SpawnLoot;
 
-      LootPiece lootPiece = await _factory.CreateLoot();
+      LootPiece lootPiece = await _lootFactory.CreateLoot();
       lootPiece.transform.position = transform.position;
       lootPiece.GetComponent<UniqueId>().GenerateId();
 

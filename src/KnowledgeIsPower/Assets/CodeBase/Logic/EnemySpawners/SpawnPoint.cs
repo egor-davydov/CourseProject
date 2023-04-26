@@ -2,27 +2,29 @@
 using CodeBase.Data;
 using CodeBase.Data.Progress;
 using CodeBase.Gameplay.Enemy;
-using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.Factories.Enemy;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using CodeBase.StaticData;
 using UnityEngine;
 
 namespace CodeBase.Logic.EnemySpawners
 {
-  public class SpawnPoint : MonoBehaviour, ISavedProgress
+  public class SpawnPoint : MonoBehaviour, IProgressWriter, IProgressReader
   {
     public MonsterTypeId MonsterTypeId;
     
     public string Id { get; set; }
-
-    private IGameFactory _factory;
+    
+    private IEnemyFactory _enemyFactory;
     
     private EnemyDeath _enemyDeath;
 
     public bool Slain { get; private set; }
 
-    public void Construct(IGameFactory gameFactory) => 
-      _factory = gameFactory;
+    public void Construct(IEnemyFactory enemyFactory) => 
+      _enemyFactory = enemyFactory;
 
     private void OnDestroy()
     {
@@ -48,7 +50,7 @@ namespace CodeBase.Logic.EnemySpawners
 
     public async void Spawn()
     {
-      GameObject monster = await _factory.CreateEnemy(MonsterTypeId, transform);
+      GameObject monster = await _enemyFactory.CreateEnemy(MonsterTypeId, transform);
       _enemyDeath = monster.GetComponent<EnemyDeath>();
       _enemyDeath.Happened += Slay;
     }

@@ -3,12 +3,13 @@ using CodeBase.Data.Progress;
 using CodeBase.Data.Progress.Loot;
 using CodeBase.Logic;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using TMPro;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Enemy.Loot
 {
-  public class LootPiece : MonoBehaviour, ISavedProgress
+  public class LootPiece : MonoBehaviour, IProgressWriter
   {
     public GameObject Skull;
     public GameObject PickupFxPrefab;
@@ -52,10 +53,6 @@ namespace CodeBase.Gameplay.Enemy.Loot
       if (!lootPiecesOnScene.Dictionary.ContainsKey(_id))
         lootPiecesOnScene.Dictionary
           .Add(_id, new LootPieceData(transform.position.AsVectorData(), _loot));
-    }
-
-    public void ReceiveProgress(PlayerProgress progress)
-    {
     }
 
     private void Pickup()

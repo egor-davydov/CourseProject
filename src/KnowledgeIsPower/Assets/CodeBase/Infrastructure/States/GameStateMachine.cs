@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeBase.Gameplay.Hero;
 using CodeBase.Gameplay.Hero.States;
-using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.AssetManagement;
+using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.Factories.EnemySpawner;
+using CodeBase.Infrastructure.Factories.Hero;
+using CodeBase.Infrastructure.Factories.Hud;
+using CodeBase.Infrastructure.Factories.LevelTransfer;
+using CodeBase.Infrastructure.Factories.Loot;
 using CodeBase.Logic;
 using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
@@ -21,20 +29,20 @@ namespace CodeBase.Infrastructure.States
     {
       _states = new Dictionary<Type, IExitableState>
       {
-        [typeof(BootstrapState)] = new BootstrapState(this,heroStateMachine, sceneLoader, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, services.Single<IHeroStateMachine>(), sceneLoader, loadingCurtain, services.Single<IGameFactory>(),
-          services.Single<IPersistentProgressService>(), services.Single<IStaticDataService>(), services.Single<IUIFactory>(),
+        [typeof(BootstrapState)] = new BootstrapState(this, heroStateMachine, sceneLoader, services),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, services.Single<IHeroStateMachine>(), services.Single<HeroProvider>(), sceneLoader, loadingCurtain, services.Single<IAssetProvider>(),
+          services.Single<IPersistentProgressService>(), services.Single<IProgressWatchers>(), services.Single<IStaticDataService>(), services.Single<IEnemySpawnerFactory>()
+          , services.Single<ILootFactory>(), services.Single<IHeroFactory>(), services.Single<IHudFactory>(), services.Single<ILevelTransferFactory>(), services.Single<IUIFactory>(),
           services.Single<IRespawnService>()),
-        
+
         [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
         [typeof(GameLoopState)] = new GameLoopState(this),
       };
     }
-    
+
     public void Enter<TState>() where TState : class, IState
     {
       IState state = ChangeState<TState>();
-      Debug.Log(state);
       state.Enter();
     }
 
@@ -47,14 +55,14 @@ namespace CodeBase.Infrastructure.States
     private TState ChangeState<TState>() where TState : class, IExitableState
     {
       _activeState?.Exit();
-      
+
       TState state = GetState<TState>();
       _activeState = state;
-      
+
       return state;
     }
 
-    private TState GetState<TState>() where TState : class, IExitableState => 
+    private TState GetState<TState>() where TState : class, IExitableState =>
       _states[typeof(TState)] as TState;
   }
 }

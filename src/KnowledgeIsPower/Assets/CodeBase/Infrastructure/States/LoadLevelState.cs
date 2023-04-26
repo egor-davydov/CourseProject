@@ -6,11 +6,18 @@ using CodeBase.Data.Progress.Loot;
 using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Gameplay.Hero;
 using CodeBase.Gameplay.Hero.States;
-using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.AssetManagement;
+using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.Factories.EnemySpawner;
+using CodeBase.Infrastructure.Factories.Hero;
+using CodeBase.Infrastructure.Factories.Hud;
+using CodeBase.Infrastructure.Factories.LevelTransfer;
+using CodeBase.Infrastructure.Factories.Loot;
 using CodeBase.Logic;
 using CodeBase.Logic.EnemySpawners;
 using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData;
 using CodeBase.UI.Elements;
@@ -24,33 +31,54 @@ namespace CodeBase.Infrastructure.States
   {
     private readonly GameStateMachine _stateMachine;
     private readonly IHeroStateMachine _heroStateMachine;
+    private readonly HeroProvider _heroProvider;
     private readonly SceneLoader _sceneLoader;
     private readonly LoadingCurtain _loadingCurtain;
-    private readonly IGameFactory _gameFactory;
+    private readonly IAssetProvider _assets;
     private readonly IPersistentProgressService _progressService;
+    private readonly IProgressWatchers _progressWatchers;
     private readonly IStaticDataService _staticData;
+    private readonly IEnemySpawnerFactory _enemySpawnerFactory;
+    private readonly ILootFactory _lootFactory;
+    private readonly IHeroFactory _heroFactory;
+    private readonly IHudFactory _hudFactory;
+    private readonly ILevelTransferFactory _levelTransferFactory;
     private readonly IUIFactory _uiFactory;
     private readonly IRespawnService _respawnService;
 
     public LoadLevelState(
       GameStateMachine gameStateMachine,
       IHeroStateMachine heroStateMachine,
+      HeroProvider heroProvider,
       SceneLoader sceneLoader,
       LoadingCurtain loadingCurtain,
-      IGameFactory gameFactory,
+      IAssetProvider assets,
       IPersistentProgressService progressService,
+      IProgressWatchers progressWatchers,
       IStaticDataService staticDataService,
+      IEnemySpawnerFactory enemySpawnerFactory,
+      ILootFactory lootFactory,
+      IHeroFactory heroFactory,
+      IHudFactory hudFactory,
+      ILevelTransferFactory levelTransferFactory,
       IUIFactory uiFactory,
       IRespawnService respawnService
     )
     {
       _stateMachine = gameStateMachine;
       _heroStateMachine = heroStateMachine;
+      _heroProvider = heroProvider;
       _sceneLoader = sceneLoader;
       _loadingCurtain = loadingCurtain;
-      _gameFactory = gameFactory;
+      _assets = assets;
       _progressService = progressService;
+      _progressWatchers = progressWatchers;
       _staticData = staticDataService;
+      _enemySpawnerFactory = enemySpawnerFactory;
+      _lootFactory = lootFactory;
+      _heroFactory = heroFactory;
+      _hudFactory = hudFactory;
+      _levelTransferFactory = levelTransferFactory;
       _uiFactory = uiFactory;
       _respawnService = respawnService;
     }
@@ -58,13 +86,28 @@ namespace CodeBase.Infrastructure.States
     public void Enter(string sceneName)
     {
       _loadingCurtain.Show();
-      _gameFactory.Cleanup();
-      _gameFactory.WarmUp();
+      Cleanup();
+      WarmUp();
       _sceneLoader.Load(sceneName, OnLoaded);
     }
 
     public void Exit() =>
       _loadingCurtain.Hide();
+
+    private async Task WarmUp()
+    {
+      await _assets.Load<GameObject>(AssetAddress.Loot);
+      await _assets.Load<GameObject>(AssetAddress.Spawner);
+    }
+
+    private void Cleanup()
+    {
+      _progressWatchers.Readers.Clear();
+      _progressWatchers.Writers.Clear();
+
+      _assets.Cleanup();
+    }
+
 
     private async void OnLoaded()
     {
@@ -80,7 +123,7 @@ namespace CodeBase.Infrastructure.States
 
     private void InformProgressReaders()
     {
-      foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
+      foreach (IProgressReader progressReader in _progressWatchers.Readers)
         progressReader.ReceiveProgress(_progressService.Progress);
     }
 
@@ -101,7 +144,7 @@ namespace CodeBase.Infrastructure.States
       List<SpawnPoint> spawners = new List<SpawnPoint>();
       foreach (EnemySpawnerStaticData spawnerData in levelStaticData.EnemySpawners)
       {
-        SpawnPoint spawnPoint = await _gameFactory.CreateSpawner(spawnerData.Id, spawnerData.TransformData, spawnerData.MonsterTypeId);
+        SpawnPoint spawnPoint = await _enemySpawnerFactory.CreateSpawner(spawnerData.Id, spawnerData.TransformData, spawnerData.MonsterTypeId);
         spawners.Add(spawnPoint);
       }
 
@@ -112,7 +155,7 @@ namespace CodeBase.Infrastructure.States
     {
       foreach (KeyValuePair<string, LootPieceData> item in _progressService.Progress.WorldData.LootData.LootPiecesOnScene.Dictionary)
       {
-        LootPiece lootPiece = await _gameFactory.CreateLoot();
+        LootPiece lootPiece = await _lootFactory.CreateLoot();
         lootPiece.GetComponent<UniqueId>().Id = item.Key;
         lootPiece.Initialize(item.Value.Loot);
         lootPiece.transform.position = item.Value.Position.AsUnityVector();
@@ -121,19 +164,20 @@ namespace CodeBase.Infrastructure.States
 
     private async Task<GameObject> InitHero(LevelStaticData levelStaticData)
     {
-      GameObject heroObject = await _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
+      GameObject heroObject = await _heroFactory.CreateHero(levelStaticData.InitialHeroPosition);
       _heroStateMachine.Initialize(heroObject);
+      _heroProvider.Initialize(heroObject);
       _heroStateMachine.Enter(HeroStateType.Basic);
       
       return heroObject;
     }
 
     private async Task InitLevelTransfer(LevelStaticData levelData) =>
-      await _gameFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);
+      await _levelTransferFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);
 
     private async Task InitHud(GameObject hero)
     {
-      GameObject hud = await _gameFactory.CreateHud();
+      GameObject hud = await _hudFactory.CreateHud();
 
       hud.GetComponentInChildren<ActorUI>().Construct(hero.GetComponent<HeroHealth>());
     }
