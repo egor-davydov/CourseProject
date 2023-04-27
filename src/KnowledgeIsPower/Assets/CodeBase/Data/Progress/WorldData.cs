@@ -8,11 +8,13 @@ namespace CodeBase.Data.Progress
   {
     public PositionOnLevel PositionOnLevel;
     public LootData LootData;
+    public SaveTriggersData SaveTriggersData;
 
     public WorldData(string initialLevel)
     {
       PositionOnLevel = new PositionOnLevel(initialLevel);
       LootData = new LootData();
+      SaveTriggersData = new SaveTriggersData();
     }
   }
 }
