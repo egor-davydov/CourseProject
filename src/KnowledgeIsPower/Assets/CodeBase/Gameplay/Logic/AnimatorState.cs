@@ -1,4 +1,4 @@
-namespace CodeBase.Logic
+namespace CodeBase.Gameplay.Logic
 {
   public enum AnimatorState
   {

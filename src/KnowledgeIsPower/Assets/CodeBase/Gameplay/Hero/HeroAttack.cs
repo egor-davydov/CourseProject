@@ -1,5 +1,5 @@
 using CodeBase.Data.Progress;
-using CodeBase.Logic;
+using CodeBase.Gameplay.Logic;
 using CodeBase.Services;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
@@ -20,16 +20,15 @@ namespace CodeBase.Gameplay.Hero
     private readonly Collider[] _hits = new Collider[3];
     private Stats _stats;
 
-    private void Awake()
-    {
-      _inputService = AllServices.Container.Single<IInputService>();
+    public void Construct(IInputService inputService) =>
+      _inputService = inputService;
 
+    private void Awake() => 
       _layerMask = 1 << LayerMask.NameToLayer(Layers.HittableLayer);
-    }
 
     private void Update()
     {
-      if(Animator.IsAttacking)
+      if(_inputService == null || Animator.IsAttacking)
         return;
       
       if(_inputService.IsFastAttackButtonUp())

@@ -31,6 +31,7 @@ namespace CodeBase.Infrastructure.Factories.Hero
       heroObject.GetComponent<HeroAnimator>().Construct(_heroStateMachine);
       heroObject.GetComponent<HeroMove>().Construct(_inputService, _heroStateMachine);
       heroObject.GetComponent<HeroDefend>().Construct(_inputService);
+      heroObject.GetComponent<HeroAttack>().Construct(_inputService);
       
       return heroObject;
     }

@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using CodeBase.Data;
+using CodeBase.Gameplay.Logic.EnemySpawners;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Factories.Enemy;
-using CodeBase.Logic.EnemySpawners;
 using CodeBase.Services.ProgressWatchers;
-using CodeBase.StaticData;
+using CodeBase.StaticData.Monster;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.EnemySpawner
@@ -22,12 +22,12 @@ namespace CodeBase.Infrastructure.Factories.EnemySpawner
       _enemyFactory = enemyFactory;
     }
 
-    public async Task<SpawnPoint> CreateSpawner(string spawnerId, TransformData transform, MonsterTypeId monsterTypeId)
+    public async Task<SpawnPoint> CreateSpawner(string spawnerId, TransformData transformData, MonsterTypeId monsterTypeId)
     {
       GameObject prefab = await _assets.Load<GameObject>(AssetAddress.Spawner);
-
-      GameObject spawnerObject = Object.Instantiate(prefab, transform.position.AsUnityVector(), transform.rotation);
+      GameObject spawnerObject = Object.Instantiate(prefab, transformData.Position.AsUnityVector(), transformData.Rotation.AsUnityQuaternion());
       _progressWatchers.Register(spawnerObject);
+      
       SpawnPoint spawner = spawnerObject.GetComponent<SpawnPoint>();
       spawner.Construct(_enemyFactory);
       spawner.MonsterTypeId = monsterTypeId;

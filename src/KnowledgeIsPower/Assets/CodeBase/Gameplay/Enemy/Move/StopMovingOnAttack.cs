@@ -1,4 +1,4 @@
-using CodeBase.Logic;
+using CodeBase.Gameplay.Logic;
 using UnityEngine;
 using UnityEngine.AI;
 

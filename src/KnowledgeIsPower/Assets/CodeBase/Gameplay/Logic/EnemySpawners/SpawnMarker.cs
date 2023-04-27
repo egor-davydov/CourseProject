@@ -1,7 +1,7 @@
-﻿using CodeBase.StaticData;
+﻿using CodeBase.StaticData.Monster;
 using UnityEngine;
 
-namespace CodeBase.Logic.EnemySpawners
+namespace CodeBase.Gameplay.Logic.EnemySpawners
 {
   public class SpawnMarker : MonoBehaviour
   {

@@ -17,64 +17,80 @@ MonoBehaviour:
   - Id: SpawnMarker_232f4141-47c4-4264-80ae-749742aa1bea
     MonsterTypeId: 2
     TransformData:
-      position:
+      Position:
         X: -1.4198163
         Y: 0.1227684
         Z: 10.385698
-      rotation: {x: -0, y: 0.8925858, z: -0, w: 0.4508776}
-      scale:
+      Rotation:
+        X: -0
+        Y: 126.4
+        Z: -0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
   - Id: Main_33ec1e17-31d9-4c34-9b93-552ae2ea43cd
     MonsterTypeId: 1
     TransformData:
-      position:
+      Position:
         X: -12.01
         Y: 0.2227683
         Z: -12.84
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale:
+      Rotation:
+        X: -0
+        Y: 0
+        Z: 0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
   - Id: Main_d72a7202-d1f5-49c3-9a82-7140d86cc074
     MonsterTypeId: 1
     TransformData:
-      position:
+      Position:
         X: 0.30018377
         Y: 0.3727684
         Z: -14.304844
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale:
+      Rotation:
+        X: -0
+        Y: 0
+        Z: 0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
   - Id: Main_0c3d001a-18cd-43d5-8a07-4c4b7c12f771
     MonsterTypeId: 1
     TransformData:
-      position:
+      Position:
         X: -14.753568
         Y: 0.66276836
         Z: -4.7960496
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale:
+      Rotation:
+        X: -0
+        Y: 0
+        Z: 0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
   - Id: Main_63b26722-cc31-4968-9146-b9a9e96088ef
     MonsterTypeId: 1
     TransformData:
-      position:
+      Position:
         X: 9.46
         Y: 0.07276845
         Z: 1.0500002
-      rotation: {x: -0, y: -0.7521414, z: -0, w: 0.6590018}
-      scale:
+      Rotation:
+        X: -0
+        Y: 262.44757
+        Z: 0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
-  InitialHeroPosition: {x: 4.13, y: 0.022323875, z: 10.25}
+  SaveTriggers: []
   LevelTransfer:
     TransferTo: Dungeon
     Position: {x: 0.67502224, y: 0.07, z: 12.38}
+  InitialHeroPosition: {x: 4.13, y: 0.27, z: 10.25}

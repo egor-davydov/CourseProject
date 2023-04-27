@@ -1,7 +1,7 @@
 ﻿using CodeBase.Data;
 using CodeBase.Data.Progress;
 using CodeBase.Data.Progress.Loot;
-using CodeBase.Logic;
+using CodeBase.Gameplay.Logic;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using TMPro;

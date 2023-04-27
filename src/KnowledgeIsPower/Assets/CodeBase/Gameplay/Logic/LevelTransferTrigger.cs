@@ -1,8 +1,7 @@
-﻿using CodeBase.Gameplay;
-using CodeBase.Infrastructure.States;
+﻿using CodeBase.Infrastructure.States;
 using UnityEngine;
 
-namespace CodeBase.Logic
+namespace CodeBase.Gameplay.Logic
 {
   public class LevelTransferTrigger : MonoBehaviour
   {

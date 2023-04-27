@@ -1,6 +1,7 @@
-﻿using CodeBase.Logic.EnemySpawners;
+﻿using CodeBase.Gameplay.Logic.EnemySpawners;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData;
+using CodeBase.StaticData.Monster;
 using UnityEditor;
 using UnityEngine;
 

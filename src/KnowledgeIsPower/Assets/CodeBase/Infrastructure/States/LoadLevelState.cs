@@ -6,20 +6,20 @@ using CodeBase.Data.Progress.Loot;
 using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Gameplay.Hero;
 using CodeBase.Gameplay.Hero.States;
+using CodeBase.Gameplay.Logic;
+using CodeBase.Gameplay.Logic.EnemySpawners;
 using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Factories.EnemySpawner;
 using CodeBase.Infrastructure.Factories.Hero;
 using CodeBase.Infrastructure.Factories.Hud;
 using CodeBase.Infrastructure.Factories.LevelTransfer;
 using CodeBase.Infrastructure.Factories.Loot;
-using CodeBase.Logic;
-using CodeBase.Logic.EnemySpawners;
+using CodeBase.Infrastructure.Factories.SaveTrigger;
 using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.StaticData;
-using CodeBase.StaticData;
+using CodeBase.StaticData.Level;
 using CodeBase.UI.Elements;
 using CodeBase.UI.Services.Factory;
 using UnityEngine;
@@ -39,6 +39,7 @@ namespace CodeBase.Infrastructure.States
     private readonly IProgressWatchers _progressWatchers;
     private readonly IStaticDataService _staticData;
     private readonly IEnemySpawnerFactory _enemySpawnerFactory;
+    private readonly ISaveTriggerFactory _saveTriggerFactory;
     private readonly ILootFactory _lootFactory;
     private readonly IHeroFactory _heroFactory;
     private readonly IHudFactory _hudFactory;
@@ -57,6 +58,7 @@ namespace CodeBase.Infrastructure.States
       IProgressWatchers progressWatchers,
       IStaticDataService staticDataService,
       IEnemySpawnerFactory enemySpawnerFactory,
+      ISaveTriggerFactory saveTriggerFactory,
       ILootFactory lootFactory,
       IHeroFactory heroFactory,
       IHudFactory hudFactory,
@@ -75,6 +77,7 @@ namespace CodeBase.Infrastructure.States
       _progressWatchers = progressWatchers;
       _staticData = staticDataService;
       _enemySpawnerFactory = enemySpawnerFactory;
+      _saveTriggerFactory = saveTriggerFactory;
       _lootFactory = lootFactory;
       _heroFactory = heroFactory;
       _hudFactory = hudFactory;
@@ -132,6 +135,7 @@ namespace CodeBase.Infrastructure.States
       LevelStaticData levelData = LevelStaticData();
 
       await InitSpawners(levelData);
+      await InitSaveTriggers(levelData);
       await InitLootPieces();
       GameObject hero = await InitHero(levelData);
       await InitLevelTransfer(levelData);
@@ -149,6 +153,12 @@ namespace CodeBase.Infrastructure.States
       }
 
       _respawnService.Initialize(spawners);
+    }
+
+    private async Task InitSaveTriggers(LevelStaticData levelStaticData)
+    {
+      foreach (SaveTriggerStaticData saveTriggerData in levelStaticData.SaveTriggers)
+        await _saveTriggerFactory.CreateSaveTrigger(saveTriggerData.Id, saveTriggerData.TransformData, saveTriggerData.BoxColliderData);
     }
 
     private async Task InitLootPieces()

@@ -7,5 +7,6 @@ namespace CodeBase.Infrastructure.AssetManagement
     public const string HudPath = "Hud";
     public const string Spawner = "SpawnPoint";
     public const string LevelTransferTrigger = "LevelTransferTrigger";
+    public const string SaveTrigger = "SaveTrigger";
   }
 }

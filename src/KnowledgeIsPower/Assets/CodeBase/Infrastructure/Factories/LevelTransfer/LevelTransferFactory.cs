@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using CodeBase.Gameplay.Logic;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.States;
-using CodeBase.Logic;
 using CodeBase.Services.ProgressWatchers;
 using UnityEngine;
 

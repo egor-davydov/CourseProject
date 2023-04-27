@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using CodeBase.Gameplay.Hero;
 using CodeBase.Gameplay.Hero.States;
+using CodeBase.Gameplay.Logic;
 using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Factories.EnemySpawner;
 using CodeBase.Infrastructure.Factories.Hero;
 using CodeBase.Infrastructure.Factories.Hud;
 using CodeBase.Infrastructure.Factories.LevelTransfer;
 using CodeBase.Infrastructure.Factories.Loot;
-using CodeBase.Logic;
+using CodeBase.Infrastructure.Factories.SaveTrigger;
 using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
-using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -31,8 +30,7 @@ namespace CodeBase.Infrastructure.States
       {
         [typeof(BootstrapState)] = new BootstrapState(this, heroStateMachine, sceneLoader, services),
         [typeof(LoadLevelState)] = new LoadLevelState(this, services.Single<IHeroStateMachine>(), services.Single<HeroProvider>(), sceneLoader, loadingCurtain, services.Single<IAssetProvider>(),
-          services.Single<IPersistentProgressService>(), services.Single<IProgressWatchers>(), services.Single<IStaticDataService>(), services.Single<IEnemySpawnerFactory>()
-          , services.Single<ILootFactory>(), services.Single<IHeroFactory>(), services.Single<IHudFactory>(), services.Single<ILevelTransferFactory>(), services.Single<IUIFactory>(),
+          services.Single<IPersistentProgressService>(), services.Single<IProgressWatchers>(), services.Single<IStaticDataService>(), services.Single<IEnemySpawnerFactory>(), services.Single<ISaveTriggerFactory>(), services.Single<ILootFactory>(), services.Single<IHeroFactory>(), services.Single<IHudFactory>(), services.Single<ILevelTransferFactory>(), services.Single<IUIFactory>(),
           services.Single<IRespawnService>()),
 
         [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),

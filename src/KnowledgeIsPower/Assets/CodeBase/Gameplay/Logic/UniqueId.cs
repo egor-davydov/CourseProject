@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CodeBase.Logic
+namespace CodeBase.Gameplay.Logic
 {
   public class UniqueId : MonoBehaviour
   {

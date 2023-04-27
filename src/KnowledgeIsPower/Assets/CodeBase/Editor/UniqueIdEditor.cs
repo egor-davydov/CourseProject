@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CodeBase.Logic;
+using CodeBase.Gameplay.Logic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;

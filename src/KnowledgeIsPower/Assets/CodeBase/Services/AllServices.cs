@@ -6,12 +6,9 @@ namespace CodeBase.Services
 {
   public class AllServices
   {
-    private static AllServices _instance;
-    public static AllServices Container => _instance ?? (_instance = new AllServices());
-
     private readonly Dictionary<Type, IService> _services;
 
-    private AllServices()
+    public AllServices()
     {
       _services = new Dictionary<Type, IService>();
     }

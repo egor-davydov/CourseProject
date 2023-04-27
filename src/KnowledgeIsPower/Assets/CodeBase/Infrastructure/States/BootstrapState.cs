@@ -8,6 +8,7 @@ using CodeBase.Infrastructure.Factories.Hero;
 using CodeBase.Infrastructure.Factories.Hud;
 using CodeBase.Infrastructure.Factories.LevelTransfer;
 using CodeBase.Infrastructure.Factories.Loot;
+using CodeBase.Infrastructure.Factories.SaveTrigger;
 using CodeBase.Services;
 using CodeBase.Services.Ads;
 using CodeBase.Services.IAP;
@@ -64,7 +65,13 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
       _services.RegisterSingle<IProgressWatchers>(new ProgressWatchers());
       
-      RegisterIAPService(new IAPProvider(),
+      _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
+        _services.Single<IPersistentProgressService>(),
+        _services.Single<IProgressWatchers>()
+        ));
+
+      RegisterIAPService(
+        new IAPProvider(),
         _services.Single<IPersistentProgressService>(),
         _services.Single<IRespawnService>()
         );
@@ -83,6 +90,11 @@ namespace CodeBase.Infrastructure.States
         _services.Single<IAssetProvider>(),
         _services.Single<IProgressWatchers>(),
         _services.Single<IPersistentProgressService>()
+      ));
+      _services.RegisterSingle<ISaveTriggerFactory>(new SaveTriggerFactory(
+        _services.Single<IAssetProvider>(),
+        _services.Single<IProgressWatchers>(),
+        _services.Single<ISaveLoadService>()
       ));
       _services.RegisterSingle<ILevelTransferFactory>(new LevelTransferFactory(
         _services.Single<IAssetProvider>(),
@@ -115,10 +127,6 @@ namespace CodeBase.Infrastructure.States
         _services.Single<IProgressWatchers>(),
         _services.Single<IEnemyFactory>()
         ));
-      
-      _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
-        _services.Single<IPersistentProgressService>(),
-        _services.Single<IProgressWatchers>()));
     }
 
     private void RegisterAssetProvider()

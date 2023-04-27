@@ -1,8 +1,8 @@
 ﻿using System;
 using CodeBase.Data;
-using UnityEngine;
+using CodeBase.StaticData.Monster;
 
-namespace CodeBase.StaticData
+namespace CodeBase.StaticData.Level
 {
   [Serializable]
   public class EnemySpawnerStaticData

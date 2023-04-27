@@ -8,13 +8,13 @@ namespace CodeBase.Data
       new Vector3Data(vector.x, vector.y, vector.z);
     
     public static Vector3Data AsVectorData(this Quaternion quaternion) => 
-      new Vector3Data(quaternion.x, quaternion.y, quaternion.z);
+      quaternion.eulerAngles.AsVectorData();
     
     public static Vector3 AsUnityVector(this Vector3Data vector3Data) => 
       new Vector3(vector3Data.X, vector3Data.Y, vector3Data.Z);
     
     public static Quaternion AsUnityQuaternion(this Vector3Data vector3Data) => 
-      new Quaternion(vector3Data.X, vector3Data.Y, vector3Data.Z, 0);
+      Quaternion.Euler(vector3Data.X, vector3Data.Y, vector3Data.Z);
 
     public static Vector3 AddY(this Vector3 vector, float y)
     {

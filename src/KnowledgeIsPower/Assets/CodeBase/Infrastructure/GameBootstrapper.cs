@@ -1,6 +1,6 @@
 ﻿using CodeBase.Gameplay.Hero.States;
+using CodeBase.Gameplay.Logic;
 using CodeBase.Infrastructure.States;
-using CodeBase.Logic;
 using CodeBase.Services;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ namespace CodeBase.Infrastructure
     private void Awake()
     {
       _heroStateMachine = new HeroStateMachine();
-      GameStateMachine gameStateMachine = new GameStateMachine(new SceneLoader(this), Instantiate(CurtainPrefab), AllServices.Container, _heroStateMachine);
+      GameStateMachine gameStateMachine = new GameStateMachine(new SceneLoader(this), Instantiate(CurtainPrefab), new AllServices(), _heroStateMachine);
       gameStateMachine.Enter<BootstrapState>();
 
       DontDestroyOnLoad(this);

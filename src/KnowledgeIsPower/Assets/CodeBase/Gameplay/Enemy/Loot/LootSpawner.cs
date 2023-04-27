@@ -1,6 +1,6 @@
-﻿using CodeBase.Infrastructure.Factories;
+﻿using CodeBase.Gameplay.Logic;
+using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Factories.Loot;
-using CodeBase.Logic;
 using CodeBase.Services.Randomizer;
 using UnityEngine;
 

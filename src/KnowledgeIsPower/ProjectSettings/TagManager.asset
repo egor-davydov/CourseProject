@@ -12,6 +12,7 @@ TagManager:
   - LoadingCurtain
   - LevelTransferInitialPoint
   - Enemy
+  - EnemyHurtBox
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - AttackZone
   - Hittable
   - Pickup
-  - 
+  - SaveTrigger
   - 
   - 
   - 
