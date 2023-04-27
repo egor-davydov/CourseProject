@@ -1,3 +1,4 @@
+using CodeBase.Gameplay;
 using CodeBase.Services;
 using CodeBase.Services.SaveLoad;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace CodeBase.Logic
 
     private void OnTriggerEnter(Collider other)
     {
-      if(!other.CompareTag("Player"))
+      if(!other.CompareTag(Tags.PlayerTag))
         return;
       
       _saveLoadService.SaveProgress();

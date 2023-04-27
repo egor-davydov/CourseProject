@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace CodeBase.Services
 {
@@ -10,11 +11,20 @@ namespace CodeBase.Services
 
     private readonly Dictionary<Type, IService> _services;
 
-    private AllServices() =>
+    private AllServices()
+    {
       _services = new Dictionary<Type, IService>();
+    }
 
-    public void RegisterSingle<TService>(TService service) where TService : IService =>
+    public void RegisterSingle<TService>(TService service) where TService : IService
+    {
+      if(_services.ContainsKey(typeof(TService)))
+      {
+        Debug.LogError($"You try to register already registered service {typeof(TService).Name}.");
+        return;
+      }
       _services.Add(typeof(TService), service);
+    }
 
     public TService Single<TService>() where TService : IService
     {

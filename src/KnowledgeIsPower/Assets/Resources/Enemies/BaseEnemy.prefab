@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 8580551966244656563}
   m_Layer: 15
   m_Name: HurtBox
-  m_TagString: Enemy
+  m_TagString: EnemyHurtBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -1,12 +1,11 @@
 ﻿using CodeBase.Services.StaticData;
-using CodeBase.StaticData;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Editor
 {
-  public class AutoCollectLevelDataOnPlay
+  public static class AutoCollectLevelDataOnPlay
   {
     private const string AutoCollectOnPlayMenu = "Tools/Auto Collect On Play";
     
@@ -25,8 +24,8 @@ namespace CodeBase.Editor
         return _staticDataService;
       }
     }
-    
-    public static bool AutoCollectOnPlay
+
+    private static bool AutoCollectOnPlay
     {
       get => EditorPrefs.HasKey(AutoCollectOnPlayMenu) && EditorPrefs.GetBool(AutoCollectOnPlayMenu);
       set => EditorPrefs.SetBool(AutoCollectOnPlayMenu, value);
@@ -42,13 +41,15 @@ namespace CodeBase.Editor
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void CollectLevelStaticData()
     {
-      if (AutoCollectOnPlay)
+      if (!AutoCollectOnPlay)
+        return;
+      
+      for (int i = 1; i < EditorBuildSettings.scenes.Length; i++)
       {
-        for (int i = 1; i < EditorBuildSettings.scenes.Length; i++)
-        {
-          SceneManager.LoadScene(i);
-          LevelStaticDataEditor.Collect(StaticDataService.ForLevel(CurrentSceneName));
-        }
+        SceneManager.LoadScene(i);
+        string sceneName = SceneManager.GetActiveScene().name;
+        int index = SceneManager.GetActiveScene().buildIndex;
+        LevelStaticDataEditor.Collect(StaticDataService.ForLevel(CurrentSceneName));
       }
     }
 
