@@ -20,13 +20,8 @@ namespace CodeBase.Gameplay.Logic.Save
 
     private void OnTriggerEnter(Collider other)
     {
-      if (_used)
-        return;
-
       Debug.Log("Progress saved!");
-      MakeUnActive();
-      _used = true;
-
+      MakeTriggerUsed();
       _saveLoadService.SaveProgress();
     }
 
@@ -48,10 +43,7 @@ namespace CodeBase.Gameplay.Logic.Save
     private void MakeTriggerUsed()
     {
       _used = true;
-      MakeUnActive();
-    }
-
-    private void MakeUnActive() =>
       gameObject.SetActive(false);
+    }
   }
 }
