@@ -51,8 +51,8 @@ MonoBehaviour:
     m_Address: Hero
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 176288, guid: 181862a89f60d7a459002f9870860ad4, type: 3}
-    m_TargetAsset: {fileID: 176288, guid: 181862a89f60d7a459002f9870860ad4, type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: f6395af14c6ae2d4ea00c7e97e633ad3
     m_Address: Hud
     m_ReadOnly: 0
@@ -103,6 +103,18 @@ MonoBehaviour:
     m_TargetAsset: {fileID: 0}
   - m_GUID: 53f0a099e5669d345a3f0b7f41c2f8c7
     m_Address: Assets/Plugins/Free RPG Icons/PNG/14.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 0bd086fcdc3404471afd723476b4e845
+    m_Address: SaveTrigger
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 00f3a10f832903a4898848ec91bd3f85
+    m_Address: Fire
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}

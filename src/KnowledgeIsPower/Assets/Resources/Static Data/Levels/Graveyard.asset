@@ -14,67 +14,119 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelKey: Main
   EnemySpawners:
-  - Id: SpawnMarker_232f4141-47c4-4264-80ae-749742aa1bea
+  - Id: SpawnMarker_3dc8d132-a18e-4db0-9687-2e682ad46047
     MonsterTypeId: 2
     TransformData:
-      position:
+      Position:
         X: -1.4198163
         Y: 0.1227684
         Z: 10.385698
-      rotation: {x: -0, y: 0.8925858, z: -0, w: 0.4508776}
-      scale:
+      Rotation:
+        X: -0
+        Y: 126.4
+        Z: -0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
   - Id: Main_33ec1e17-31d9-4c34-9b93-552ae2ea43cd
     MonsterTypeId: 1
     TransformData:
-      position:
+      Position:
         X: -12.01
         Y: 0.2227683
         Z: -12.84
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale:
+      Rotation:
+        X: -0
+        Y: 0
+        Z: 0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
   - Id: Main_d72a7202-d1f5-49c3-9a82-7140d86cc074
     MonsterTypeId: 1
     TransformData:
-      position:
+      Position:
         X: 0.30018377
         Y: 0.3727684
         Z: -14.304844
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale:
+      Rotation:
+        X: -0
+        Y: 0
+        Z: 0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
   - Id: Main_0c3d001a-18cd-43d5-8a07-4c4b7c12f771
     MonsterTypeId: 1
     TransformData:
-      position:
+      Position:
         X: -14.753568
         Y: 0.66276836
         Z: -4.7960496
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale:
+      Rotation:
+        X: -0
+        Y: 0
+        Z: 0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
   - Id: Main_63b26722-cc31-4968-9146-b9a9e96088ef
     MonsterTypeId: 1
     TransformData:
-      position:
+      Position:
         X: 9.46
         Y: 0.07276845
         Z: 1.0500002
-      rotation: {x: -0, y: -0.7521414, z: -0, w: 0.6590018}
-      scale:
+      Rotation:
+        X: -0
+        Y: 262.44757
+        Z: 0
+      Scale:
         X: 0.01
         Y: 0.01
         Z: 0.01
-  InitialHeroPosition: {x: 4.13, y: 0.022323875, z: 10.25}
+  SaveTriggers:
+  - Id: Main_f74b7aae-d182-4e64-93ee-f5288d14d2d8
+    TransformData:
+      Position:
+        X: 3.78
+        Y: 0.00000010556619
+        Z: 4.93
+      Rotation:
+        X: -0
+        Y: 0
+        Z: 0
+      Scale:
+        X: 1
+        Y: 1
+        Z: 1
+    BoxColliderData:
+      Size: {x: 2.364761, y: 1, z: 3.788448}
+      Center: {x: 0.68238056, y: 0.5, z: -0.3022021}
+    FirePosition: {x: 4.58, y: 1.6739999, z: 3.2}
+  - Id: SaveMarker_4ceb0962-cacb-4adf-819c-3cd27899048f
+    TransformData:
+      Position:
+        X: -12.42
+        Y: 0.00000079825753
+        Z: -8.44
+      Rotation:
+        X: -0
+        Y: 0
+        Z: 0
+      Scale:
+        X: 1
+        Y: 1
+        Z: 1
+    BoxColliderData:
+      Size: {x: 5.627619, y: 2.606579, z: 1.9312096}
+      Center: {x: -2.3138094, y: 1.3032895, z: -0.46560478}
+    FirePosition: {x: -12.427785, y: 1.6322855, z: -8.938017}
   LevelTransfer:
     TransferTo: Dungeon
     Position: {x: 0.67502224, y: 0.07, z: 12.38}
+  InitialHeroPosition: {x: 4.13, y: 0.27, z: 10.25}

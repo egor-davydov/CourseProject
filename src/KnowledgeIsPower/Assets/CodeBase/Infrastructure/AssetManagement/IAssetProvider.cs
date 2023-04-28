@@ -5,14 +5,13 @@ using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Infrastructure.AssetManagement
 {
-  public interface IAssetProvider:IService
+  public interface IAssetProvider : IService
   {
-    Task<GameObject> Instantiate(string path, Vector3 at);
-    Task<GameObject> Instantiate(string path);
-    Task<T> Load<T>(AssetReference monsterDataPrefabReference) where T : class;
-    void Cleanup();
-    Task<T> Load<T>(string address) where T : class;
     void Initialize();
-    Task<GameObject> Instantiate(string address, Transform under);
+    Task<T> Load<T>(AssetReference monsterDataPrefabReference) where T : class;
+    Task<T> Load<T>(string address) where T : class;
+    Task<GameObject> Instantiate(string path, Vector3 at);
+    Task<GameObject> Instantiate(string address, Transform under = null);
+    void Cleanup();
   }
 }

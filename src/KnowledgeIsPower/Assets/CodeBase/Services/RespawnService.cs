@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Logic.EnemySpawners;
+using CodeBase.Gameplay.Logic.EnemySpawners;
 using UnityEngine;
 
 namespace CodeBase.Services

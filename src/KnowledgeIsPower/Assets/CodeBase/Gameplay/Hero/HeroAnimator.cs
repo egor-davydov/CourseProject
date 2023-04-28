@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CodeBase.Gameplay.Hero.States;
-using CodeBase.Logic;
+using CodeBase.Gameplay.Logic;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero

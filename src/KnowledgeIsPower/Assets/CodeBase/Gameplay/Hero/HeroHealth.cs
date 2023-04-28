@@ -1,12 +1,13 @@
 using System;
 using CodeBase.Data.Progress;
-using CodeBase.Logic;
+using CodeBase.Gameplay.Logic;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero
 {
-  public class HeroHealth : MonoBehaviour, ISavedProgress, IHealth
+  public class HeroHealth : MonoBehaviour, IHealth, IProgressWriter, IProgressReader
   {
     [SerializeField]
     private HeroAnimator Animator;

@@ -1,4 +1,4 @@
-using CodeBase.Logic;
+using CodeBase.Gameplay.Logic;
 using UnityEngine;
 
 namespace CodeBase.UI.Elements
@@ -15,8 +15,11 @@ namespace CodeBase.UI.Elements
       _health.HealthChanged += UpdateHpBar;
     }
 
-    private void OnDestroy() => 
-      _health.HealthChanged -= UpdateHpBar;
+    private void OnDestroy()
+    {
+      if (_health != null)
+        _health.HealthChanged -= UpdateHpBar;
+    }
 
     private void UpdateHpBar() =>
       HpBar.SetValue(_health.Current, _health.Max);

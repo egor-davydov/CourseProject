@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.StaticData;
+using CodeBase.StaticData.Level;
+using CodeBase.StaticData.Monster;
 using CodeBase.StaticData.Windows;
 using CodeBase.UI.Services.Windows;
 using UnityEngine;

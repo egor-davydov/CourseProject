@@ -42,6 +42,9 @@ namespace CodeBase.UI.Elements
 
     private void Update()
     {
+      if (_focusSphere == null || _heroStateMachine == null)
+        return;
+      
       bool canChangeFocus = _focusSphere.EnemiesInSphere.Count > 1 && _heroStateMachine.IsFocused;
       _changeEnemyLeftButton.gameObject.SetActive(canChangeFocus);
       _changeEnemyRightButton.gameObject.SetActive(canChangeFocus);
@@ -77,10 +80,7 @@ namespace CodeBase.UI.Elements
     private void ChangeEnemyLeft() =>
       _heroFocusOnEnemy.ChangeEnemyToFocusLeft();
 
-    private void ChangeEnemyRight()
-    {
-      Debug.Log("Pressed");
+    private void ChangeEnemyRight() => 
       _heroFocusOnEnemy.ChangeEnemyToFocusRight();
-    }
   }
 }

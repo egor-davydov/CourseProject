@@ -1,24 +1,27 @@
 ﻿using CodeBase.Data;
 using CodeBase.Data.Progress;
+using CodeBase.Data.Progress.Loot;
+using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.ProgressWatchers;
 using TMPro;
 using UnityEngine;
 
 namespace CodeBase.UI.Elements
 {
-  public class LootCounter : MonoBehaviour
+  public class LootCounter : MonoBehaviour, IProgressReader
   {
     public TextMeshProUGUI Counter;
-    private WorldData _worldData;
+    private LootData _lootData;
 
-    public void Construct(WorldData worldData)
+    public void ReceiveProgress(PlayerProgress progress)
     {
-      _worldData = worldData;
-      _worldData.LootData.Changed += UpdateCounter;
+      _lootData = progress.WorldData.LootData;
+      _lootData.Changed += UpdateCounter;
       
       UpdateCounter();
     }
 
     private void UpdateCounter() => 
-      Counter.text = $"{_worldData.LootData.Collected}";
+      Counter.text = $"{_lootData.Collected}";
   }
 }

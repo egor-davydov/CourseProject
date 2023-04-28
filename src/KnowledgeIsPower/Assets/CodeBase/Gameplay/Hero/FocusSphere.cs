@@ -25,29 +25,38 @@ namespace CodeBase.Gameplay.Hero
 
     private void OnSphereEnter(Collider obj)
     {
-      Transform transformParent = obj.transform.parent;
-      if (IsEnemy(transformParent))
+      if (!IsEnemy(obj))
         return;
+      
+      Transform enemyTransform = obj.transform.parent;
+      //Debug.Log($"OnSphereEnter {enemyTransform.name}");
+      EnemiesInSphere.Add(enemyTransform);
+      enemyTransform.GetComponent<EnemyDeath>().Happened += OnHappened;
 
-      EnemiesInSphere.Add(transformParent);
-      transformParent.GetComponent<EnemyDeath>().Happened += OnHappened;
-
-      void OnHappened()
-      {
-        EnemiesInSphere.Remove(transformParent);
-        if (EnemiesInSphere.Count != 0)
-          GetComponentInParent<HeroFocusOnEnemy>().ChangeEnemyToFocusRight();
-      }
+      void OnHappened() => RemoveInSphereAndTryChangeFocus(enemyTransform);
     }
 
     private void OnSphereExit(Collider obj)
     {
-      Transform transformParent = obj.transform.parent;
-      if (IsEnemy(transformParent))
-        EnemiesInSphere.Remove(transformParent);
+      if (!IsEnemy(obj))
+        return;
+      
+      Transform enemyTransform = obj.transform.parent;
+      //Debug.Log($"OnSphereExit {enemyTransform.name}");
+      RemoveInSphereAndTryChangeFocus(enemyTransform);
     }
 
-    private bool IsEnemy(Transform transformParent) =>
-      transformParent == null || !transformParent.CompareTag(Tags.EnemyTag);
+    private bool IsEnemy(Collider obj) =>
+      obj.CompareTag(Tags.EnemyHurtBox);
+
+    private void RemoveInSphereAndTryChangeFocus(Transform objTransform)
+    {
+      EnemiesInSphere.Remove(objTransform);
+      if (EnemiesInSphere.Count != 0)
+        ChangeFocus();
+    }
+
+    private void ChangeFocus() => 
+      GetComponentInParent<HeroFocusOnEnemy>().ChangeEnemyToFocusRight();
   }
 }
