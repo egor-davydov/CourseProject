@@ -43,7 +43,7 @@ namespace CodeBase.Editor
           x.transform.position.AsVectorData(),
           x.transform.rotation.AsVectorData(),
           x.transform.localScale.AsVectorData()
-        ), new BoxColliderData(x.GetComponent<BoxCollider>().size, x.GetComponent<BoxCollider>().center))).ToList();
+        ), new BoxColliderData(x.GetComponent<BoxCollider>().size, x.GetComponent<BoxCollider>().center), x.FirePositionObject.transform.position)).ToList();
 
       levelData.LevelKey = SceneManager.GetActiveScene().name;
       levelData.InitialHeroPosition = GameObject.FindWithTag(Tags.InitialPointTag).transform.position;

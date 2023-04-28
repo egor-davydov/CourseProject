@@ -10,12 +10,14 @@ namespace CodeBase.StaticData.Level
     public string Id;
     public TransformData TransformData;
     public BoxColliderData BoxColliderData;
+    public Vector3 FirePosition;
 
-    public SaveTriggerStaticData(string id, TransformData transformData, BoxColliderData boxColliderData)
+    public SaveTriggerStaticData(string id, TransformData transformData, BoxColliderData boxColliderData, Vector3 firePosition)
     {
       Id = id;
       TransformData = transformData;
       BoxColliderData = boxColliderData;
+      FirePosition = firePosition;
     }
   }
 }

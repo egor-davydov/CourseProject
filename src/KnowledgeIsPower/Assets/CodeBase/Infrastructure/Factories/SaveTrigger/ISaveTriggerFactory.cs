@@ -7,6 +7,6 @@ namespace CodeBase.Infrastructure.Factories.SaveTrigger
 {
   public interface ISaveTriggerFactory : IService
   {
-    Task<GameObject> CreateSaveTrigger(string id, TransformData transformData, BoxColliderData boxColliderData);
+    Task<GameObject> CreateSaveTrigger(string id, TransformData transformData, BoxColliderData boxColliderData, Vector3 firePosition);
   }
 }

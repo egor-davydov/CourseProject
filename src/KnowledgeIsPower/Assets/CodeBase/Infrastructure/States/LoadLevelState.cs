@@ -55,6 +55,7 @@ namespace CodeBase.Infrastructure.States
     {
       await _assets.Load<GameObject>(AssetAddress.Loot);
       await _assets.Load<GameObject>(AssetAddress.Spawner);
+      await _assets.Load<GameObject>(AssetAddress.Fire);
     }
 
     private void OnLoaded() =>

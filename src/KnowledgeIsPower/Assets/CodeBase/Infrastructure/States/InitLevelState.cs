@@ -90,7 +90,7 @@ namespace CodeBase.Infrastructure.States
     {
       foreach (SaveTriggerStaticData saveTriggerData in levelStaticData.SaveTriggers)
         await _saveTriggerFactory.
-          CreateSaveTrigger(saveTriggerData.Id, saveTriggerData.TransformData, saveTriggerData.BoxColliderData);
+          CreateSaveTrigger(saveTriggerData.Id, saveTriggerData.TransformData, saveTriggerData.BoxColliderData, saveTriggerData.FirePosition);
     }
 
     private async Task InitLootPieces()

@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using CodeBase.Data.Progress;
+using CodeBase.Gameplay.Enemy.Loot;
+using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.SaveLoad;
 using UnityEngine;
@@ -11,10 +14,14 @@ namespace CodeBase.Gameplay.Logic.Save
     private ISaveLoadService _saveLoadService;
     private string _id;
     private bool _used;
+    private Vector3 _firePosition;
+    private IAssetProvider _assets;
 
-    public void Construct(string id, ISaveLoadService saveLoadService)
+    public void Construct(string id, Vector3 firePosition, ISaveLoadService saveLoadService, IAssetProvider assets)
     {
+      _assets = assets;
       _id = id;
+      _firePosition = firePosition;
       _saveLoadService = saveLoadService;
     }
 
@@ -40,10 +47,17 @@ namespace CodeBase.Gameplay.Logic.Save
         usedSaveTriggers.Add(_id);
     }
 
-    private void MakeTriggerUsed()
+    private async void MakeTriggerUsed()
     {
       _used = true;
       gameObject.SetActive(false);
+      await CreateFire();
+    }
+
+    private async Task CreateFire()
+    {
+      GameObject prefab = await _assets.Load<GameObject>(AssetAddress.Fire);
+      Instantiate(prefab, _firePosition, prefab.transform.rotation);
     }
   }
 }
