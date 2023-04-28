@@ -16,6 +16,7 @@ using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -29,11 +30,24 @@ namespace CodeBase.Infrastructure.States
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, heroStateMachine, sceneLoader, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, services.Single<IHeroStateMachine>(), services.Single<HeroProvider>(), sceneLoader, loadingCurtain, services.Single<IAssetProvider>(),
-          services.Single<IPersistentProgressService>(), services.Single<IProgressWatchers>(), services.Single<IStaticDataService>(), services.Single<IEnemySpawnerFactory>(), services.Single<ISaveTriggerFactory>(), services.Single<ILootFactory>(), services.Single<IHeroFactory>(), services.Single<IHudFactory>(), services.Single<ILevelTransferFactory>(), services.Single<IUIFactory>(),
-          services.Single<IRespawnService>()),
 
-        [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
+        [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(),
+          services.Single<ISaveLoadService>()),
+
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
+          services.Single<IAssetProvider>(), services.Single<IProgressWatchers>()),
+
+        [typeof(InitLevelState)] = new InitLevelState(this, services.Single<IStaticDataService>(),
+          services.Single<IPersistentProgressService>(), services.Single<IEnemySpawnerFactory>(),
+          services.Single<ISaveTriggerFactory>(), services.Single<ILevelTransferFactory>(),
+          services.Single<ILootFactory>(), services.Single<IUIFactory>(), services.Single<IRespawnService>()),
+
+        [typeof(InitHeroState)] = new InitHeroState(this, services.Single<IHeroStateMachine>(), services.Single<HeroProvider>(),
+          services.Single<IStaticDataService>(), services.Single<IHeroFactory>(), services.Single<IHudFactory>()),
+
+        [typeof(FinishLevelInitializationState)] = new FinishLevelInitializationState(this, loadingCurtain,
+          services.Single<IPersistentProgressService>(), services.Single<IProgressWatchers>()),
+
         [typeof(GameLoopState)] = new GameLoopState(this),
       };
     }
@@ -56,7 +70,8 @@ namespace CodeBase.Infrastructure.States
 
       TState state = GetState<TState>();
       _activeState = state;
-
+      //Debug.Log(state);
+      
       return state;
     }
 

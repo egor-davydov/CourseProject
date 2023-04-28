@@ -1,8 +1,6 @@
 using CodeBase.Data.Progress;
 using CodeBase.Gameplay.Logic;
-using CodeBase.Services;
 using CodeBase.Services.Input;
-using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using UnityEngine;
 
