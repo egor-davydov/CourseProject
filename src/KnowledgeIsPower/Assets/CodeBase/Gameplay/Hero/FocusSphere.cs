@@ -25,7 +25,7 @@ namespace CodeBase.Gameplay.Hero
 
     private void OnSphereEnter(Collider obj)
     {
-      if (!IsEnemy(obj))
+      if (!IsEnemyHurtBox(obj))
         return;
       
       Transform enemyTransform = obj.transform.parent;
@@ -33,20 +33,22 @@ namespace CodeBase.Gameplay.Hero
       EnemiesInSphere.Add(enemyTransform);
       enemyTransform.GetComponent<EnemyDeath>().Happened += OnHappened;
 
-      void OnHappened() => RemoveInSphereAndTryChangeFocus(enemyTransform);
+      void OnHappened() =>
+        RemoveInSphereAndTryChangeFocus(enemyTransform);
     }
 
     private void OnSphereExit(Collider obj)
     {
-      if (!IsEnemy(obj))
+      if (!IsEnemyHurtBox(obj))
         return;
       
       Transform enemyTransform = obj.transform.parent;
       //Debug.Log($"OnSphereExit {enemyTransform.name}");
-      RemoveInSphereAndTryChangeFocus(enemyTransform);
+      if (EnemiesInSphere.Contains(enemyTransform)) 
+        RemoveInSphereAndTryChangeFocus(enemyTransform);
     }
 
-    private bool IsEnemy(Collider obj) =>
+    private bool IsEnemyHurtBox(Collider obj) =>
       obj.CompareTag(Tags.EnemyHurtBox);
 
     private void RemoveInSphereAndTryChangeFocus(Transform objTransform)

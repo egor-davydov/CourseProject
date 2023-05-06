@@ -1,5 +1,6 @@
 using System.Linq;
 using CodeBase.Gameplay.Logic;
+using CodeBase.StaticData.Monster;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Enemy.Attack
@@ -20,13 +21,19 @@ namespace CodeBase.Gameplay.Enemy.Attack
     private float _attackCooldown;
     private bool _isAttacking;
     private bool _attackIsActive;
+    [SerializeField] private GameObject _orangeHitFxPrefab;
+    [SerializeField] private GameObject _whiteHitFxPrefab;
+    private MonsterTypeId _monsterType;
 
 
     public void Construct(Transform heroTransform) =>
       _heroTransform = heroTransform;
 
-    private void Awake() =>
+    private void Awake()
+    {
       _layerMask = 1 << LayerMask.NameToLayer(Layers.PlayerLayer);
+      _monsterType = GetComponent<EnemyType>().Value;
+    }
 
     private void Update()
     {
@@ -48,6 +55,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
       {
         //PhysicsDebug.DrawDebug(StartPoint(), Cleavage, 1.0f);
         hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+        CreateHitFx(hit.transform);
       }
     }
 
@@ -62,6 +70,23 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     public void EnableAttack() =>
       _attackIsActive = true;
+    
+    private void CreateHitFx(Transform heroTransform)
+    {
+      Vector3 heroPosition = heroTransform.position + Vector3.up;
+      switch (_monsterType)
+      {
+        case MonsterTypeId.Lich:
+          Instantiate(_whiteHitFxPrefab, heroPosition, Quaternion.identity);
+          break;
+        case MonsterTypeId.Golem:
+          Instantiate(_whiteHitFxPrefab, heroPosition, Quaternion.identity);
+          break;
+        case MonsterTypeId.FatDragon:
+          Instantiate(_orangeHitFxPrefab, heroPosition, Quaternion.identity);
+          break;
+      }
+    }
 
     private bool CooldownIsUp() =>
       _attackCooldown <= 0f;

@@ -1,8 +1,12 @@
+using System;
 using CodeBase.Data.Progress;
+using CodeBase.Gameplay.Enemy;
 using CodeBase.Gameplay.Logic;
 using CodeBase.Services.Input;
 using CodeBase.Services.ProgressWatchers;
+using CodeBase.StaticData.Monster;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace CodeBase.Gameplay.Hero
 {
@@ -11,6 +15,12 @@ namespace CodeBase.Gameplay.Hero
   {
     public HeroAnimator Animator;
     public CharacterController CharacterController;
+
+    [SerializeField]
+    private GameObject _bloodFxPrefab;
+
+    [SerializeField]
+    private GameObject _rockHitFxPrefab;
 
     private IInputService _inputService;
 
@@ -21,18 +31,18 @@ namespace CodeBase.Gameplay.Hero
     public void Construct(IInputService inputService) =>
       _inputService = inputService;
 
-    private void Awake() => 
+    private void Awake() =>
       _layerMask = 1 << LayerMask.NameToLayer(Layers.HittableLayer);
 
     private void Update()
     {
-      if(_inputService == null || Animator.IsAttacking)
+      if (_inputService == null || Animator.IsAttacking)
         return;
-      
-      if(_inputService.IsFastAttackButtonUp())
+
+      if (_inputService.IsFastAttackButtonUp())
         Animator.PlayFastAttack();
-      
-      if(_inputService.IsLongAttackButtonUp())
+
+      if (_inputService.IsLongAttackButtonUp())
         Animator.PlayLongAttack();
     }
 
@@ -41,18 +51,39 @@ namespace CodeBase.Gameplay.Hero
 
     private void Attack(float attackMultiplier)
     {
-      PhysicsDebug.DrawDebug(StartPoint() + transform.forward, _stats.DamageRadius, 1.0f);
+      //PhysicsDebug.DrawDebug(OverlapPosition(), _stats.DamageRadius, 100.0f);
       for (int i = 0; i < Hit(); ++i)
-        _hits[i].transform.parent.GetComponent<IHealth>().TakeDamage(_stats.Damage * attackMultiplier);
+      {
+        Transform enemyTransform = _hits[i].transform.parent;
+        enemyTransform.GetComponent<IHealth>().TakeDamage(_stats.Damage * attackMultiplier);
+        CreateHitFx(enemyTransform);
+      }
     }
 
-    private int Hit() => 
-      Physics.OverlapSphereNonAlloc(StartPoint() + transform.forward, _stats.DamageRadius, _hits, _layerMask);
+    private void CreateHitFx(Transform enemyTransform)
+    {
+      MonsterTypeId monsterType = enemyTransform.GetComponent<EnemyType>().Value;
+      switch (monsterType)
+      {
+        case MonsterTypeId.Lich:
+          Instantiate(_bloodFxPrefab, enemyTransform.position + Vector3.up, Quaternion.identity);
+          break;
+        case MonsterTypeId.Golem:
+          Instantiate(_rockHitFxPrefab, enemyTransform.position + Vector3.up, Quaternion.identity);
+          break;
+        case MonsterTypeId.FatDragon:
+          Instantiate(_bloodFxPrefab, OverlapPosition(), Quaternion.identity);
+          break;
+      }
+    }
 
-    private Vector3 StartPoint() =>
-      new Vector3(transform.position.x, CharacterController.center.y / 2, transform.position.z);
+    private int Hit() =>
+      Physics.OverlapSphereNonAlloc(OverlapPosition(), _stats.DamageRadius, _hits, _layerMask);
 
-    public void ReceiveProgress(PlayerProgress progress) => 
+    private Vector3 OverlapPosition() =>
+      new Vector3(transform.position.x, CharacterController.center.y, transform.position.z) + transform.forward;
+
+    public void ReceiveProgress(PlayerProgress progress) =>
       _stats = progress.HeroStats;
   }
 }
