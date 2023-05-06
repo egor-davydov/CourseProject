@@ -1,8 +1,12 @@
+using System;
 using CodeBase.Data.Progress;
+using CodeBase.Gameplay.Enemy;
 using CodeBase.Gameplay.Logic;
 using CodeBase.Services.Input;
 using CodeBase.Services.ProgressWatchers;
+using CodeBase.StaticData.Monster;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace CodeBase.Gameplay.Hero
 {
@@ -13,7 +17,10 @@ namespace CodeBase.Gameplay.Hero
     public CharacterController CharacterController;
 
     [SerializeField]
-    private GameObject _bloodSystemPrefab;
+    private GameObject _bloodFxPrefab;
+
+    [SerializeField]
+    private GameObject _rockHitFxPrefab;
 
     private IInputService _inputService;
 
@@ -47,14 +54,27 @@ namespace CodeBase.Gameplay.Hero
       //PhysicsDebug.DrawDebug(OverlapPosition(), _stats.DamageRadius, 100.0f);
       for (int i = 0; i < Hit(); ++i)
       {
-        _hits[i].transform.parent.GetComponent<IHealth>().TakeDamage(_stats.Damage * attackMultiplier);
-        CreateHitFx();
+        Transform enemyTransform = _hits[i].transform.parent;
+        enemyTransform.GetComponent<IHealth>().TakeDamage(_stats.Damage * attackMultiplier);
+        CreateHitFx(enemyTransform);
       }
     }
 
-    private void CreateHitFx()
+    private void CreateHitFx(Transform enemyTransform)
     {
-      Instantiate(_bloodSystemPrefab, OverlapPosition(), Quaternion.identity);
+      MonsterTypeId monsterType = enemyTransform.GetComponent<EnemyType>().Value;
+      switch (monsterType)
+      {
+        case MonsterTypeId.Lich:
+          Instantiate(_bloodFxPrefab, enemyTransform.position + Vector3.up, Quaternion.identity);
+          break;
+        case MonsterTypeId.Golem:
+          Instantiate(_rockHitFxPrefab, enemyTransform.position + Vector3.up, Quaternion.identity);
+          break;
+        case MonsterTypeId.FatDragon:
+          Instantiate(_bloodFxPrefab, OverlapPosition(), Quaternion.identity);
+          break;
+      }
     }
 
     private int Hit() =>

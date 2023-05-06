@@ -1,3 +1,4 @@
+using CodeBase.Gameplay.Logic;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero
@@ -31,8 +32,10 @@ namespace CodeBase.Gameplay.Hero
       Move.enabled = false;
       Attack.enabled = false;
       Animator.PlayDeath();
+      Animator.StateExited += CreateDeathFx;
 
-      Instantiate(DeathFx, transform.position, Quaternion.identity);
+      void CreateDeathFx(AnimatorState animatorState) => 
+        Instantiate(DeathFx, transform.position, Quaternion.identity);
     }
   }
 }

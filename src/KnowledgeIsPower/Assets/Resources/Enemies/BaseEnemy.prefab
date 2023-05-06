@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 1260865992186159246}
   - component: {fileID: 502268589996600908}
   - component: {fileID: 8358964436095184501}
+  - component: {fileID: 5202189114089301272}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Enemy
@@ -159,6 +160,8 @@ MonoBehaviour:
   Cleavage: 0.5
   EffectiveDistance: 0.5
   Damage: 10
+  _orangeHitFxPrefab: {fileID: 100002, guid: e9391f622091e1449bdef4ef15af4948, type: 3}
+  _whiteHitFxPrefab: {fileID: 100000, guid: 979632a27455af442bd2d8f36eb0ffce, type: 3}
 --- !u!114 &714932278100941371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +232,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _focusCircle: {fileID: 1290960480080092497}
+--- !u!114 &5202189114089301272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500939411536426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63316057af434efdabf21fad0c408502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _monsterType: 0
 --- !u!1 &49975782816367269
 GameObject:
   m_ObjectHideFlags: 0
