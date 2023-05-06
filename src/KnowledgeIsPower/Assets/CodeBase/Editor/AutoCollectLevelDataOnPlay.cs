@@ -44,10 +44,9 @@ namespace CodeBase.Editor
       if (!AutoCollectOnPlay)
         return;
       
-      for (int i = 1; i < EditorBuildSettings.scenes.Length; i++)
+      for (int i = 1; i < SceneManager.sceneCountInBuildSettings; i++)
       {
         SceneManager.LoadScene(i);
-        string sceneName = SceneManager.GetActiveScene().name;
         int index = SceneManager.GetActiveScene().buildIndex;
         LevelStaticDataEditor.Collect(StaticDataService.ForLevel(CurrentSceneName));
       }
