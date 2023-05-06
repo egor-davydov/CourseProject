@@ -24,7 +24,7 @@ namespace CodeBase.Gameplay.Enemy.Loot
     
     private void Start()
     {
-      EnemyDeath.Happened += SpawnLoot;
+      EnemyDeath.ObjectDestroyed += SpawnLoot;
     }
 
     public void SetLootValue(int min, int max)

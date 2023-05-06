@@ -1,4 +1,3 @@
-using CodeBase.Gameplay.Logic;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero
@@ -20,6 +19,9 @@ namespace CodeBase.Gameplay.Hero
     private void OnDestroy() => 
       Health.HealthChanged -= HealthChanged;
 
+    private void OnDeathEnd() => 
+      CreateDeathFx();
+
     private void HealthChanged()
     {
       if (!_isDead && Health.Current <= 0) 
@@ -32,10 +34,9 @@ namespace CodeBase.Gameplay.Hero
       Move.enabled = false;
       Attack.enabled = false;
       Animator.PlayDeath();
-      Animator.StateExited += CreateDeathFx;
-
-      void CreateDeathFx(AnimatorState animatorState) => 
-        Instantiate(DeathFx, transform.position, Quaternion.identity);
     }
+
+    private void CreateDeathFx() => 
+      Instantiate(DeathFx, transform.position, Quaternion.identity);
   }
 }

@@ -55,8 +55,11 @@ namespace CodeBase.Gameplay.Hero
       for (int i = 0; i < Hit(); ++i)
       {
         Transform enemyTransform = _hits[i].transform.parent;
-        enemyTransform.GetComponent<IHealth>().TakeDamage(_stats.Damage * attackMultiplier);
-        CreateHitFx(enemyTransform);
+        if (enemyTransform.TryGetComponent(out IHealth health))
+        {
+          health.TakeDamage(_stats.Damage * attackMultiplier);
+          CreateHitFx(enemyTransform);
+        }
       }
     }
 
