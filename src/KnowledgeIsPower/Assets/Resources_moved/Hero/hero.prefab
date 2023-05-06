@@ -1434,6 +1434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animator: {fileID: 1941000699}
   CharacterController: {fileID: 6247783307006756389}
+  _bloodSystemPrefab: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
 --- !u!114 &4783825719322237971
 MonoBehaviour:
   m_ObjectHideFlags: 0

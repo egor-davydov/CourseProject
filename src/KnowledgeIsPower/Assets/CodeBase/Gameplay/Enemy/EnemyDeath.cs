@@ -14,15 +14,11 @@ namespace CodeBase.Gameplay.Enemy
 
     public event Action Happened;
 
-    private void Start()
-    {
+    private void Start() => 
       Health.HealthChanged += OnHealthChanged;
-    }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() => 
       Health.HealthChanged -= OnHealthChanged;
-    }
 
     private void OnHealthChanged()
     {
@@ -37,7 +33,8 @@ namespace CodeBase.Gameplay.Enemy
       Animator.PlayDeath();
       SpawnDeathFx();
 
-      StartCoroutine(DestroyTimer());
+      Destroy(GetComponentInChildren<BoxCollider>().gameObject);
+      Destroy(gameObject, 3);
       
       Happened?.Invoke();
     }
@@ -45,12 +42,6 @@ namespace CodeBase.Gameplay.Enemy
     private void SpawnDeathFx()
     {
       Instantiate(DeathFx, transform.position, Quaternion.identity);
-    }
-
-    private IEnumerator DestroyTimer()
-    {
-      yield return new WaitForSeconds(3);
-      Destroy(gameObject);
     }
   }
 }

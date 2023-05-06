@@ -12,6 +12,9 @@ namespace CodeBase.Gameplay.Hero
     public HeroAnimator Animator;
     public CharacterController CharacterController;
 
+    [SerializeField]
+    private GameObject _bloodSystemPrefab;
+
     private IInputService _inputService;
 
     private static int _layerMask;
@@ -21,18 +24,18 @@ namespace CodeBase.Gameplay.Hero
     public void Construct(IInputService inputService) =>
       _inputService = inputService;
 
-    private void Awake() => 
+    private void Awake() =>
       _layerMask = 1 << LayerMask.NameToLayer(Layers.HittableLayer);
 
     private void Update()
     {
-      if(_inputService == null || Animator.IsAttacking)
+      if (_inputService == null || Animator.IsAttacking)
         return;
-      
-      if(_inputService.IsFastAttackButtonUp())
+
+      if (_inputService.IsFastAttackButtonUp())
         Animator.PlayFastAttack();
-      
-      if(_inputService.IsLongAttackButtonUp())
+
+      if (_inputService.IsLongAttackButtonUp())
         Animator.PlayLongAttack();
     }
 
@@ -41,18 +44,26 @@ namespace CodeBase.Gameplay.Hero
 
     private void Attack(float attackMultiplier)
     {
-      PhysicsDebug.DrawDebug(StartPoint() + transform.forward, _stats.DamageRadius, 1.0f);
+      //PhysicsDebug.DrawDebug(OverlapPosition(), _stats.DamageRadius, 100.0f);
       for (int i = 0; i < Hit(); ++i)
+      {
         _hits[i].transform.parent.GetComponent<IHealth>().TakeDamage(_stats.Damage * attackMultiplier);
+        CreateHitFx();
+      }
     }
 
-    private int Hit() => 
-      Physics.OverlapSphereNonAlloc(StartPoint() + transform.forward, _stats.DamageRadius, _hits, _layerMask);
+    private void CreateHitFx()
+    {
+      Instantiate(_bloodSystemPrefab, OverlapPosition(), Quaternion.identity);
+    }
 
-    private Vector3 StartPoint() =>
-      new Vector3(transform.position.x, CharacterController.center.y / 2, transform.position.z);
+    private int Hit() =>
+      Physics.OverlapSphereNonAlloc(OverlapPosition(), _stats.DamageRadius, _hits, _layerMask);
 
-    public void ReceiveProgress(PlayerProgress progress) => 
+    private Vector3 OverlapPosition() =>
+      new Vector3(transform.position.x, CharacterController.center.y, transform.position.z) + transform.forward;
+
+    public void ReceiveProgress(PlayerProgress progress) =>
       _stats = progress.HeroStats;
   }
 }
