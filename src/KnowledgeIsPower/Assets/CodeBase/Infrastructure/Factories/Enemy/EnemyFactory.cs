@@ -52,12 +52,12 @@ namespace CodeBase.Infrastructure.Factories.Enemy
       monsterObject.GetComponent<ActorUI>().Construct(health);
       monsterObject.GetComponent<NavMeshAgent>().speed = monsterData.MoveSpeed;
 
-      Attack attack = monsterObject.GetComponent<Attack>();
+      EnemyAttack enemyAttack = monsterObject.GetComponent<EnemyAttack>();
 
-      attack.Construct(heroGameObject.transform);
-      attack.Damage = monsterData.Damage;
-      attack.Cleavage = monsterData.Cleavage;
-      attack.EffectiveDistance = monsterData.EffectiveDistance;
+      enemyAttack.Construct(heroGameObject.transform);
+      enemyAttack.Damage = monsterData.Damage;
+      enemyAttack.Cleavage = monsterData.Cleavage;
+      enemyAttack.EffectiveDistance = monsterData.EffectiveDistance;
 
       monsterObject.GetComponent<AgentMoveToPlayer>()?.Construct(heroGameObject.transform);
       monsterObject.GetComponent<RotateToHero>()?.Construct(heroGameObject.transform);

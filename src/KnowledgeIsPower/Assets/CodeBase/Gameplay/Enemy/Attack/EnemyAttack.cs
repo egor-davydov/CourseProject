@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using CodeBase.Gameplay.Logic;
 using CodeBase.StaticData.Monster;
@@ -6,9 +7,10 @@ using UnityEngine;
 namespace CodeBase.Gameplay.Enemy.Attack
 {
   [RequireComponent(typeof(EnemyAnimator))]
-  public class Attack : MonoBehaviour
+  public class EnemyAttack : MonoBehaviour
   {
-    public EnemyAnimator Animator;
+    [SerializeField]
+    private EnemyAnimator _enemyAnimator;
 
     public float AttackCooldown = 3.0f;
     public float Cleavage = 0.5f;
@@ -21,8 +23,13 @@ namespace CodeBase.Gameplay.Enemy.Attack
     private float _attackCooldown;
     private bool _isAttacking;
     private bool _attackIsActive;
-    [SerializeField] private GameObject _orangeHitFxPrefab;
-    [SerializeField] private GameObject _whiteHitFxPrefab;
+
+    [SerializeField]
+    private GameObject _orangeHitFxPrefab;
+
+    [SerializeField]
+    private GameObject _whiteHitFxPrefab;
+
     private MonsterTypeId _monsterType;
 
 
@@ -38,7 +45,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
     private void Update()
     {
       UpdateCooldown();
-      
+
       if (_attackIsActive)
         LookAtHero();
 
@@ -57,12 +64,8 @@ namespace CodeBase.Gameplay.Enemy.Attack
         hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
         CreateHitFx(hit.transform);
       }
-    }
 
-    private void OnAttackEnded()
-    {
-      _attackCooldown = AttackCooldown;
-      _isAttacking = false;
+      EndAttack();
     }
 
     public void DisableAttack() =>
@@ -70,7 +73,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     public void EnableAttack() =>
       _attackIsActive = true;
-    
+
     private void CreateHitFx(Transform heroTransform)
     {
       Vector3 heroPosition = heroTransform.position + Vector3.up;
@@ -117,8 +120,21 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     private void StartAttack()
     {
-      Animator.PlayAttack();
+      _enemyAnimator.PlayAttack();
       _isAttacking = true;
+      StartCoroutine(ActivateAttack());
+    }
+
+    private IEnumerator ActivateAttack()
+    {
+      yield return new WaitForSeconds(1);
+      EndAttack();
+    }
+
+    private void EndAttack()
+    {
+      _isAttacking = false;
+      _attackCooldown = AttackCooldown;
     }
   }
 }
