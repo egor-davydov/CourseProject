@@ -51,7 +51,7 @@ namespace CodeBase.Gameplay.Enemy
       Health.HealthChanged -= OnHealthChanged;
 
       DisableScripts();
-      DestroyHurtBox();
+      //DestroyHurtBox();
       DestroyCanvas();
       Animator.PlayDeath();
 
@@ -62,7 +62,7 @@ namespace CodeBase.Gameplay.Enemy
       Destroy(GetComponentInChildren<Canvas>().gameObject);
 
     private void DestroyHurtBox() =>
-      Destroy(GetComponentInChildren<BoxCollider>().gameObject);
+      Destroy(GetComponentInChildren<BoxCollider>());
 
     private void DisableScripts()
     {

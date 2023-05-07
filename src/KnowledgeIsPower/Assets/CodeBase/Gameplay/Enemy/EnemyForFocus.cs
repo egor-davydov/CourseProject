@@ -7,10 +7,13 @@ namespace CodeBase.Gameplay.Enemy
     [SerializeField]
     private GameObject _focusCircle;
 
-    public void Focus() => 
+    public void Focus() =>
       _focusCircle.SetActive(true);
 
-    public void UnFocus() => 
-      _focusCircle.SetActive(false);
+    public void UnFocus()
+    {
+      if (_focusCircle != null) 
+        _focusCircle.SetActive(false);
+    }
   }
 }

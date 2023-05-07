@@ -44,16 +44,16 @@ namespace CodeBase.Gameplay.Hero
       
       Transform enemyTransform = obj.transform.parent;
       //Debug.Log($"OnSphereExit {enemyTransform.name}");
-      if (EnemiesInSphere.Contains(enemyTransform)) 
         RemoveInSphereAndTryChangeFocus(enemyTransform);
     }
 
     private bool IsEnemyHurtBox(Collider obj) =>
       obj.CompareTag(Tags.EnemyHurtBox);
 
-    private void RemoveInSphereAndTryChangeFocus(Transform objTransform)
+    private void RemoveInSphereAndTryChangeFocus(Transform enemyTransform)
     {
-      EnemiesInSphere.Remove(objTransform);
+      if (EnemiesInSphere.Contains(enemyTransform)) 
+      EnemiesInSphere.Remove(enemyTransform);
       if (EnemiesInSphere.Count != 0)
         ChangeFocus();
     }

@@ -69,7 +69,7 @@ namespace CodeBase.Gameplay.Hero
       switch (monsterType)
       {
         case MonsterTypeId.Lich:
-          Instantiate(_bloodFxPrefab, enemyTransform.position + Vector3.up, Quaternion.identity);
+          Instantiate(_bloodFxPrefab, enemyTransform.position + Vector3.up*0.5f, Quaternion.identity);
           break;
         case MonsterTypeId.Golem:
           Instantiate(_rockHitFxPrefab, enemyTransform.position + Vector3.up, Quaternion.identity);
