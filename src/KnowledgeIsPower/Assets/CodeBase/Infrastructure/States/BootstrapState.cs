@@ -1,7 +1,6 @@
 ﻿using CodeBase.Gameplay.Hero;
 using CodeBase.Gameplay.Hero.States;
 using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Factories.Enemy;
 using CodeBase.Infrastructure.Factories.EnemySpawner;
 using CodeBase.Infrastructure.Factories.Hero;
@@ -26,25 +25,22 @@ namespace CodeBase.Infrastructure.States
 {
   public class BootstrapState : IState
   {
-    private const string Initial = "Initial";
     
     private readonly GameStateMachine _stateMachine;
     private readonly HeroStateMachine _heroStateMachine;
-    private readonly SceneLoader _sceneLoader;
     private readonly AllServices _services;
 
-    public BootstrapState(GameStateMachine stateMachine, HeroStateMachine heroStateMachine, SceneLoader sceneLoader, AllServices services)
+    public BootstrapState(GameStateMachine stateMachine, HeroStateMachine heroStateMachine, AllServices services)
     {
       _stateMachine = stateMachine;
       _heroStateMachine = heroStateMachine;
-      _sceneLoader = sceneLoader;
       _services = services;
 
       RegisterServices();
     }
 
     public void Enter() =>
-      _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
+      _stateMachine.Enter<LoadProgressState>();
 
     public void Exit()
     {
@@ -155,9 +151,6 @@ namespace CodeBase.Infrastructure.States
       staticData.Load();
       _services.RegisterSingle(staticData);
     }
-
-    private void EnterLoadLevel() =>
-      _stateMachine.Enter<LoadProgressState>();
 
     private static IInputService InputService() =>
       Application.isEditor

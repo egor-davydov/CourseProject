@@ -29,7 +29,7 @@ namespace CodeBase.Infrastructure.States
     {
       _states = new Dictionary<Type, IExitableState>
       {
-        [typeof(BootstrapState)] = new BootstrapState(this, heroStateMachine, sceneLoader, services),
+        [typeof(BootstrapState)] = new BootstrapState(this, heroStateMachine, services),
 
         [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(),
           services.Single<ISaveLoadService>()),
