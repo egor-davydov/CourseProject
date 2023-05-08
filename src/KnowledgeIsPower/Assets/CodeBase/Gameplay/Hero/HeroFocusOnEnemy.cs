@@ -31,7 +31,7 @@ namespace CodeBase.Gameplay.Hero
     private void Update()
     {
       if (CurrentEnemyToFocus != null)
-        LookAt(transform, CurrentEnemyToFocus);
+        transform.SmoothLookAt(CurrentEnemyToFocus, 10);
     }
 
     public void ChangeEnemyToFocusLeft()

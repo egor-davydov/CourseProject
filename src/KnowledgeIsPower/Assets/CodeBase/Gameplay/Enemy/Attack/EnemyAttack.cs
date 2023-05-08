@@ -54,7 +54,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
     }
 
     private void LookAtHero() =>
-      transform.LookAt(_heroTransform);
+      transform.SmoothLookAt(_heroTransform, 2);
 
     private void OnAttack()
     {
