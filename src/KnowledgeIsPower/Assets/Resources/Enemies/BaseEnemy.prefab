@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 502268589996600908}
   - component: {fileID: 8358964436095184501}
   - component: {fileID: 5202189114089301272}
+  - component: {fileID: 5727833379090314978}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Enemy
@@ -88,7 +89,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1500939411536426}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
+  m_Radius: 0.98
   m_Speed: 3
   m_Acceleration: 15
   avoidancePriority: 50
@@ -155,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b875a25f50449119ceb2fc83734fe91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 1759886331324184333}
+  _enemyAnimator: {fileID: 1759886331324184333}
   AttackCooldown: 3
   Cleavage: 0.5
   EffectiveDistance: 0.5
@@ -174,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e64dc2c5b0741d5afb74f121c23ae09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Attack: {fileID: 5506074209734154432}
+  enemyAttack: {fileID: 5506074209734154432}
   TriggerObserver: {fileID: 3367644382387082131}
 --- !u!114 &4970791679775700779
 MonoBehaviour:
@@ -245,6 +246,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _monsterType: 0
+--- !u!114 &5727833379090314978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500939411536426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4156cb3a3d4201a868c01d35179edf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 2
 --- !u!1 &49975782816367269
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +650,7 @@ GameObject:
   - component: {fileID: 6937923552516902480}
   - component: {fileID: 235835247671380907}
   - component: {fileID: 6856510735531968045}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AggroZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

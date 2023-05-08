@@ -1,7 +1,6 @@
 using System;
 using CodeBase.Data.Progress;
 using CodeBase.Gameplay.Logic;
-using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using UnityEngine;
 
@@ -19,30 +18,18 @@ namespace CodeBase.Gameplay.Hero
     private bool _defending;
 
     public event Action HealthChanged;
-
-    private void Start()
-    {
-      HeroDefend.Activate += ActivateDefending;
-      HeroDefend.Deactivate += DeactivateDefending;
-    }
-
-    private void OnDestroy()
-    {
-      HeroDefend.Activate -= ActivateDefending;
-      HeroDefend.Deactivate -= DeactivateDefending;
-    }
+    public event Action OnTakeDamage;
 
     public float Current
     {
       get => _state.CurrentHP;
       set
       {
-        if (value != _state.CurrentHP)
-        {
-          _state.CurrentHP = value;
+        if (value == _state.CurrentHP)
+          return;
 
-          HealthChanged?.Invoke();
-        }
+        _state.CurrentHP = value;
+        HealthChanged?.Invoke();
       }
     }
 
@@ -71,28 +58,27 @@ namespace CodeBase.Gameplay.Hero
         return;
 
       float finalDamage;
-      if (!_defending)
+      if (!HeroDefend.IsActive)
       {
         finalDamage = damage;
       }
       else
       {
-        if (HeroDefend.MaximumDamageToBlock > damage)
+        if (HeroDefend.MaxDamageToCompleteBlock > damage)
           finalDamage = 0;
         else
           finalDamage = damage - damage * HeroDefend.DefendFactor;
       }
 
-      Current -= finalDamage;
 
-      Animator.PlayHit();
+      if (finalDamage != 0)
+      {
+        Current -= finalDamage;
+        Animator.PlayHit();
+      }
+
+      OnTakeDamage?.Invoke();
       //Debug.Log($"Damage {finalDamage}");
     }
-
-    private void ActivateDefending() =>
-      _defending = true;
-
-    private void DeactivateDefending() =>
-      _defending = false;
   }
 }

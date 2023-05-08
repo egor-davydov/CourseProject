@@ -17,7 +17,7 @@ namespace CodeBase.Gameplay.Enemy
     private readonly int _walkingStateHash = Animator.StringToHash("Move");
     private readonly int _deathStateHash = Animator.StringToHash("die");
 
-    private Animator _animator;
+    public Animator Animator { get; private set; }
 
     public event Action<AnimatorState> StateEntered;
     public event Action<AnimatorState> StateExited;
@@ -25,20 +25,20 @@ namespace CodeBase.Gameplay.Enemy
     public AnimatorState State { get; private set; }
 
     private void Awake() => 
-      _animator = GetComponent<Animator>();
+      Animator = GetComponent<Animator>();
 
-    public void PlayHit() => _animator.SetTrigger(Hit);
-    public void PlayDeath() => _animator.SetTrigger(Die);
+    public void PlayHit() => Animator.SetTrigger(Hit);
+    public void PlayDeath() => Animator.SetTrigger(Die);
 
     public void Move(float speed)
     {
-      _animator.SetBool(IsMoving, true);
-      _animator.SetFloat(Speed, speed);
+      Animator.SetBool(IsMoving, true);
+      Animator.SetFloat(Speed, speed);
     }
 
-    public void StopMoving() => _animator.SetBool(IsMoving, false);
+    public void StopMoving() => Animator.SetBool(IsMoving, false);
 
-    public void PlayAttack() => _animator.SetTrigger(Attack);
+    public void PlayAttack() => Animator.SetTrigger(Attack);
 
     public void EnteredState(int stateHash)
     {

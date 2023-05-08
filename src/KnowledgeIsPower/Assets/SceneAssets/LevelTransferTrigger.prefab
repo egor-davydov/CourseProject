@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8946044369709527944}
   - component: {fileID: 8540566313614326954}
   - component: {fileID: 2727943515552253102}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: LevelTransferTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6160c9ab3af2442f9edeef08d2e4cddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransferTo: Dungeon
 --- !u!1001 &8930335569977693672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76,7 +75,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 3d4907e6bd39f474b8fd8220920e65c4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.01
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 3d4907e6bd39f474b8fd8220920e65c4, type: 3}
       propertyPath: m_LocalPosition.z

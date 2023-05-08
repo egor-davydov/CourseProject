@@ -12,12 +12,13 @@ namespace CodeBase.Gameplay.Hero.States
 
     public void Enter()
     {
+      //Debug.Log($"{Time.time} HeroFocusedState");
       _heroObject.GetComponent<HeroAnimator>().TurnOffRun();
       _heroFocusOnEnemy = _heroObject.GetComponent<HeroFocusOnEnemy>();
       _heroFocusOnEnemy.Initialize();
     }
 
-    public void Exit() => 
+    public void Exit() =>
       _heroFocusOnEnemy.UnFocus();
   }
 }

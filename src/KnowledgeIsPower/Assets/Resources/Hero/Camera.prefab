@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationAngleX: 55
-  _distance: 10
+  _distance: 8
   _offsetY: 0.5

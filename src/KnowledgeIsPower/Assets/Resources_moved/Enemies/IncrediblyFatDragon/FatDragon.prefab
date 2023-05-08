@@ -2111,6 +2111,11 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: f14db21b5e70e3d4ab6f0e158099a341, type: 3}
+    - target: {fileID: 2720272718998919933, guid: 274c4c35ed05ea14c87492064b3cadfd,
+        type: 3}
+      propertyPath: m_Radius
+      value: 3.55
+      objectReference: {fileID: 0}
     - target: {fileID: 2982102125011798096, guid: 274c4c35ed05ea14c87492064b3cadfd,
         type: 3}
       propertyPath: m_Size.y

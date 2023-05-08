@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Gameplay.Logic.EnemySpawners;
-using UnityEngine;
 
-namespace CodeBase.Services
+namespace CodeBase.Services.Respawn
 {
   public class RespawnService : IRespawnService
   {

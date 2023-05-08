@@ -3,6 +3,7 @@ using CodeBase.Gameplay.Logic;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.States;
 using CodeBase.Services.ProgressWatchers;
+using CodeBase.Services.SaveLoad;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.LevelTransfer
@@ -12,21 +13,24 @@ namespace CodeBase.Infrastructure.Factories.LevelTransfer
     private readonly IAssetProvider _assets;
     private readonly IProgressWatchers _progressWatchers;
     private readonly IGameStateMachine _gameStateMachine;
+    private readonly ISaveLoadService _saveLoadService;
 
-    public LevelTransferFactory(IAssetProvider assets, IProgressWatchers progressWatchers, IGameStateMachine gameStateMachine)
+    public LevelTransferFactory(IAssetProvider assets, IProgressWatchers progressWatchers, IGameStateMachine gameStateMachine, ISaveLoadService saveLoadService)
     {
       _assets = assets;
       _progressWatchers = progressWatchers;
       _gameStateMachine = gameStateMachine;
+      _saveLoadService = saveLoadService;
     }
 
-    public async Task CreateLevelTransfer(Vector3 at)
+    public async Task<GameObject> CreateLevelTransfer(Vector3 at, string transferTo)
     {
       GameObject levelTransferObject = await _assets.Instantiate(AssetAddress.LevelTransferTrigger, at);
       _progressWatchers.Register(levelTransferObject);
       LevelTransferTrigger levelTransfer = levelTransferObject.GetComponent<LevelTransferTrigger>();
 
-      levelTransfer.Construct(_gameStateMachine);
+      levelTransfer.Construct(transferTo, _gameStateMachine, _saveLoadService);
+      return levelTransferObject;
     }
   }
 }

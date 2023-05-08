@@ -49,14 +49,20 @@ namespace CodeBase.Gameplay.Hero
     private void OnFastAttack() => Attack(attackMultiplier: 1f);
     private void OnLongAttack() => Attack(attackMultiplier: 2f);
 
+    public void ReceiveProgress(PlayerProgress progress) =>
+      _stats = progress.HeroStats;
+
     private void Attack(float attackMultiplier)
     {
       //PhysicsDebug.DrawDebug(OverlapPosition(), _stats.DamageRadius, 100.0f);
       for (int i = 0; i < Hit(); ++i)
       {
         Transform enemyTransform = _hits[i].transform.parent;
-        enemyTransform.GetComponent<IHealth>().TakeDamage(_stats.Damage * attackMultiplier);
-        CreateHitFx(enemyTransform);
+        if (enemyTransform.TryGetComponent(out IHealth health))
+        {
+          health.TakeDamage(_stats.Damage * attackMultiplier);
+          CreateHitFx(enemyTransform);
+        }
       }
     }
 
@@ -66,7 +72,7 @@ namespace CodeBase.Gameplay.Hero
       switch (monsterType)
       {
         case MonsterTypeId.Lich:
-          Instantiate(_bloodFxPrefab, enemyTransform.position + Vector3.up, Quaternion.identity);
+          Instantiate(_bloodFxPrefab, enemyTransform.position + Vector3.up*0.5f, Quaternion.identity);
           break;
         case MonsterTypeId.Golem:
           Instantiate(_rockHitFxPrefab, enemyTransform.position + Vector3.up, Quaternion.identity);
@@ -82,8 +88,5 @@ namespace CodeBase.Gameplay.Hero
 
     private Vector3 OverlapPosition() =>
       new Vector3(transform.position.x, CharacterController.center.y, transform.position.z) + transform.forward;
-
-    public void ReceiveProgress(PlayerProgress progress) =>
-      _stats = progress.HeroStats;
   }
 }

@@ -1,4 +1,7 @@
+using System.Collections;
 using System.Linq;
+using CodeBase.Extensions.GameplayExtensions;
+using CodeBase.Gameplay.Hero;
 using CodeBase.Gameplay.Logic;
 using CodeBase.StaticData.Monster;
 using UnityEngine;
@@ -6,14 +9,16 @@ using UnityEngine;
 namespace CodeBase.Gameplay.Enemy.Attack
 {
   [RequireComponent(typeof(EnemyAnimator))]
-  public class Attack : MonoBehaviour
+  public class EnemyAttack : MonoBehaviour
   {
-    public EnemyAnimator Animator;
+    [SerializeField]
+    private EnemyAnimator _enemyAnimator;
 
     public float AttackCooldown = 3.0f;
     public float Cleavage = 0.5f;
     public float EffectiveDistance = 0.5f;
     public float Damage = 10;
+    public float RotationSpeed;
 
     private Transform _heroTransform;
     private Collider[] _hits = new Collider[1];
@@ -21,10 +26,15 @@ namespace CodeBase.Gameplay.Enemy.Attack
     private float _attackCooldown;
     private bool _isAttacking;
     private bool _attackIsActive;
-    [SerializeField] private GameObject _orangeHitFxPrefab;
-    [SerializeField] private GameObject _whiteHitFxPrefab;
-    private MonsterTypeId _monsterType;
 
+    [SerializeField]
+    private GameObject _orangeHitFxPrefab;
+
+    [SerializeField]
+    private GameObject _whiteHitFxPrefab;
+
+    private MonsterTypeId _monsterType;
+    private AnimationEvent _onAttackEvent;
 
     public void Construct(Transform heroTransform) =>
       _heroTransform = heroTransform;
@@ -33,12 +43,15 @@ namespace CodeBase.Gameplay.Enemy.Attack
     {
       _layerMask = 1 << LayerMask.NameToLayer(Layers.PlayerLayer);
       _monsterType = GetComponent<EnemyType>().Value;
+      _onAttackEvent = _enemyAnimator.Animator.runtimeAnimatorController
+        .animationClips.First(x => x.name.ToLower() == "attack01")
+        .events.First(x => x.functionName == "OnAttack");
     }
 
     private void Update()
     {
       UpdateCooldown();
-      
+
       if (_attackIsActive)
         LookAtHero();
 
@@ -47,22 +60,17 @@ namespace CodeBase.Gameplay.Enemy.Attack
     }
 
     private void LookAtHero() =>
-      transform.LookAt(_heroTransform);
+      transform.SmoothLookAt(_heroTransform, RotationSpeed * Time.deltaTime);
 
     private void OnAttack()
     {
-      if (Hit(out Collider hit))
-      {
-        //PhysicsDebug.DrawDebug(StartPoint(), Cleavage, 1.0f);
-        hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
-        CreateHitFx(hit.transform);
-      }
-    }
+      if (!Hit(out Collider hit))
+        return;
 
-    private void OnAttackEnded()
-    {
-      _attackCooldown = AttackCooldown;
-      _isAttacking = false;
+      //PhysicsDebug.DrawDebug(StartPoint(), Cleavage, 1.0f);
+      hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+      if (!hit.GetComponent<HeroDefend>().IsActive)
+        CreateHitFx(hit.transform);
     }
 
     public void DisableAttack() =>
@@ -70,7 +78,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     public void EnableAttack() =>
       _attackIsActive = true;
-    
+
     private void CreateHitFx(Transform heroTransform)
     {
       Vector3 heroPosition = heroTransform.position + Vector3.up;
@@ -93,8 +101,11 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     private void UpdateCooldown()
     {
-      if (!CooldownIsUp())
-        _attackCooldown -= Time.deltaTime;
+      if (CooldownIsUp())
+        return;
+
+      _attackCooldown -= Time.deltaTime;
+      Debug.Log(_attackCooldown);
     }
 
     private bool Hit(out Collider hit)
@@ -108,8 +119,8 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     private Vector3 StartPoint()
     {
-      return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
-             transform.forward * EffectiveDistance;
+      return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z)
+             + transform.forward * EffectiveDistance;
     }
 
     private bool CanAttack() =>
@@ -117,8 +128,21 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     private void StartAttack()
     {
-      Animator.PlayAttack();
+      _enemyAnimator.PlayAttack();
       _isAttacking = true;
+      StartCoroutine(ActivateAttack());
+    }
+
+    private IEnumerator ActivateAttack()
+    {
+      yield return new WaitForSeconds(_onAttackEvent.time);
+      EndAttack();
+    }
+
+    private void EndAttack()
+    {
+      _isAttacking = false;
+      _attackCooldown = AttackCooldown;
     }
   }
 }

@@ -1,4 +1,3 @@
-using CodeBase.Gameplay.Logic;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero
@@ -6,7 +5,7 @@ namespace CodeBase.Gameplay.Hero
   public class HeroDeath : MonoBehaviour
   {
     public HeroHealth Health;
-    
+
     public HeroMove Move;
     public HeroAttack Attack;
     public HeroAnimator Animator;
@@ -14,15 +13,18 @@ namespace CodeBase.Gameplay.Hero
     public GameObject DeathFx;
     private bool _isDead;
 
-    private void Start() => 
+    private void Start() =>
       Health.HealthChanged += HealthChanged;
 
-    private void OnDestroy() => 
+    private void OnDestroy() =>
       Health.HealthChanged -= HealthChanged;
+
+    private void OnDeathEnd() =>
+      CreateDeathFx();
 
     private void HealthChanged()
     {
-      if (!_isDead && Health.Current <= 0) 
+      if (!_isDead && Health.Current <= 0)
         Die();
     }
 
@@ -32,10 +34,9 @@ namespace CodeBase.Gameplay.Hero
       Move.enabled = false;
       Attack.enabled = false;
       Animator.PlayDeath();
-      Animator.StateExited += CreateDeathFx;
-
-      void CreateDeathFx(AnimatorState animatorState) => 
-        Instantiate(DeathFx, transform.position, Quaternion.identity);
     }
+
+    private void CreateDeathFx() =>
+      Instantiate(DeathFx, transform.position + transform.forward * 0.5f, Quaternion.identity);
   }
 }

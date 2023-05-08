@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using CodeBase.Gameplay.Enemy.Attack;
+using CodeBase.Gameplay.Enemy.Move;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Enemy
@@ -7,18 +9,36 @@ namespace CodeBase.Gameplay.Enemy
   [RequireComponent(typeof(EnemyHealth), typeof(EnemyAnimator))]
   public class EnemyDeath : MonoBehaviour
   {
-    public EnemyHealth Health;
-    public EnemyAnimator Animator;
+    [SerializeField]
+    private EnemyHealth Health;
 
-    public GameObject DeathFx;
+    [SerializeField]
+    private EnemyAnimator Animator;
+
+    [SerializeField]
+    private GameObject DeathFx;
 
     public event Action Happened;
+    public event Action ObjectDestroyed;
 
-    private void Start() => 
+    private void Start() =>
       Health.HealthChanged += OnHealthChanged;
 
-    private void OnDestroy() => 
+    private void OnDestroy() =>
       Health.HealthChanged -= OnHealthChanged;
+
+    private void OnDeathEnd()
+    {
+      SpawnDeathFx();
+      StartCoroutine(DestroyEnemy());
+    }
+
+    private IEnumerator DestroyEnemy()
+    {
+      yield return new WaitForSeconds(2);
+      Destroy(gameObject);
+      ObjectDestroyed?.Invoke();
+    }
 
     private void OnHealthChanged()
     {
@@ -29,19 +49,31 @@ namespace CodeBase.Gameplay.Enemy
     private void Die()
     {
       Health.HealthChanged -= OnHealthChanged;
-      
-      Animator.PlayDeath();
-      SpawnDeathFx();
 
-      Destroy(GetComponentInChildren<BoxCollider>().gameObject);
-      Destroy(gameObject, 3);
-      
+      DisableScripts();
+      DestroyHurtBox();
+      DestroyCanvas();
+      Animator.PlayDeath();
+
       Happened?.Invoke();
     }
 
-    private void SpawnDeathFx()
+    private void DestroyCanvas() => 
+      Destroy(GetComponentInChildren<Canvas>().gameObject);
+
+    private void DestroyHurtBox() =>
+      Destroy(GetComponentInChildren<BoxCollider>());
+
+    private void DisableScripts()
     {
-      Instantiate(DeathFx, transform.position, Quaternion.identity);
+      GetComponent<EnemyAttack>().enabled = false;
+      GetComponent<CheckAttackRange>().enabled = false;
+      GetComponent<Aggro>().enabled = false;
+      GetComponent<AgentMoveToPlayer>().enabled = false;
+      GetComponent<RotateOnDamage>().enabled = false;
     }
+
+    private void SpawnDeathFx() =>
+      Instantiate(DeathFx, transform.position, Quaternion.identity);
   }
 }

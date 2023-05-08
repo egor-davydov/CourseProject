@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: Lich
   m_EditorClassIdentifier: 
   MonsterTypeId: 1
-  Hp: 5
+  Hp: 4
   Damage: 5
-  MaxLootValue: 7
-  MinLootValue: 1
+  AttackCooldown: 2
+  StunCooldown: 3
   EffectiveDistance: 0.5
   Cleavage: 0.5
-  MoveSpeed: 3
+  MoveSpeed: 2.3
+  RotationSpeed: 3
+  MaxLootValue: 6
+  MinLootValue: 2
   PrefabReference:
     m_AssetGUID: 58bfdcdcb5df542b9bd638a51d825a6c
     m_SubObjectName: 

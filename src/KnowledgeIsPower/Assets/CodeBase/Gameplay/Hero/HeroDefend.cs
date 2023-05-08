@@ -15,11 +15,10 @@ namespace CodeBase.Gameplay.Hero
     private IInputService _inputService;
     private Stats _stats;
     
-    public float MaximumDamageToBlock => _stats.MaximumDamageToBlock;
+    public float MaxDamageToCompleteBlock => _stats.MaxDamageToCompleteBlock;
     public float DefendFactor => _stats.DefendFactor;
-    public event Action Activate; 
-    public event Action Deactivate; 
-    
+    public bool IsActive { get; private set; }
+
     public void Construct(IInputService inputService) =>
       _inputService = inputService;
 
@@ -29,13 +28,13 @@ namespace CodeBase.Gameplay.Hero
         Animator.PlayDefend();
     }
 
-    private void OnDefend() => 
-      Activate?.Invoke();
-
-    private void OnDefendEnd() => 
-      Deactivate?.Invoke();
-
     public void ReceiveProgress(PlayerProgress progress) => 
       _stats = progress.HeroStats;
+
+    private void OnDefend() => 
+      IsActive = true;
+
+    private void OnDefendEnd() => 
+      IsActive = false;
   }
 }

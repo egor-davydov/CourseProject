@@ -1,11 +1,11 @@
-﻿using CodeBase.Data;
-using CodeBase.Data.Progress;
+﻿using CodeBase.Data.Progress;
 using CodeBase.Data.Progress.Loot;
+using CodeBase.Extensions;
 using CodeBase.Gameplay.Logic;
-using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CodeBase.Gameplay.Enemy.Loot
 {
@@ -16,7 +16,20 @@ namespace CodeBase.Gameplay.Enemy.Loot
     public GameObject PickupPopup;
     public TextMeshPro LootText;
 
-    private WorldData _worldData;
+    private LootData _lootData;
+
+    private LootPieceDictionary LootPieceDictionary
+    {
+      get
+      {
+        LootPiecesOnLevelsDictionary lootDataLootPiecesOnLevels = _lootData.LootPiecesOnLevels;
+        if(!lootDataLootPiecesOnLevels.Dictionary.ContainsKey(CurrentLevelName()))
+          lootDataLootPiecesOnLevels.Dictionary.Add(CurrentLevelName(), new LootPieceDictionary());
+        
+        return lootDataLootPiecesOnLevels.Dictionary[CurrentLevelName()];
+      }
+    }
+
     private Data.Progress.Loot.Loot _loot;
 
     private const float DelayBeforeDestroying = 1.5f;
@@ -25,8 +38,8 @@ namespace CodeBase.Gameplay.Enemy.Loot
     
     private bool _pickedUp;
 
-    public void Construct(WorldData worldData) => 
-      _worldData = worldData;
+    public void Construct(LootData lootData) => 
+      _lootData = lootData;
 
     public void Initialize(Data.Progress.Loot.Loot loot) => 
       _loot = loot;
@@ -36,11 +49,11 @@ namespace CodeBase.Gameplay.Enemy.Loot
 
     private void OnTriggerEnter(Collider other)
     {
-      if (!_pickedUp)
-      {
-        _pickedUp = true;
-        Pickup();
-      }
+      if (_pickedUp)
+        return;
+      
+      _pickedUp = true;
+      Pickup();
     }
 
     public void UpdateProgress(PlayerProgress progress)
@@ -48,7 +61,7 @@ namespace CodeBase.Gameplay.Enemy.Loot
       if (_pickedUp)
         return;
 
-      LootPieceDataDictionary lootPiecesOnScene = progress.WorldData.LootData.LootPiecesOnScene;
+      LootPieceDictionary lootPiecesOnScene = LootPieceDictionary;
 
       if (!lootPiecesOnScene.Dictionary.ContainsKey(_id))
         lootPiecesOnScene.Dictionary
@@ -72,11 +85,11 @@ namespace CodeBase.Gameplay.Enemy.Loot
     }
 
     private void UpdateCollectedLootAmount() =>
-      _worldData.LootData.Collect(_loot);
+      _lootData.Collect(_loot);
 
     private void RemoveLootPieceFromSavedPieces()
     {
-      LootPieceDataDictionary savedLootPieces = _worldData.LootData.LootPiecesOnScene;
+      LootPieceDictionary savedLootPieces = LootPieceDictionary;
 
       if (savedLootPieces.Dictionary.ContainsKey(_id)) 
         savedLootPieces.Dictionary.Remove(_id);
@@ -93,5 +106,8 @@ namespace CodeBase.Gameplay.Enemy.Loot
       LootText.text = $"{_loot.Value}";
       PickupPopup.SetActive(true);
     }
+    
+    private string CurrentLevelName() => 
+      SceneManager.GetActiveScene().name;
   }
 }

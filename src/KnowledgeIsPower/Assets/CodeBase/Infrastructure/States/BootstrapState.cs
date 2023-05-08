@@ -1,7 +1,6 @@
 ﻿using CodeBase.Gameplay.Hero;
 using CodeBase.Gameplay.Hero.States;
 using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Factories.Enemy;
 using CodeBase.Infrastructure.Factories.EnemySpawner;
 using CodeBase.Infrastructure.Factories.Hero;
@@ -13,9 +12,11 @@ using CodeBase.Services;
 using CodeBase.Services.Ads;
 using CodeBase.Services.IAP;
 using CodeBase.Services.Input;
+using CodeBase.Services.LevelCleared;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.Randomizer;
+using CodeBase.Services.Respawn;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
@@ -26,25 +27,22 @@ namespace CodeBase.Infrastructure.States
 {
   public class BootstrapState : IState
   {
-    private const string Initial = "Initial";
     
     private readonly GameStateMachine _stateMachine;
     private readonly HeroStateMachine _heroStateMachine;
-    private readonly SceneLoader _sceneLoader;
     private readonly AllServices _services;
 
-    public BootstrapState(GameStateMachine stateMachine, HeroStateMachine heroStateMachine, SceneLoader sceneLoader, AllServices services)
+    public BootstrapState(GameStateMachine stateMachine, HeroStateMachine heroStateMachine, AllServices services)
     {
       _stateMachine = stateMachine;
       _heroStateMachine = heroStateMachine;
-      _sceneLoader = sceneLoader;
       _services = services;
 
       RegisterServices();
     }
 
     public void Enter() =>
-      _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
+      _stateMachine.Enter<LoadProgressState>();
 
     public void Exit()
     {
@@ -62,6 +60,7 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IRespawnService>(new RespawnService());
+      _services.RegisterSingle<ILevelClearedService>(new LevelClearedService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
       _services.RegisterSingle<IProgressWatchers>(new ProgressWatchers());
       
@@ -99,7 +98,8 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<ILevelTransferFactory>(new LevelTransferFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IProgressWatchers>(),
-        _services.Single<IGameStateMachine>()
+        _services.Single<IGameStateMachine>(), 
+        _services.Single<ISaveLoadService>()
       ));
       _services.RegisterSingle<IHeroFactory>(new HeroFactory(
         _services.Single<IAssetProvider>(),
@@ -155,9 +155,6 @@ namespace CodeBase.Infrastructure.States
       staticData.Load();
       _services.RegisterSingle(staticData);
     }
-
-    private void EnterLoadLevel() =>
-      _stateMachine.Enter<LoadProgressState>();
 
     private static IInputService InputService() =>
       Application.isEditor
