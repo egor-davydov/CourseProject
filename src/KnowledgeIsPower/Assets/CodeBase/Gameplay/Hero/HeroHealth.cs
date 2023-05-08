@@ -1,7 +1,6 @@
 using System;
 using CodeBase.Data.Progress;
 using CodeBase.Gameplay.Logic;
-using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using UnityEngine;
 
@@ -19,6 +18,7 @@ namespace CodeBase.Gameplay.Hero
     private bool _defending;
 
     public event Action HealthChanged;
+    public event Action OnTakeDamage;
 
     private void Start()
     {
@@ -37,12 +37,11 @@ namespace CodeBase.Gameplay.Hero
       get => _state.CurrentHP;
       set
       {
-        if (value != _state.CurrentHP)
-        {
-          _state.CurrentHP = value;
-
-          HealthChanged?.Invoke();
-        }
+        if (value == _state.CurrentHP)
+          return;
+        
+        _state.CurrentHP = value;
+        HealthChanged?.Invoke();
       }
     }
 
@@ -86,6 +85,7 @@ namespace CodeBase.Gameplay.Hero
       Current -= finalDamage;
 
       Animator.PlayHit();
+      OnTakeDamage?.Invoke();
       //Debug.Log($"Damage {finalDamage}");
     }
 

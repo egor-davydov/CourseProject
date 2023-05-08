@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using CodeBase.Extensions.GameplayExtensions;
 using CodeBase.Gameplay.Logic;
 using CodeBase.StaticData.Monster;
 using UnityEngine;
@@ -54,7 +55,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
     }
 
     private void LookAtHero() =>
-      transform.SmoothLookAt(_heroTransform, 2);
+      transform.SmoothLookAt(_heroTransform, 2f * Time.deltaTime);
 
     private void OnAttack()
     {

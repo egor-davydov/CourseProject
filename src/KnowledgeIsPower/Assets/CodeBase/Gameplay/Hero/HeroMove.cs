@@ -1,5 +1,6 @@
 ﻿using CodeBase.Data;
 using CodeBase.Data.Progress;
+using CodeBase.Extensions;
 using CodeBase.Gameplay.Hero.States;
 using CodeBase.Services.Input;
 using CodeBase.Services.ProgressWatchers;

@@ -15,11 +15,19 @@ namespace CodeBase.Gameplay.Enemy
     private float _max;
 
     public event Action HealthChanged;
+    public event Action OnTakeDamage;
 
     public float Current
     {
       get => _current;
-      set => _current = value;
+      set
+      {
+        if(_current == value)
+          return;
+        
+        _current = value;
+        HealthChanged?.Invoke();
+      }
     }
 
     public float Max
@@ -33,9 +41,7 @@ namespace CodeBase.Gameplay.Enemy
       Current -= damage;
       
       Animator.PlayHit();
-      
-      HealthChanged?.Invoke();
+      OnTakeDamage?.Invoke();
     }
-
   }
 }

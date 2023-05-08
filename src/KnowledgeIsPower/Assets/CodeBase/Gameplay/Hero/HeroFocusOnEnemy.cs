@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CodeBase.Extensions.GameplayExtensions;
 using CodeBase.Gameplay.Enemy;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ namespace CodeBase.Gameplay.Hero
     private void Update()
     {
       if (CurrentEnemyToFocus != null)
-        transform.SmoothLookAt(CurrentEnemyToFocus, 10);
+        transform.SmoothLookAt(CurrentEnemyToFocus, 10*Time.deltaTime);
     }
 
     public void ChangeEnemyToFocusLeft()

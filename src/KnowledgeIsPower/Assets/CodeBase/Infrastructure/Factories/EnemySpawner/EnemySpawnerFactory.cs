@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CodeBase.Data;
+using CodeBase.Extensions;
 using CodeBase.Gameplay.Logic.EnemySpawners;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Factories.Enemy;

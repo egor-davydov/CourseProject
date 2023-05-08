@@ -19,8 +19,5 @@ namespace CodeBase.Infrastructure
 
       DontDestroyOnLoad(this);
     }
-
-    private void Update() => 
-      _heroStateMachine.OnUpdate();
   }
 }

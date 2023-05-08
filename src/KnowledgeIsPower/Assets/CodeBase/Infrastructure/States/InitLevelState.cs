@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CodeBase.Data;
 using CodeBase.Data.Progress.Loot;
+using CodeBase.Extensions;
 using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Gameplay.Logic;
 using CodeBase.Gameplay.Logic.EnemySpawners;

@@ -9,7 +9,6 @@ using CodeBase.Infrastructure.Factories.Loot;
 using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.StaticData;
-using CodeBase.StaticData;
 using CodeBase.StaticData.Monster;
 using CodeBase.UI.Elements;
 using UnityEngine;
@@ -59,8 +58,8 @@ namespace CodeBase.Infrastructure.Factories.Enemy
       enemyAttack.Cleavage = monsterData.Cleavage;
       enemyAttack.EffectiveDistance = monsterData.EffectiveDistance;
 
-      monsterObject.GetComponent<AgentMoveToPlayer>()?.Construct(heroGameObject.transform);
-      monsterObject.GetComponent<RotateToHero>()?.Construct(heroGameObject.transform);
+      monsterObject.GetComponent<AgentMoveToPlayer>().Construct(heroGameObject.transform);
+      monsterObject.GetComponent<RotateOnDamage>().Construct(heroGameObject.transform);
 
       LootSpawner lootSpawner = monsterObject.GetComponentInChildren<LootSpawner>();
       lootSpawner.Construct(_lootFactory, _randomService);
