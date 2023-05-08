@@ -1285,7 +1285,7 @@ GameObject:
   - component: {fileID: 4783825719322237971}
   - component: {fileID: 516263134856838748}
   m_Layer: 12
-  m_Name: Hero
+  m_Name: hero
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1867,7 +1867,7 @@ GameObject:
   - component: {fileID: 5111473026039114884}
   - component: {fileID: 5220373482407832961}
   - component: {fileID: 6464303999180210576}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: SphereForFocusOnEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

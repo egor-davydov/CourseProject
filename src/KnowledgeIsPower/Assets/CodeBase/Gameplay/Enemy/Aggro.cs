@@ -51,7 +51,8 @@ namespace CodeBase.Gameplay.Enemy
 
     private void StopAggroCoroutine()
     {
-      if(_aggroCoroutine == null) return;
+      if(_aggroCoroutine == null)
+        return;
       
       StopCoroutine(_aggroCoroutine);
       _aggroCoroutine = null;
