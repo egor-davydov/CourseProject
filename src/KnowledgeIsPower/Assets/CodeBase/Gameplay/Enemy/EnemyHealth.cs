@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using CodeBase.Gameplay.Logic;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace CodeBase.Gameplay.Enemy
     [SerializeField]
     private float _max;
 
+    private bool _canStun = true;
+
     public event Action HealthChanged;
     public event Action OnTakeDamage;
 
@@ -22,9 +25,9 @@ namespace CodeBase.Gameplay.Enemy
       get => _current;
       set
       {
-        if(_current == value)
+        if (_current == value)
           return;
-        
+
         _current = value;
         HealthChanged?.Invoke();
       }
@@ -36,12 +39,28 @@ namespace CodeBase.Gameplay.Enemy
       set => _max = value;
     }
 
+    public float StunCooldown { get; set; }
+
     public void TakeDamage(float damage)
     {
       Current -= damage;
-      
-      Animator.PlayHit();
+
+      if (_canStun)
+        StunEnemy();
       OnTakeDamage?.Invoke();
+    }
+
+    private void StunEnemy()
+    {
+      Animator.PlayHit();
+      StartCoroutine(MakeStunCooldown());
+    }
+
+    private IEnumerator MakeStunCooldown()
+    {
+      _canStun = false;
+      yield return new WaitForSeconds(StunCooldown);
+      _canStun = true;
     }
   }
 }

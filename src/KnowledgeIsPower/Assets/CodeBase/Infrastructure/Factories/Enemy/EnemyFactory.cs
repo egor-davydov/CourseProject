@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using CodeBase.Gameplay.Enemy;
 using CodeBase.Gameplay.Enemy.Attack;
 using CodeBase.Gameplay.Enemy.Loot;
 using CodeBase.Gameplay.Enemy.Move;
@@ -25,7 +26,8 @@ namespace CodeBase.Infrastructure.Factories.Enemy
     private readonly IRandomService _randomService;
     private readonly ILootFactory _lootFactory;
 
-    public EnemyFactory(IAssetProvider assets, IProgressWatchers progressWatchers, IStaticDataService staticData, HeroProvider heroProvider, IRandomService randomService, ILootFactory lootFactory)
+    public EnemyFactory(IAssetProvider assets, IProgressWatchers progressWatchers, IStaticDataService staticData,
+      HeroProvider heroProvider, IRandomService randomService, ILootFactory lootFactory)
     {
       _assets = assets;
       _progressWatchers = progressWatchers;
@@ -44,9 +46,10 @@ namespace CodeBase.Infrastructure.Factories.Enemy
       GameObject monsterObject = Object.Instantiate(prefab, parent.position, parent.rotation, parent);
       _progressWatchers.Register(monsterObject);
 
-      IHealth health = monsterObject.GetComponent<IHealth>();
+      EnemyHealth health = monsterObject.GetComponent<EnemyHealth>();
       health.Current = monsterData.Hp;
       health.Max = monsterData.Hp;
+      health.StunCooldown = monsterData.StunCooldown;
 
       monsterObject.GetComponent<ActorUI>().Construct(health);
       monsterObject.GetComponent<NavMeshAgent>().speed = monsterData.MoveSpeed;
@@ -60,6 +63,7 @@ namespace CodeBase.Infrastructure.Factories.Enemy
 
       enemyAttack.Construct(heroGameObject.transform);
       enemyAttack.Damage = monsterData.Damage;
+      enemyAttack.AttackCooldown = monsterData.AttackCooldown;
       enemyAttack.Cleavage = monsterData.Cleavage;
       enemyAttack.EffectiveDistance = monsterData.EffectiveDistance;
       enemyAttack.RotationSpeed = monsterData.RotationSpeed;

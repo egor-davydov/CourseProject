@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using CodeBase.Extensions.GameplayExtensions;
+using CodeBase.Gameplay.Hero;
 using CodeBase.Gameplay.Logic;
 using CodeBase.StaticData.Monster;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
     private GameObject _whiteHitFxPrefab;
 
     private MonsterTypeId _monsterType;
-
+    private AnimationEvent _onAttackEvent;
 
     public void Construct(Transform heroTransform) =>
       _heroTransform = heroTransform;
@@ -42,6 +43,9 @@ namespace CodeBase.Gameplay.Enemy.Attack
     {
       _layerMask = 1 << LayerMask.NameToLayer(Layers.PlayerLayer);
       _monsterType = GetComponent<EnemyType>().Value;
+      _onAttackEvent = _enemyAnimator.Animator.runtimeAnimatorController
+        .animationClips.First(x => x.name.ToLower() == "attack01")
+        .events.First(x => x.functionName == "OnAttack");
     }
 
     private void Update()
@@ -60,12 +64,13 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     private void OnAttack()
     {
-      if (Hit(out Collider hit))
-      {
-        //PhysicsDebug.DrawDebug(StartPoint(), Cleavage, 1.0f);
-        hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+      if (!Hit(out Collider hit))
+        return;
+
+      //PhysicsDebug.DrawDebug(StartPoint(), Cleavage, 1.0f);
+      hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+      if (!hit.GetComponent<HeroDefend>().IsActive)
         CreateHitFx(hit.transform);
-      }
     }
 
     public void DisableAttack() =>
@@ -96,8 +101,11 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     private void UpdateCooldown()
     {
-      if (!CooldownIsUp())
-        _attackCooldown -= Time.deltaTime;
+      if (CooldownIsUp())
+        return;
+
+      _attackCooldown -= Time.deltaTime;
+      Debug.Log(_attackCooldown);
     }
 
     private bool Hit(out Collider hit)
@@ -111,8 +119,8 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     private Vector3 StartPoint()
     {
-      return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
-             transform.forward * EffectiveDistance;
+      return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z)
+             + transform.forward * EffectiveDistance;
     }
 
     private bool CanAttack() =>
@@ -127,7 +135,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
 
     private IEnumerator ActivateAttack()
     {
-      yield return new WaitForSeconds(1);
+      yield return new WaitForSeconds(_onAttackEvent.time);
       EndAttack();
     }
 

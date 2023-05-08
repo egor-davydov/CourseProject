@@ -202,6 +202,6 @@ MonoBehaviour:
       Center: {x: -2.3138094, y: 1.3032895, z: -0.46560478}
     FirePosition: {x: -12.427785, y: 1.6322861, z: -8.938017}
   LevelTransfers:
-  - TransferTo: 
+  - TransferTo: Dungeon
     Position: {x: 0.67502224, y: 0.07, z: 10.92}
   InitialHeroPosition: {x: 1.32, y: 0.27, z: -8.07}

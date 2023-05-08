@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterTypeId: 3
   Hp: 30
-  Damage: 30
-  MaxLootValue: 500
-  MinLootValue: 100
+  Damage: 19.9
+  AttackCooldown: 2
+  StunCooldown: 3
   EffectiveDistance: 1
-  Cleavage: 0.5
-  MoveSpeed: 2.57
+  Cleavage: 1
+  MoveSpeed: 2
+  RotationSpeed: 3
+  MaxLootValue: 500
+  MinLootValue: 200
   PrefabReference:
     m_AssetGUID: c09d884e7ca40460f91e5b20675d3e94
     m_SubObjectName: 

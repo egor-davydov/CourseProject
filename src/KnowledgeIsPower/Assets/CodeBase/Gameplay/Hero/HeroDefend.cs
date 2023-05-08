@@ -17,9 +17,8 @@ namespace CodeBase.Gameplay.Hero
     
     public float MaxDamageToCompleteBlock => _stats.MaxDamageToCompleteBlock;
     public float DefendFactor => _stats.DefendFactor;
-    public event Action Activate; 
-    public event Action Deactivate; 
-    
+    public bool IsActive { get; private set; }
+
     public void Construct(IInputService inputService) =>
       _inputService = inputService;
 
@@ -33,9 +32,9 @@ namespace CodeBase.Gameplay.Hero
       _stats = progress.HeroStats;
 
     private void OnDefend() => 
-      Activate?.Invoke();
+      IsActive = true;
 
     private void OnDefendEnd() => 
-      Deactivate?.Invoke();
+      IsActive = false;
   }
 }
