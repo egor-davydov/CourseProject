@@ -15,7 +15,7 @@ namespace CodeBase.Gameplay.Hero
     private IInputService _inputService;
     private Stats _stats;
     
-    public float MaximumDamageToBlock => _stats.MaximumDamageToBlock;
+    public float MaxDamageToCompleteBlock => _stats.MaxDamageToCompleteBlock;
     public float DefendFactor => _stats.DefendFactor;
     public event Action Activate; 
     public event Action Deactivate; 

@@ -7,9 +7,10 @@ namespace CodeBase.Data.Progress
   {
     public float Damage;
     public float DamageRadius;
-    public float MaximumDamageToBlock;
+    public float MaxDamageToCompleteBlock;
     public float DefendFactor;
     public float BasicMovementSpeed;
     public float FocusedMovementSpeed;
+    public float RotationSpeed;
   }
 }

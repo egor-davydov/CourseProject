@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeBase.StaticData;
 using CodeBase.StaticData.Level;
 using CodeBase.StaticData.Monster;
 using CodeBase.StaticData.Windows;
@@ -14,11 +13,13 @@ namespace CodeBase.Services.StaticData
     private const string MonstersDataPath = "Static Data/Monsters";
     private const string LevelsDataPath = "Static Data/Levels";
     private const string StaticDataWindowPath = "Static Data/UI/WindowStaticData";
+    private const string HeroDataPath = "Static Data/Hero/Hero";
 
     private Dictionary<MonsterTypeId, MonsterStaticData> _monsters;
     private Dictionary<string, LevelStaticData> _levels;
     private Dictionary<WindowId, WindowConfig> _windowConfigs;
-    
+    private HeroStaticData _hero;
+
     public Dictionary<string, LevelStaticData> Levels => _levels;
 
     public void Load()
@@ -31,11 +32,15 @@ namespace CodeBase.Services.StaticData
         .LoadAll<LevelStaticData>(LevelsDataPath)
         .ToDictionary(x => x.LevelKey, x => x);
 
+      _hero = Resources
+        .Load<HeroStaticData>(HeroDataPath);
       _windowConfigs = Resources
         .Load<WindowStaticData>(StaticDataWindowPath)
         .Configs
         .ToDictionary(x => x.WindowId, x => x);
     }
+    
+    public HeroStaticData ForHero() => _hero;
 
     public MonsterStaticData ForMonster(MonsterTypeId typeId) =>
       _monsters.TryGetValue(typeId, out MonsterStaticData staticData)

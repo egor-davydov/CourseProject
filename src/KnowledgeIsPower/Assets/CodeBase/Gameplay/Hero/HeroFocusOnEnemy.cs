@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using CodeBase.Data.Progress;
 using CodeBase.Extensions.GameplayExtensions;
 using CodeBase.Gameplay.Enemy;
+using CodeBase.Services.ProgressWatchers;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero
 {
-  public class HeroFocusOnEnemy : MonoBehaviour
+  public class HeroFocusOnEnemy : MonoBehaviour, IProgressReader
   {
     private Transform CurrentEnemyToFocus
     {
@@ -22,6 +24,7 @@ namespace CodeBase.Gameplay.Hero
     private List<Transform> _enemiesInSphere;
     private int _currentFocusedEnemyNumber;
     private Transform _currentEnemyToFocus;
+    private float _rotationSpeed;
 
     public void Initialize()
     {
@@ -32,8 +35,11 @@ namespace CodeBase.Gameplay.Hero
     private void Update()
     {
       if (CurrentEnemyToFocus != null)
-        transform.SmoothLookAt(CurrentEnemyToFocus, 10*Time.deltaTime);
+        transform.SmoothLookAt(CurrentEnemyToFocus, _rotationSpeed * Time.deltaTime);
     }
+
+    public void ReceiveProgress(PlayerProgress progress) =>
+      _rotationSpeed = progress.HeroStats.RotationSpeed;
 
     public void ChangeEnemyToFocusLeft()
     {
@@ -78,17 +84,6 @@ namespace CodeBase.Gameplay.Hero
     {
       CurrentEnemyToFocus = _enemiesInSphere[enemyNumber];
       _currentFocusedEnemyNumber = enemyNumber;
-    }
-
-    private void LookAt(Transform thisTransform, Transform target)
-    {
-      Vector3 viewForward = target.position - thisTransform.position;
-      viewForward.Normalize();
-
-      Vector3 viewUp = Vector3.up - Vector3.Project(viewForward, Vector3.up);
-      viewUp.Normalize();
-
-      thisTransform.forward = new Vector3(viewForward.x, 0, viewForward.z);
     }
 
     private bool HeroUnFocused() =>

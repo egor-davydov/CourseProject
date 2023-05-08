@@ -76,7 +76,7 @@ namespace CodeBase.Gameplay.Hero
       }
       else
       {
-        if (HeroDefend.MaximumDamageToBlock > damage)
+        if (HeroDefend.MaxDamageToCompleteBlock > damage)
           finalDamage = 0;
         else
           finalDamage = damage - damage * HeroDefend.DefendFactor;

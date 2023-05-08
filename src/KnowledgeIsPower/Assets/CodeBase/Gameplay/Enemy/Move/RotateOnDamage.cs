@@ -17,6 +17,9 @@ namespace CodeBase.Gameplay.Enemy.Move
     public void Construct(Transform heroTransform)
       => _heroTransform = heroTransform;
 
+    public void Initialize(float rotationSpeed) => 
+      _rotationSpeed = rotationSpeed;
+
     private void Start() =>
       GetComponent<IHealth>().OnTakeDamage += StartRotationCoroutine;
 

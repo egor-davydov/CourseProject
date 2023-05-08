@@ -17,6 +17,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
     public float Cleavage = 0.5f;
     public float EffectiveDistance = 0.5f;
     public float Damage = 10;
+    public float RotationSpeed;
 
     private Transform _heroTransform;
     private Collider[] _hits = new Collider[1];
@@ -55,7 +56,7 @@ namespace CodeBase.Gameplay.Enemy.Attack
     }
 
     private void LookAtHero() =>
-      transform.SmoothLookAt(_heroTransform, 2f * Time.deltaTime);
+      transform.SmoothLookAt(_heroTransform, RotationSpeed * Time.deltaTime);
 
     private void OnAttack()
     {
@@ -65,8 +66,6 @@ namespace CodeBase.Gameplay.Enemy.Attack
         hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
         CreateHitFx(hit.transform);
       }
-
-      EndAttack();
     }
 
     public void DisableAttack() =>

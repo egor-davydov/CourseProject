@@ -15,5 +15,6 @@ namespace CodeBase.Services.StaticData
     LevelStaticData ForLevel(string sceneKey);
     WindowConfig ForWindow(WindowId shop);
     Dictionary<string, LevelStaticData> Levels { get; }
+    HeroStaticData ForHero();
   }
 }

@@ -34,7 +34,7 @@ namespace CodeBase.Infrastructure.States
         [typeof(BootstrapState)] = new BootstrapState(this, heroStateMachine, services),
 
         [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(),
-          services.Single<ISaveLoadService>()),
+          services.Single<ISaveLoadService>(), services.Single<IStaticDataService>()),
 
         [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
           services.Single<IAssetProvider>(), services.Single<IProgressWatchers>()),

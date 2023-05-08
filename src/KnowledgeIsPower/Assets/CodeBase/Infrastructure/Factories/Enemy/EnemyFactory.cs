@@ -51,15 +51,20 @@ namespace CodeBase.Infrastructure.Factories.Enemy
       monsterObject.GetComponent<ActorUI>().Construct(health);
       monsterObject.GetComponent<NavMeshAgent>().speed = monsterData.MoveSpeed;
 
+      RotateOnDamage rotateOnDamage = monsterObject.GetComponent<RotateOnDamage>();
+      rotateOnDamage.Construct(heroGameObject.transform);
+
+      rotateOnDamage.Initialize(monsterData.RotationSpeed);
+      
       EnemyAttack enemyAttack = monsterObject.GetComponent<EnemyAttack>();
 
       enemyAttack.Construct(heroGameObject.transform);
       enemyAttack.Damage = monsterData.Damage;
       enemyAttack.Cleavage = monsterData.Cleavage;
       enemyAttack.EffectiveDistance = monsterData.EffectiveDistance;
+      enemyAttack.RotationSpeed = monsterData.RotationSpeed;
 
       monsterObject.GetComponent<AgentMoveToPlayer>().Construct(heroGameObject.transform);
-      monsterObject.GetComponent<RotateOnDamage>().Construct(heroGameObject.transform);
 
       LootSpawner lootSpawner = monsterObject.GetComponentInChildren<LootSpawner>();
       lootSpawner.Construct(_lootFactory, _randomService);

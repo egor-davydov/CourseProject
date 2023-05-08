@@ -26,6 +26,9 @@ namespace CodeBase.StaticData.Monster
     [Range(0,10)]
     public float MoveSpeed = 3;
     
+    [Range(0.1f,15)]
+    public float RotationSpeed = 3;
+    
     public AssetReferenceGameObject PrefabReference;
   }
 }
