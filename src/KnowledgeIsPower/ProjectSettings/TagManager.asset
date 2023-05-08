@@ -32,7 +32,7 @@ TagManager:
   - Hittable
   - Pickup
   - SaveTrigger
-  - 
+  - Focus
   - 
   - 
   - 
