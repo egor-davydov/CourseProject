@@ -51,7 +51,7 @@ namespace CodeBase.Gameplay.Enemy
       Health.HealthChanged -= OnHealthChanged;
 
       DisableScripts();
-      //DestroyHurtBox();
+      DestroyHurtBox();
       DestroyCanvas();
       Animator.PlayDeath();
 
@@ -67,8 +67,10 @@ namespace CodeBase.Gameplay.Enemy
     private void DisableScripts()
     {
       GetComponent<EnemyAttack>().enabled = false;
+      GetComponent<CheckAttackRange>().enabled = false;
       GetComponent<Aggro>().enabled = false;
       GetComponent<AgentMoveToPlayer>().enabled = false;
+      GetComponent<RotateOnDamage>().enabled = false;
     }
 
     private void SpawnDeathFx() =>

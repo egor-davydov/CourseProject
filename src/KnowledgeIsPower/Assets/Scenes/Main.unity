@@ -6458,5 +6458,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelTransferInitialPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 9095620573920041489, guid: a4b182b2a5e115343829c35f473397c1,
+        type: 3}
+      propertyPath: _transferTo
+      value: Dungeon
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4b182b2a5e115343829c35f473397c1, type: 3}
