@@ -60,7 +60,7 @@ namespace CodeBase.Gameplay.Hero
 
     public void EnemyLeftFromSphere()
     {
-      if(!HeroUnFocused())
+      if (!HeroUnFocused() && _enemiesInSphere.Count != 0)
         ChangeEnemyToFocusRight();
     }
 
@@ -90,7 +90,7 @@ namespace CodeBase.Gameplay.Hero
       thisTransform.forward = new Vector3(viewForward.x, 0, viewForward.z);
     }
 
-    private bool HeroUnFocused() => 
+    private bool HeroUnFocused() =>
       _currentEnemyToFocus == null;
   }
 }
