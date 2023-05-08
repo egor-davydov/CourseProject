@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using CodeBase.Data;
-using CodeBase.Data.Progress;
+﻿using CodeBase.Data.Progress;
 using CodeBase.Data.Progress.Loot;
 using CodeBase.Extensions;
 using CodeBase.Gameplay.Logic;
-using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using TMPro;
 using UnityEngine;
@@ -52,11 +49,11 @@ namespace CodeBase.Gameplay.Enemy.Loot
 
     private void OnTriggerEnter(Collider other)
     {
-      if (!_pickedUp)
-      {
-        _pickedUp = true;
-        Pickup();
-      }
+      if (_pickedUp)
+        return;
+      
+      _pickedUp = true;
+      Pickup();
     }
 
     public void UpdateProgress(PlayerProgress progress)

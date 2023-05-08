@@ -5,22 +5,22 @@ namespace CodeBase.Gameplay.Logic
 {
   public class LevelTransferTrigger : MonoBehaviour
   {
-    public string TransferTo;
     private IGameStateMachine _stateMachine;
     private bool _triggered;
+    private string _transferTo;
 
-    public void Construct(IGameStateMachine stateMachine) => 
+    public void Construct(IGameStateMachine stateMachine, string transferTo)
+    {
+      _transferTo = transferTo;
       _stateMachine = stateMachine;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
       if(_triggered)
         return;
 
-      if (!other.CompareTag(Tags.PlayerTag))
-        return;
-      
-      _stateMachine.Enter<LoadLevelState, string>(TransferTo);
+      _stateMachine.Enter<LoadLevelState, string>(_transferTo);
       _triggered = true;
     }
   }

@@ -2809,8 +2809,28 @@ PrefabInstance:
       propertyPath: _firePositionObject
       value: 
       objectReference: {fileID: 1873031038}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5461676247416781731, guid: 77afe9da23d48a846988949a73ce3293, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 77afe9da23d48a846988949a73ce3293, type: 3}
+--- !u!1 &994695376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5505885974759795585, guid: 77afe9da23d48a846988949a73ce3293,
+    type: 3}
+  m_PrefabInstance: {fileID: 994695375}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &994695377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994695376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28f7b18dc0164cb0a405d9b5ceb7b68d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Id: Dungeon_02b7758e-ca3c-402b-a12a-1e9860c40b4f
 --- !u!1001 &995839320
 PrefabInstance:
   m_ObjectHideFlags: 0

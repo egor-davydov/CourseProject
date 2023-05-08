@@ -9,7 +9,7 @@ namespace CodeBase.StaticData.Level
     public string LevelKey;
     public List<EnemySpawnerStaticData> EnemySpawners;
     public List<SaveTriggerStaticData> SaveTriggers;
-    public LevelTransferStaticData LevelTransfer;
+    public List<LevelTransferStaticData> LevelTransfers;
     public Vector3 InitialHeroPosition;
   }
 }

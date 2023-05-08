@@ -118,9 +118,12 @@ namespace CodeBase.Infrastructure.States
 
     private async Task InitLevelTransfer(LevelStaticData levelData)
     {
-      GameObject levelTransfer = await _levelTransferFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);
-      levelTransfer.SetActive(false);
-      _levelClearedService.InitializeObjectToEnable(levelTransfer);
+      foreach (LevelTransferStaticData levelTransferData in levelData.LevelTransfers)
+      {
+        GameObject levelTransfer = await _levelTransferFactory.CreateLevelTransfer(levelTransferData.Position, levelTransferData.TransferTo);
+        levelTransfer.SetActive(false);
+        _levelClearedService.InitializeObjectToEnable(levelTransfer);
+      }
     }
     private string CurrentLevelName() => 
       SceneManager.GetActiveScene().name;
