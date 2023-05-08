@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using CodeBase.Extensions.GameplayExtensions;
 using CodeBase.Gameplay.Logic;
 using UnityEngine;
@@ -10,14 +12,28 @@ namespace CodeBase.Gameplay.Enemy.Move
     private float _rotationSpeed;
 
     private Transform _heroTransform;
+    private bool _isRotating;
 
     public void Construct(Transform heroTransform)
       => _heroTransform = heroTransform;
 
-    private void Start() => 
-      GetComponent<IHealth>().OnTakeDamage += RotateToHero;
+    private void Start() =>
+      GetComponent<IHealth>().OnTakeDamage += StartRotationCoroutine;
 
-    private void RotateToHero() =>
-      transform.SmoothLookAt(_heroTransform, _rotationSpeed);
+    private void Update()
+    {
+      if (_isRotating)
+        transform.SmoothLookAt(_heroTransform, _rotationSpeed * Time.deltaTime);
+    }
+
+    private void StartRotationCoroutine() => 
+      StartCoroutine(StartRotation());
+
+    private IEnumerator StartRotation()
+    {
+      _isRotating = true;
+      yield return new WaitForSeconds(_rotationSpeed);
+      _isRotating = false;
+    }
   }
 }
