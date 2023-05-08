@@ -49,6 +49,9 @@ namespace CodeBase.Gameplay.Hero
     private void OnFastAttack() => Attack(attackMultiplier: 1f);
     private void OnLongAttack() => Attack(attackMultiplier: 2f);
 
+    public void ReceiveProgress(PlayerProgress progress) =>
+      _stats = progress.HeroStats;
+
     private void Attack(float attackMultiplier)
     {
       //PhysicsDebug.DrawDebug(OverlapPosition(), _stats.DamageRadius, 100.0f);
@@ -85,8 +88,5 @@ namespace CodeBase.Gameplay.Hero
 
     private Vector3 OverlapPosition() =>
       new Vector3(transform.position.x, CharacterController.center.y, transform.position.z) + transform.forward;
-
-    public void ReceiveProgress(PlayerProgress progress) =>
-      _stats = progress.HeroStats;
   }
 }

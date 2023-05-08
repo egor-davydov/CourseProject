@@ -14,12 +14,15 @@ namespace CodeBase.Gameplay.Hero
     [SerializeField]
     private CharacterController _characterController;
 
-    [SerializeField]
-    private float _movementSpeed;
+    private float MovementSpeed =>
+      _hero.IsOnBasicState
+        ? _stats.BasicMovementSpeed
+        : _stats.FocusedMovementSpeed;
 
     private IInputService _inputService;
     private Camera _camera;
     private IHeroStateMachine _hero;
+    private Stats _stats;
 
     public void Construct(IInputService inputService, IHeroStateMachine heroStateMachine)
     {
@@ -32,9 +35,12 @@ namespace CodeBase.Gameplay.Hero
 
     private void Update()
     {
+      if (_hero == null || _stats == null || _inputService == null)
+        return;
+
       Vector3 movementVector = Vector3.zero;
 
-      if (_inputService != null && _inputService.Axis.sqrMagnitude > Constants.Epsilon)
+      if (_inputService.Axis.sqrMagnitude > Constants.Epsilon)
       {
         movementVector = _camera.transform.TransformDirection(_inputService.Axis);
         movementVector.y = 0;
@@ -47,7 +53,7 @@ namespace CodeBase.Gameplay.Hero
       transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
       movementVector += Physics.gravity;
 
-      _characterController.Move(_movementSpeed * movementVector * Time.deltaTime);
+      _characterController.Move(MovementSpeed * movementVector * Time.deltaTime);
     }
 
     public void UpdateProgress(PlayerProgress progress)
@@ -61,7 +67,9 @@ namespace CodeBase.Gameplay.Hero
 
     public void ReceiveProgress(PlayerProgress progress)
     {
-      if (CurrentLevel() != progress.WorldData.PositionOnLevel.Level) return;
+      _stats = progress.HeroStats;
+      if (CurrentLevel() != progress.WorldData.PositionOnLevel.Level)
+        return;
 
       Vector3Data savedPosition = progress.WorldData.PositionOnLevel.Position;
       Vector3Data savedRotation = progress.WorldData.PositionOnLevel.Rotation;
@@ -82,7 +90,7 @@ namespace CodeBase.Gameplay.Hero
       _characterController.enabled = true;
     }
 
-    private void Rotate(Vector3Data on) => 
+    private void Rotate(Vector3Data on) =>
       transform.rotation = on.AsUnityQuaternion();
   }
 }

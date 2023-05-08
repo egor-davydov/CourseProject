@@ -11,8 +11,10 @@ using CodeBase.Infrastructure.Factories.LevelTransfer;
 using CodeBase.Infrastructure.Factories.Loot;
 using CodeBase.Infrastructure.Factories.SaveTrigger;
 using CodeBase.Services;
+using CodeBase.Services.LevelCleared;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
+using CodeBase.Services.Respawn;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
@@ -40,7 +42,7 @@ namespace CodeBase.Infrastructure.States
         [typeof(InitLevelState)] = new InitLevelState(this, services.Single<IStaticDataService>(),
           services.Single<IPersistentProgressService>(), services.Single<IEnemySpawnerFactory>(),
           services.Single<ISaveTriggerFactory>(), services.Single<ILevelTransferFactory>(),
-          services.Single<ILootFactory>(), services.Single<IUIFactory>(), services.Single<IRespawnService>()),
+          services.Single<ILootFactory>(), services.Single<IUIFactory>(), services.Single<IRespawnService>(), services.Single<ILevelClearedService>()),
 
         [typeof(InitHeroState)] = new InitHeroState(this, services.Single<IHeroStateMachine>(), services.Single<HeroProvider>(),
           services.Single<IStaticDataService>(), services.Single<IHeroFactory>(), services.Single<IHudFactory>()),

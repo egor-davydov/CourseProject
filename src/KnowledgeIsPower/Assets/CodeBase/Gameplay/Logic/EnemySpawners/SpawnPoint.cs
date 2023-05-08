@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeBase.Data.Progress;
 using CodeBase.Gameplay.Enemy;
 using CodeBase.Infrastructure.Factories.Enemy;
@@ -19,6 +20,7 @@ namespace CodeBase.Gameplay.Logic.EnemySpawners
     private EnemyDeath _enemyDeath;
 
     public bool Slain { get; private set; }
+    public event Action OnSlain;
 
     public void Construct(IEnemyFactory enemyFactory) =>
       _enemyFactory = enemyFactory;
@@ -58,6 +60,7 @@ namespace CodeBase.Gameplay.Logic.EnemySpawners
         _enemyDeath.Happened -= Slay;
 
       Slain = true;
+      OnSlain?.Invoke();
     }
   }
 }

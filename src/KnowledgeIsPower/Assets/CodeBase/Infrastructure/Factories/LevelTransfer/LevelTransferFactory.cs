@@ -20,13 +20,14 @@ namespace CodeBase.Infrastructure.Factories.LevelTransfer
       _gameStateMachine = gameStateMachine;
     }
 
-    public async Task CreateLevelTransfer(Vector3 at)
+    public async Task<GameObject> CreateLevelTransfer(Vector3 at)
     {
       GameObject levelTransferObject = await _assets.Instantiate(AssetAddress.LevelTransferTrigger, at);
       _progressWatchers.Register(levelTransferObject);
       LevelTransferTrigger levelTransfer = levelTransferObject.GetComponent<LevelTransferTrigger>();
 
       levelTransfer.Construct(_gameStateMachine);
+      return levelTransferObject;
     }
   }
 }

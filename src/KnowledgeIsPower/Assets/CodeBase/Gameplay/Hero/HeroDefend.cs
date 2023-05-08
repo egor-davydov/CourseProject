@@ -29,13 +29,13 @@ namespace CodeBase.Gameplay.Hero
         Animator.PlayDefend();
     }
 
+    public void ReceiveProgress(PlayerProgress progress) => 
+      _stats = progress.HeroStats;
+
     private void OnDefend() => 
       Activate?.Invoke();
 
     private void OnDefendEnd() => 
       Deactivate?.Invoke();
-
-    public void ReceiveProgress(PlayerProgress progress) => 
-      _stats = progress.HeroStats;
   }
 }

@@ -11,10 +11,13 @@ using CodeBase.Infrastructure.Factories.LevelTransfer;
 using CodeBase.Infrastructure.Factories.Loot;
 using CodeBase.Infrastructure.Factories.SaveTrigger;
 using CodeBase.Services;
+using CodeBase.Services.LevelCleared;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.Respawn;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData.Level;
 using CodeBase.UI.Services.Factory;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.States
@@ -30,6 +33,7 @@ namespace CodeBase.Infrastructure.States
     private readonly ILootFactory _lootFactory;
     private readonly IUIFactory _uiFactory;
     private readonly IRespawnService _respawnService;
+    private readonly ILevelClearedService _levelClearedService;
 
     public InitLevelState(
       GameStateMachine gameStateMachine,
@@ -40,7 +44,8 @@ namespace CodeBase.Infrastructure.States
       ILevelTransferFactory levelTransferFactory,
       ILootFactory lootFactory,
       IUIFactory uiFactory,
-      IRespawnService respawnService
+      IRespawnService respawnService,
+      ILevelClearedService levelClearedService
     )
     {
       _gameStateMachine = gameStateMachine;
@@ -52,6 +57,7 @@ namespace CodeBase.Infrastructure.States
       _lootFactory = lootFactory;
       _uiFactory = uiFactory;
       _respawnService = respawnService;
+      _levelClearedService = levelClearedService;
     }
 
     public async void Enter()
@@ -85,6 +91,7 @@ namespace CodeBase.Infrastructure.States
       }
 
       _respawnService.Initialize(spawners);
+      _levelClearedService.InitializeSpawners(spawners);
     }
 
     private async Task InitSaveTriggers(LevelStaticData levelStaticData)
@@ -105,8 +112,12 @@ namespace CodeBase.Infrastructure.States
       }
     }
 
-    private async Task InitLevelTransfer(LevelStaticData levelData) =>
-      await _levelTransferFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);
+    private async Task InitLevelTransfer(LevelStaticData levelData)
+    {
+      GameObject levelTransfer = await _levelTransferFactory.CreateLevelTransfer(levelData.LevelTransfer.Position);
+      levelTransfer.SetActive(false);
+      _levelClearedService.InitializeObjectToEnable(levelTransfer);
+    }
 
     private LevelStaticData LevelStaticData() =>
       _staticData.ForLevel(SceneManager.GetActiveScene().name);

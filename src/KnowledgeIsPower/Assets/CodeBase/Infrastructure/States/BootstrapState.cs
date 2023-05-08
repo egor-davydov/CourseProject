@@ -12,9 +12,11 @@ using CodeBase.Services;
 using CodeBase.Services.Ads;
 using CodeBase.Services.IAP;
 using CodeBase.Services.Input;
+using CodeBase.Services.LevelCleared;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ProgressWatchers;
 using CodeBase.Services.Randomizer;
+using CodeBase.Services.Respawn;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
@@ -58,6 +60,7 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IRespawnService>(new RespawnService());
+      _services.RegisterSingle<ILevelClearedService>(new LevelClearedService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
       _services.RegisterSingle<IProgressWatchers>(new ProgressWatchers());
       
