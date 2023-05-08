@@ -24,7 +24,7 @@ namespace CodeBase.Gameplay.Hero
 
     public void Initialize()
     {
-      _enemiesInSphere = GetComponentInChildren<FocusSphere>().EnemiesInSphere;
+      _enemiesInSphere = GetComponentInChildren<HeroFocusSphere>().EnemiesInSphere;
       FocusOnEnemyFromSphere(enemyNumber: 0);
     }
 
@@ -58,6 +58,12 @@ namespace CodeBase.Gameplay.Hero
       _currentEnemyToFocus = null;
     }
 
+    public void EnemyLeftFromSphere()
+    {
+      if(!HeroUnFocused())
+        ChangeEnemyToFocusRight();
+    }
+
     private void Focus(Transform enemyForFocus)
     {
       _currentEnemyToFocus = enemyForFocus;
@@ -83,5 +89,8 @@ namespace CodeBase.Gameplay.Hero
 
       thisTransform.forward = new Vector3(viewForward.x, 0, viewForward.z);
     }
+
+    private bool HeroUnFocused() => 
+      _currentEnemyToFocus == null;
   }
 }

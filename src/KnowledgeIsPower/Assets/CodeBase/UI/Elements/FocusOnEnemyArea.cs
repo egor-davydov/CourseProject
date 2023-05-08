@@ -19,7 +19,7 @@ namespace CodeBase.UI.Elements
     private IHeroStateMachine _heroStateMachine;
     private GameObject _heroObject;
     private Image _focusButtonImage;
-    private FocusSphere _focusSphere;
+    private HeroFocusSphere _heroFocusSphere;
     private HeroFocusOnEnemy _heroFocusOnEnemy;
 
     public void Initialize(IHeroStateMachine heroStateMachine, GameObject heroObject)
@@ -27,7 +27,7 @@ namespace CodeBase.UI.Elements
       _heroObject = heroObject;
       _heroStateMachine = heroStateMachine;
 
-      _focusSphere = _heroObject.GetComponentInChildren<FocusSphere>();
+      _heroFocusSphere = _heroObject.GetComponentInChildren<HeroFocusSphere>();
       _heroFocusOnEnemy = _heroObject.GetComponent<HeroFocusOnEnemy>();
     }
 
@@ -42,21 +42,21 @@ namespace CodeBase.UI.Elements
 
     private void Update()
     {
-      if (_focusSphere == null || _heroStateMachine == null)
+      if (_heroFocusSphere == null || _heroStateMachine == null)
         return;
       
-      bool canChangeFocus = _focusSphere.EnemiesInSphere.Count > 1 && _heroStateMachine.IsFocused;
+      bool canChangeFocus = _heroFocusSphere.EnemiesInSphere.Count > 1 && _heroStateMachine.IsFocused;
       _changeEnemyLeftButton.gameObject.SetActive(canChangeFocus);
       _changeEnemyRightButton.gameObject.SetActive(canChangeFocus);
-      if(_focusSphere.EnemiesInSphere.Count <= 0)
+      if(_heroFocusSphere.EnemiesInSphere.Count <= 0 && !OnBasicState())
         EnterBasicState();
     }
 
     private void FocusOnEnemy()
     {
-      if (_heroStateMachine.IsOnBasicState)
+      if (OnBasicState())
       {
-        if (_focusSphere.EnemiesInSphere.Count <= 0)
+        if (_heroFocusSphere.EnemiesInSphere.Count <= 0)
           return;
 
         EnterFocusedState();
@@ -64,6 +64,9 @@ namespace CodeBase.UI.Elements
       else
         EnterBasicState();
     }
+
+    private bool OnBasicState() => 
+      _heroStateMachine.IsOnBasicState;
 
     private void EnterFocusedState()
     {

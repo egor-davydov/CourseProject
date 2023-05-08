@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.Gameplay.Hero
 {
-  public class FocusSphere : MonoBehaviour
+  public class HeroFocusSphere : MonoBehaviour
   {
     [SerializeField]
     private TriggerObserver _triggerObserver;
@@ -27,38 +27,37 @@ namespace CodeBase.Gameplay.Hero
     {
       if (!IsEnemyHurtBox(obj))
         return;
-      
+
       Transform enemyTransform = obj.transform.parent;
       //Debug.Log($"OnSphereEnter {enemyTransform.name}");
       EnemiesInSphere.Add(enemyTransform);
       enemyTransform.GetComponent<EnemyDeath>().Happened += OnHappened;
 
       void OnHappened() =>
-        RemoveInSphereAndTryChangeFocus(enemyTransform);
+        RemoveFromSphereAndInform(enemyTransform);
     }
 
     private void OnSphereExit(Collider obj)
     {
       if (!IsEnemyHurtBox(obj))
         return;
-      
+
       Transform enemyTransform = obj.transform.parent;
       //Debug.Log($"OnSphereExit {enemyTransform.name}");
-        RemoveInSphereAndTryChangeFocus(enemyTransform);
+      RemoveFromSphereAndInform(enemyTransform);
     }
 
     private bool IsEnemyHurtBox(Collider obj) =>
       obj.CompareTag(Tags.EnemyHurtBox);
 
-    private void RemoveInSphereAndTryChangeFocus(Transform enemyTransform)
+    private void RemoveFromSphereAndInform(Transform enemyTransform)
     {
-      if (EnemiesInSphere.Contains(enemyTransform)) 
-      EnemiesInSphere.Remove(enemyTransform);
-      if (EnemiesInSphere.Count != 0)
-        ChangeFocus();
+      if (EnemiesInSphere.Contains(enemyTransform))
+        EnemiesInSphere.Remove(enemyTransform);
+      InformAboutSphereLeaving();
     }
 
-    private void ChangeFocus() => 
-      GetComponentInParent<HeroFocusOnEnemy>().ChangeEnemyToFocusRight();
+    private void InformAboutSphereLeaving() =>
+      GetComponentInParent<HeroFocusOnEnemy>().EnemyLeftFromSphere();
   }
 }

@@ -11,6 +11,7 @@ namespace CodeBase.Gameplay.Hero.States
 
     public void Enter()
     {
+      Debug.Log($"{Time.time} HeroBasicState");
       _heroObject.GetComponent<HeroAnimator>().TurnOffFocusedAnimations();
     }
 
