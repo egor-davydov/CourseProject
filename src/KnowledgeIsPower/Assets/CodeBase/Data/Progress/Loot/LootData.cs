@@ -6,8 +6,7 @@ namespace CodeBase.Data.Progress.Loot
   public class LootData
   {
     public int Collected;
-    public LootPieceDataDictionary LootPiecesOnScene = new LootPieceDataDictionary();
-    
+    public LootPiecesOnLevelsDictionary LootPiecesOnLevels = new LootPiecesOnLevelsDictionary();
     public Action Changed;
 
     public void Collect(Loot loot)

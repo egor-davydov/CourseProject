@@ -62,7 +62,7 @@ namespace CodeBase.Infrastructure.States
 
     public async void Enter()
     {
-      LevelStaticData levelData = LevelStaticData();
+      LevelStaticData levelData = _staticData.ForLevel(CurrentLevelName());
       
       await InitSpawners(levelData);
       await InitSaveTriggers(levelData);
@@ -103,7 +103,11 @@ namespace CodeBase.Infrastructure.States
 
     private async Task InitLootPieces()
     {
-      foreach (KeyValuePair<string, LootPieceData> item in _progressService.Progress.WorldData.LootData.LootPiecesOnScene.Dictionary)
+      Dictionary<string,LootPieceDictionary> lootPiecesOnLevels = _progressService.Progress.WorldData.LootData.LootPiecesOnLevels.Dictionary;
+      if(!lootPiecesOnLevels.TryGetValue(CurrentLevelName(), out LootPieceDictionary lootPieceDictionary))
+        return;
+      
+      foreach (KeyValuePair<string, LootPieceData> item in lootPieceDictionary.Dictionary)
       {
         LootPiece lootPiece = await _lootFactory.CreateLoot();
         lootPiece.GetComponent<UniqueId>().Id = item.Key;
@@ -118,8 +122,7 @@ namespace CodeBase.Infrastructure.States
       levelTransfer.SetActive(false);
       _levelClearedService.InitializeObjectToEnable(levelTransfer);
     }
-
-    private LevelStaticData LevelStaticData() =>
-      _staticData.ForLevel(SceneManager.GetActiveScene().name);
+    private string CurrentLevelName() => 
+      SceneManager.GetActiveScene().name;
   }
 }

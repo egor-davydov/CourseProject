@@ -3,7 +3,7 @@
 namespace CodeBase.Data.Progress.Loot
 {
   [Serializable]
-  public class LootPieceDataDictionary : SerializableDictionary<string, LootPieceData>
+  public class LootPieceDictionary : SerializableDictionary<string, LootPieceData>
   {
   }
 }

@@ -26,7 +26,7 @@ namespace CodeBase.Infrastructure.Factories.Loot
       LootPiece lootPiece = Object.Instantiate(prefab).GetComponent<LootPiece>();
       _progressWatchers.Register(lootPiece.gameObject);
 
-      lootPiece.Construct(_persistentProgressService.Progress.WorldData);
+      lootPiece.Construct(_persistentProgressService.Progress.WorldData.LootData);
 
       return lootPiece;
     }
