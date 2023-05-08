@@ -19,7 +19,7 @@ MonoBehaviour:
     TransformData:
       Position:
         X: -5.4
-        Y: -0.09
+        Y: 2.79
         Z: 24.53
       Rotation:
         X: -0
@@ -30,7 +30,7 @@ MonoBehaviour:
         Y: 0.01
         Z: 0.01
   SaveTriggers:
-  - Id: SaveMarker_4ceb0962-cacb-4adf-819c-3cd27899048f
+  - Id: Dungeon_02b7758e-ca3c-402b-a12a-1e9860c40b4f
     TransformData:
       Position:
         X: -3.4095411
@@ -48,7 +48,7 @@ MonoBehaviour:
       Size: {x: 14.651414, y: 1, z: 1.8075657}
       Center: {x: 0.075641155, y: 0.5, z: 0.40378284}
     FirePosition: {x: -8.025066, y: 1.8090392, z: -10.243963}
-  LevelTransfer:
-    TransferTo: Main
+  LevelTransfers:
+  - TransferTo: 
     Position: {x: 23.44, y: 7.75, z: 26.27}
   InitialHeroPosition: {x: -4.6, y: 0.26, z: -18.6}

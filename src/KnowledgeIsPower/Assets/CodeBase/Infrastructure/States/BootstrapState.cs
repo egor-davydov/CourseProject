@@ -98,7 +98,8 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<ILevelTransferFactory>(new LevelTransferFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IProgressWatchers>(),
-        _services.Single<IGameStateMachine>()
+        _services.Single<IGameStateMachine>(), 
+        _services.Single<ISaveLoadService>()
       ));
       _services.RegisterSingle<IHeroFactory>(new HeroFactory(
         _services.Single<IAssetProvider>(),
