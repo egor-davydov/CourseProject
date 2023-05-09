@@ -4,7 +4,10 @@ namespace CodeBase.Services.Randomizer
 {
   public class RandomService : IRandomService
   {
-    public int Next(int min, int max) =>
-      Random.Range(min, max);
+    public int Next(int minInclusive, int maxExclusive) =>
+      Random.Range(minInclusive, maxExclusive);
+
+    public float Next(float minInclusive, float maxInclusive) => 
+      Random.Range(minInclusive, maxInclusive);
   }
 }

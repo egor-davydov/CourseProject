@@ -2,6 +2,7 @@
 {
   public interface IRandomService : IService
   {
-    int Next(int minValue, int maxValue);
+    int Next(int minInclusive, int maxExclusive);
+    float Next(float minInclusive, float maxValue);
   }
 }
