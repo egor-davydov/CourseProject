@@ -1412,6 +1412,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae423521371d404e927255b5e4160583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _heroAudioSource: {fileID: -131161534089589368}
+  _hitSound: {fileID: 8300000, guid: 0602be9856a945f46ab65cc807cd1c1a, type: 3}
   Animator: {fileID: 1941000699}
   HeroDefend: {fileID: 4783825719322237971}
 --- !u!114 &9004972010143933688

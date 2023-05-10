@@ -9,6 +9,10 @@ namespace CodeBase.Gameplay.Hero
   public class HeroHealth : MonoBehaviour, IHealth, IProgressWriter, IProgressReader
   {
     [SerializeField]
+    private AudioSource _heroAudioSource;
+    [SerializeField]
+    private AudioClip _hitSound;
+    [SerializeField]
     private HeroAnimator Animator;
 
     [SerializeField]
@@ -74,7 +78,8 @@ namespace CodeBase.Gameplay.Hero
       if (finalDamage != 0)
       {
         Current -= finalDamage;
-        Animator.PlayHit();
+        Animator.PlayHit(); 
+        _heroAudioSource.PlayOneShot(_hitSound);
       }
 
       OnTakeDamage?.Invoke();
