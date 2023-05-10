@@ -10,8 +10,13 @@ namespace CodeBase.Gameplay.Hero
   {
     [SerializeField]
     private AudioSource _heroAudioSource;
+
     [SerializeField]
     private AudioClip _hitSound;
+
+    [SerializeField]
+    private AudioClip _defendSound;
+
     [SerializeField]
     private HeroAnimator Animator;
 
@@ -74,16 +79,24 @@ namespace CodeBase.Gameplay.Hero
           finalDamage = damage - damage * HeroDefend.DefendFactor;
       }
 
+      PlayHitSound();
 
       if (finalDamage != 0)
       {
         Current -= finalDamage;
-        Animator.PlayHit(); 
-        _heroAudioSource.PlayOneShot(_hitSound);
+        Animator.PlayHit();
       }
 
       OnTakeDamage?.Invoke();
       //Debug.Log($"Damage {finalDamage}");
+    }
+
+    private void PlayHitSound()
+    {
+      _heroAudioSource.PlayOneShot(
+        HeroDefend.IsActive
+          ? _defendSound
+          : _hitSound);
     }
   }
 }

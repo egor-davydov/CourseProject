@@ -1414,6 +1414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _heroAudioSource: {fileID: -131161534089589368}
   _hitSound: {fileID: 8300000, guid: 0602be9856a945f46ab65cc807cd1c1a, type: 3}
+  _defendSound: {fileID: 8300000, guid: daa952054e8e93d4ebb5c7c8d8d86718, type: 3}
   Animator: {fileID: 1941000699}
   HeroDefend: {fileID: 4783825719322237971}
 --- !u!114 &9004972010143933688
@@ -1450,6 +1451,10 @@ MonoBehaviour:
   _bloodFxPrefab: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
   _rockHitFxPrefab: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3,
     type: 3}
+  _heroAudioSource: {fileID: -131161534089589368}
+  _basicAttack: {fileID: 8300000, guid: ed2ee65455955684a95422bb55cf072f, type: 3}
+  _specialAttack: {fileID: 8300000, guid: cc892f99bc2798446a32254fffb6185d, type: 3}
+  _preSpecialAttack: {fileID: 8300000, guid: 53f9f0a3812f39d4a99da687149bfbfb, type: 3}
 --- !u!114 &4783825719322237971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1496,7 +1501,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 502.43
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
