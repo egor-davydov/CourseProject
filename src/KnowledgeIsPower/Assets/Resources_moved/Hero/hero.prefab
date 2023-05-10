@@ -1434,6 +1434,8 @@ MonoBehaviour:
   Attack: {fileID: 9052090003234460668}
   Animator: {fileID: 1941000699}
   DeathFx: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  _heroAudioSource: {fileID: -131161534089589368}
+  _fallAudio: {fileID: 8300000, guid: 08c31add9073eb2409498038e0558705, type: 3}
 --- !u!114 &9052090003234460668
 MonoBehaviour:
   m_ObjectHideFlags: 0
