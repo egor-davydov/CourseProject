@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelKey: Dungeon
   EnemySpawners:
-  - Id: SpawnMarker_3dc8d132-a18e-4db0-9687-2e682ad46047
+  - Id: Dungeon_2c033e04-d3ec-426a-9f93-8edcb12b98e3
     MonsterTypeId: 3
     TransformData:
       Position:
