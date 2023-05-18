@@ -10,6 +10,9 @@ TagManager:
   - FxTemporaire
   - InitialPoint
   - LoadingCurtain
+  - Enemy
+  - EnemyHurtBox
+  - LevelTransferInitialPoint
   layers:
   - Default
   - TransparentFX
@@ -19,18 +22,18 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
+  - 
   - 
   - 
   - 
   - Player
   - Aggro
-  - StopZone
+  - AttackZone
   - Hittable
   - Pickup
-  - 
-  - 
-  - 
+  - SaveTrigger
+  - Focus
+  - LevelTransfer
   - 
   - 
   - 
