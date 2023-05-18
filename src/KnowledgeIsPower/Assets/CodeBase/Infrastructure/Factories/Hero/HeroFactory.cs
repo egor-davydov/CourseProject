@@ -15,7 +15,8 @@ namespace CodeBase.Infrastructure.Factories.Hero
     private readonly IHeroStateMachine _heroStateMachine;
     private readonly IInputService _inputService;
 
-    public HeroFactory(IAssetProvider assets, IProgressWatchers progressWatchers, IHeroStateMachine heroStateMachine, IInputService inputService)
+    public HeroFactory(IAssetProvider assets, IProgressWatchers progressWatchers, IHeroStateMachine heroStateMachine,
+      IInputService inputService)
     {
       _assets = assets;
       _progressWatchers = progressWatchers;

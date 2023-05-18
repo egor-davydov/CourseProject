@@ -44,7 +44,7 @@ MonoBehaviour:
         X: 0.01
         Y: 0.01
         Z: 0.01
-  - Id: SpawnMarker_3dc8d132-a18e-4db0-9687-2e682ad46047
+  - Id: Main_aaced5e1-f27f-47d3-b030-4f891e8ab91e
     MonsterTypeId: 2
     TransformData:
       Position:
@@ -95,7 +95,7 @@ MonoBehaviour:
       Position:
         X: 0.30018377
         Y: 0.11276841
-        Z: -13.084844
+        Z: -13.904844
       Rotation:
         X: -0
         Y: 90
@@ -125,7 +125,7 @@ MonoBehaviour:
       Position:
         X: 0.30018377
         Y: 0.5777683
-        Z: -16.661842
+        Z: -16.124844
       Rotation:
         X: -0
         Y: 90

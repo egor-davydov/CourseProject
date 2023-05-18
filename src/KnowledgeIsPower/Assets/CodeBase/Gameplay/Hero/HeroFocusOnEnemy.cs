@@ -68,7 +68,7 @@ namespace CodeBase.Gameplay.Hero
     public void EnemyLeftFromSphere()
     {
       if (!HeroUnFocused() && _enemiesInSphere.Count != 0)
-        ChangeEnemyToFocusRight();
+        FocusOnEnemyFromSphere(enemyNumber: 0);
     }
 
     private void Focus(Transform enemyForFocus)
@@ -77,14 +77,14 @@ namespace CodeBase.Gameplay.Hero
       _currentEnemyToFocus.GetComponent<EnemyForFocus>().Focus();
     }
 
-    private bool HasFocus() =>
-      _currentEnemyToFocus != null;
-
     private void FocusOnEnemyFromSphere(int enemyNumber)
     {
       CurrentEnemyToFocus = _enemiesInSphere[enemyNumber];
       _currentFocusedEnemyNumber = enemyNumber;
     }
+
+    private bool HasFocus() =>
+      _currentEnemyToFocus != null;
 
     private bool HeroUnFocused() =>
       _currentEnemyToFocus == null;

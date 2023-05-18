@@ -14,6 +14,12 @@ namespace CodeBase.Gameplay.Hero
     [SerializeField]
     private CharacterController _characterController;
 
+    [SerializeField]
+    private AudioSource _heroAudioSource;
+
+    [SerializeField]
+    private AudioClip[] _heroSteps;
+
     private float MovementSpeed =>
       _hero.IsOnBasicState
         ? _stats.BasicMovementSpeed
@@ -23,6 +29,7 @@ namespace CodeBase.Gameplay.Hero
     private Camera _camera;
     private IHeroStateMachine _hero;
     private Stats _stats;
+    private int _previousStepNumber;
 
     public void Construct(IInputService inputService, IHeroStateMachine heroStateMachine)
     {
@@ -56,6 +63,15 @@ namespace CodeBase.Gameplay.Hero
       _characterController.Move(MovementSpeed * movementVector * Time.deltaTime);
     }
 
+    private void OnStep()
+    {
+      int currentStepNumber = _previousStepNumber != _heroSteps.Length - 1
+        ? _previousStepNumber + 1
+        : 0;
+      _heroAudioSource.PlayOneShot(_heroSteps[currentStepNumber]);
+      _previousStepNumber = currentStepNumber;
+    }
+    
     public void UpdateProgress(PlayerProgress progress)
     {
       progress.WorldData.PositionOnLevel = new PositionOnLevel(

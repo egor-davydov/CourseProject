@@ -9,6 +9,15 @@ namespace CodeBase.Gameplay.Hero
   public class HeroHealth : MonoBehaviour, IHealth, IProgressWriter, IProgressReader
   {
     [SerializeField]
+    private AudioSource _heroAudioSource;
+
+    [SerializeField]
+    private AudioClip _hitSound;
+
+    [SerializeField]
+    private AudioClip _defendSound;
+
+    [SerializeField]
     private HeroAnimator Animator;
 
     [SerializeField]
@@ -70,6 +79,7 @@ namespace CodeBase.Gameplay.Hero
           finalDamage = damage - damage * HeroDefend.DefendFactor;
       }
 
+      PlayHitSound();
 
       if (finalDamage != 0)
       {
@@ -79,6 +89,14 @@ namespace CodeBase.Gameplay.Hero
 
       OnTakeDamage?.Invoke();
       //Debug.Log($"Damage {finalDamage}");
+    }
+
+    private void PlayHitSound()
+    {
+      _heroAudioSource.PlayOneShot(
+        HeroDefend.IsActive
+          ? _defendSound
+          : _hitSound);
     }
   }
 }

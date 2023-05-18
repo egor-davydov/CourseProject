@@ -15,6 +15,15 @@ namespace CodeBase.Gameplay.Enemy
     [SerializeField]
     private float _max;
 
+    [SerializeField]
+    private AudioSource _enemyAudioSource;
+
+    [SerializeField]
+    private AudioClip _hitSound;
+
+    [SerializeField]
+    private AudioClip _deathSound;
+
     private bool _canStun = true;
 
     public event Action HealthChanged;
@@ -45,9 +54,19 @@ namespace CodeBase.Gameplay.Enemy
     {
       Current -= damage;
 
+      PlayHitSound();
+      
       if (_canStun)
         StunEnemy();
       OnTakeDamage?.Invoke();
+    }
+
+    private void PlayHitSound()
+    {
+      _enemyAudioSource.PlayOneShot(
+        Current <= 0
+          ? _deathSound
+          : _hitSound);
     }
 
     private void StunEnemy()

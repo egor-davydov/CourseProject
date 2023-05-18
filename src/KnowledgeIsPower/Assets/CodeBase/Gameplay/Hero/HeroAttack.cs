@@ -1,4 +1,3 @@
-using System;
 using CodeBase.Data.Progress;
 using CodeBase.Gameplay.Enemy;
 using CodeBase.Gameplay.Logic;
@@ -6,7 +5,6 @@ using CodeBase.Services.Input;
 using CodeBase.Services.ProgressWatchers;
 using CodeBase.StaticData.Monster;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace CodeBase.Gameplay.Hero
 {
@@ -21,6 +19,18 @@ namespace CodeBase.Gameplay.Hero
 
     [SerializeField]
     private GameObject _rockHitFxPrefab;
+
+    [SerializeField]
+    private AudioSource _heroAudioSource;
+
+    [SerializeField]
+    private AudioClip _basicAttack;
+
+    [SerializeField]
+    private AudioClip _specialAttack;
+
+    [SerializeField]
+    private AudioClip _preSpecialAttack;
 
     private IInputService _inputService;
 
@@ -45,6 +55,10 @@ namespace CodeBase.Gameplay.Hero
       if (_inputService.IsLongAttackButtonUp())
         Animator.PlayLongAttack();
     }
+
+    private void OnBasicAttackSound() => _heroAudioSource.PlayOneShot(_basicAttack);
+    private void OnSpecialAttackSound() => _heroAudioSource.PlayOneShot(_specialAttack);
+    private void OnPreSpecialAttackSound() => _heroAudioSource.PlayOneShot(_preSpecialAttack);
 
     private void OnFastAttack() => Attack(attackMultiplier: 1f);
     private void OnLongAttack() => Attack(attackMultiplier: 2f);
@@ -72,7 +86,7 @@ namespace CodeBase.Gameplay.Hero
       switch (monsterType)
       {
         case MonsterTypeId.Lich:
-          Instantiate(_bloodFxPrefab, enemyTransform.position + Vector3.up*0.5f, Quaternion.identity);
+          Instantiate(_bloodFxPrefab, enemyTransform.position + Vector3.up * 0.5f, Quaternion.identity);
           break;
         case MonsterTypeId.Golem:
           Instantiate(_rockHitFxPrefab, enemyTransform.position + Vector3.up, Quaternion.identity);

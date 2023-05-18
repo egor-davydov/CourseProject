@@ -802,6 +802,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4970791679775700779, guid: 274c4c35ed05ea14c87492064b3cadfd,
+        type: 3}
+      propertyPath: _hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 08bb0f5b35ae1534fab017fe209d3190, type: 3}
+    - target: {fileID: 4970791679775700779, guid: 274c4c35ed05ea14c87492064b3cadfd,
+        type: 3}
+      propertyPath: _deathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 6765494314cd6b14388a83f0f405521e, type: 3}
     - target: {fileID: 5202189114089301272, guid: 274c4c35ed05ea14c87492064b3cadfd,
         type: 3}
       propertyPath: _monsterType

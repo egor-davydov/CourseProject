@@ -11,6 +11,11 @@ namespace CodeBase.Gameplay.Hero
     public HeroAnimator Animator;
 
     public GameObject DeathFx;
+
+    [SerializeField]
+    private AudioSource _heroAudioSource;
+    [SerializeField]
+    private AudioClip _fallAudio;
     private bool _isDead;
 
     private void Start() =>
@@ -19,8 +24,11 @@ namespace CodeBase.Gameplay.Hero
     private void OnDestroy() =>
       Health.HealthChanged -= HealthChanged;
 
-    private void OnDeathEnd() =>
+    private void OnDeathEnd()
+    {
       CreateDeathFx();
+      PlayFallSound();
+    }
 
     private void HealthChanged()
     {
@@ -38,5 +46,8 @@ namespace CodeBase.Gameplay.Hero
 
     private void CreateDeathFx() =>
       Instantiate(DeathFx, transform.position + transform.forward * 0.5f, Quaternion.identity);
+
+    private void PlayFallSound() => 
+      _heroAudioSource.PlayOneShot(_fallAudio);
   }
 }

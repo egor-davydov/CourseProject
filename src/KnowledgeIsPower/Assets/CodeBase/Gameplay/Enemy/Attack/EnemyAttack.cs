@@ -105,7 +105,6 @@ namespace CodeBase.Gameplay.Enemy.Attack
         return;
 
       _attackCooldown -= Time.deltaTime;
-      Debug.Log(_attackCooldown);
     }
 
     private bool Hit(out Collider hit)

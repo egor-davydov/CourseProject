@@ -27,7 +27,6 @@ namespace CodeBase.Infrastructure.States
 {
   public class BootstrapState : IState
   {
-    
     private readonly GameStateMachine _stateMachine;
     private readonly HeroStateMachine _heroStateMachine;
     private readonly AllServices _services;
@@ -63,26 +62,26 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<ILevelClearedService>(new LevelClearedService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
       _services.RegisterSingle<IProgressWatchers>(new ProgressWatchers());
-      
+
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
         _services.Single<IPersistentProgressService>(),
         _services.Single<IProgressWatchers>()
-        ));
+      ));
 
       RegisterIAPService(
         new IAPProvider(),
         _services.Single<IPersistentProgressService>(),
         _services.Single<IRespawnService>()
-        );
-    
+      );
+
       _services.RegisterSingle<IUIFactory>(new UIFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IStaticDataService>(),
         _services.Single<IPersistentProgressService>(),
         _services.Single<IAdsService>(),
         _services.Single<IIAPService>()
-        ));
-      
+      ));
+
       _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
 
       _services.RegisterSingle<ILootFactory>(new LootFactory(
@@ -98,7 +97,7 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<ILevelTransferFactory>(new LevelTransferFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IProgressWatchers>(),
-        _services.Single<IGameStateMachine>(), 
+        _services.Single<IGameStateMachine>(),
         _services.Single<ISaveLoadService>()
       ));
       _services.RegisterSingle<IHeroFactory>(new HeroFactory(
@@ -113,7 +112,7 @@ namespace CodeBase.Infrastructure.States
         _services.Single<IHeroStateMachine>(),
         _services.Single<HeroProvider>(),
         _services.Single<IWindowService>()
-        ));
+      ));
       _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IProgressWatchers>(),
@@ -121,12 +120,12 @@ namespace CodeBase.Infrastructure.States
         _services.Single<HeroProvider>(),
         _services.Single<IRandomService>(),
         _services.Single<ILootFactory>()
-        ));
+      ));
       _services.RegisterSingle<IEnemySpawnerFactory>(new EnemySpawnerFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IProgressWatchers>(),
         _services.Single<IEnemyFactory>()
-        ));
+      ));
     }
 
     private void RegisterAssetProvider()
@@ -142,6 +141,7 @@ namespace CodeBase.Infrastructure.States
       adsService.Initialize();
       _services.RegisterSingle<IAdsService>(adsService);
     }
+
     private void RegisterIAPService(IAPProvider iapProvider, IPersistentProgressService progress, IRespawnService respawnService)
     {
       IAPService iapService = new IAPService(iapProvider, progress, respawnService);
@@ -158,7 +158,7 @@ namespace CodeBase.Infrastructure.States
 
     private static IInputService InputService() =>
       Application.isEditor
-        ? (IInputService) new StandaloneInputService()
+        ? (IInputService)new StandaloneInputService()
         : new MobileInputService();
   }
 }
